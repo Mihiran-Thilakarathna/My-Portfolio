@@ -23,7 +23,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   const line2 = useMemo(() => lineToSpans('Portfolio Website'), []);
 
   useEffect(() => {
-    const timers: NodeJS.Timeout[] = [];
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
     timers.push(setTimeout(() => setIconsIn(true), 150));
     timers.push(setTimeout(() => setTextIn(true), 650));
