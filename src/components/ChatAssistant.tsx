@@ -109,7 +109,7 @@ const ChatAssistant: React.FC = () => {
       return `Mihiran's educational background:\n\n${educationSummary}\n\nHe's currently pursuing his Bachelor's degree in Information and Communication Technology at Rajarata University of Sri Lanka, specializing in AI/ML and software development.`;
     }
 
-    // Resume/CV
+    // Resume/CV request
     if (message.includes('resume') || message.includes('cv') || message.includes('download')) {
       return "You can download Mihiran's CV by clicking the 'Download CV' button in the hero section at the top of the page. It contains detailed information about his education, experience, skills, and projects.";
     }
@@ -129,7 +129,7 @@ const ChatAssistant: React.FC = () => {
       return "Mihiran develops mobile applications using:\n\n• Kotlin & Jetpack Compose for Android\n• React Native for cross-platform apps\n• Firebase for backend services\n\nCheck out his AI Chat Assistant and Mood Music App projects!";
     }
 
-    // Who is Mihiran
+    // Personal intro
     if (message.includes('who') || message.includes('about')) {
       return `${personalInfo.name} is a passionate IT undergraduate at Rajarata University of Sri Lanka. He specializes in AI/ML, full-stack development, and mobile app development. His goal is to build intelligent systems that solve real-world problems using cutting-edge technologies.`;
     }
@@ -144,12 +144,12 @@ const ChatAssistant: React.FC = () => {
       return `Mihiran is open to new opportunities and collaborations! You can reach out to him at ${personalInfo.email} or connect on LinkedIn: ${personalInfo.linkedin}. He's particularly interested in AI/ML projects, web development, and innovative tech solutions.`;
     }
 
-    // Thank you
+    // Thank you response
     if (message.includes('thank')) {
       return "You're welcome! If you have any more questions about Mihiran's work, skills, or how to get in touch, just ask. I'm here to help!";
     }
 
-    // Default fallback
+    // Default fallback response
     return `I can help you learn about:\n\n• Mihiran's projects and technical skills\n• His work experience and education\n• How to contact him or view his GitHub/LinkedIn\n• Downloading his CV\n\nWhat would you like to know more about?`;
   }, []);
 

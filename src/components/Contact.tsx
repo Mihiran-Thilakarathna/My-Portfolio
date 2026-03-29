@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaWhatsapp, FaEnvelope, FaTelegram, FaDiscord } from 'react-icons/fa';
-import { SiMessenger } from 'react-icons/si';
+import { FaWhatsapp, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolio';
 import './Contact.css';
 
@@ -29,7 +28,7 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setStatus('sending');
     
-    // Simulate sending email (replace with actual email service like EmailJS)
+    // TODO: Replace mock submit with a real email service (e.g., EmailJS).
     setTimeout(() => {
       console.log('Form submitted:', formData);
       setStatus('success');
@@ -63,6 +62,26 @@ const Contact: React.FC = () => {
             <p className="connect-subtitle">Choose your preferred way to reach out</p>
             
             <div className="contact-methods">
+              <a href={personalInfo.github} className="contact-method github" target="_blank" rel="noreferrer">
+                <div className="method-icon">
+                  <FaGithub />
+                </div>
+                <div className="method-info">
+                  <h4>GitHub</h4>
+                  <p>github.com</p>
+                </div>
+              </a>
+
+              <a href={personalInfo.linkedin} className="contact-method linkedin" target="_blank" rel="noreferrer">
+                <div className="method-icon">
+                  <FaLinkedin />
+                </div>
+                <div className="method-info">
+                  <h4>LinkedIn</h4>
+                  <p>linkedin.com</p>
+                </div>
+              </a>
+
               <a href={`https://wa.me/${personalInfo.phone?.replace(/\s/g, '')}`} className="contact-method whatsapp">
                 <div className="method-icon">
                   <FaWhatsapp />
@@ -70,36 +89,6 @@ const Contact: React.FC = () => {
                 <div className="method-info">
                   <h4>WhatsApp</h4>
                   <p>{personalInfo.phone}</p>
-                </div>
-              </a>
-
-              <a href={`https://m.me/${personalInfo.messenger || 'mihiranthilakarathna'}`} className="contact-method messenger">
-                <div className="method-icon">
-                  <SiMessenger />
-                </div>
-                <div className="method-info">
-                  <h4>Messenger</h4>
-                  <p>@{personalInfo.messenger || 'mihiranthilakarathna'}</p>
-                </div>
-              </a>
-
-              <a href={`https://t.me/${personalInfo.telegram?.replace(/\+/g, '').replace(/\s/g, '')}`} className="contact-method telegram">
-                <div className="method-icon">
-                  <FaTelegram />
-                </div>
-                <div className="method-info">
-                  <h4>Telegram</h4>
-                  <p>{personalInfo.telegram || personalInfo.phone}</p>
-                </div>
-              </a>
-
-              <a href={`https://discord.com/users/${personalInfo.discord || 'mihiranthilakarathna'}`} className="contact-method discord">
-                <div className="method-icon">
-                  <FaDiscord />
-                </div>
-                <div className="method-info">
-                  <h4>Discord</h4>
-                  <p>{personalInfo.discord || 'mihiranthilakarathna'}</p>
                 </div>
               </a>
 

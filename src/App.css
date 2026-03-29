@@ -23,21 +23,21 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a45bff 0%, #6b7bff 100%);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #8f6aff 0%, #5d6dff 100%);
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(164, 91, 255, 0.28);
   color: var(--text-color);
 }
 
 ::-moz-selection {
-  background: rgba(99, 102, 241, 0.3);
+  background: rgba(164, 91, 255, 0.28);
   color: var(--text-color);
 }

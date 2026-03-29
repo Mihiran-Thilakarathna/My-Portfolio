@@ -8,7 +8,7 @@ import {
   SiMysql, SiFirebase, SiFlask, SiScikitlearn 
 } from 'react-icons/si';
 import { stats } from '../data/portfolio';
-import mihiranPhoto from '../assets/mihiran.jpg';
+import mihiranPhoto from '../assets/mihiran.png';
 import './About.css';
 
 const iconMap: { [key: string]: React.ReactNode } = {

@@ -5,7 +5,7 @@
   justify-content: center;
   padding: 8rem 2rem 8rem;
   position: relative;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  background: var(--page-gradient);
 }
 
 .hero-content {
@@ -24,7 +24,7 @@
 .greeting {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #6366f1;
+  color: #8d7cff;
   letter-spacing: 2px;
   margin-bottom: 1rem;
 }
@@ -33,7 +33,7 @@
   font-size: 3.4rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #1f2937 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #c084fc 0%, #8b5cf6 40%, #60a5fa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -41,7 +41,7 @@
 }
 
 [data-theme='dark'] .name {
-  background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, #e5e7ff 0%, #c4b5fd 45%, #93c5fd 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -50,7 +50,7 @@
 .title {
   font-size: 1.9rem;
   font-weight: 600;
-  color: #8b5cf6;
+  color: #bda8ff;
   margin-bottom: 1.5rem;
   min-height: 2.5rem;
 }
@@ -83,23 +83,23 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #a45bff 0%, #6b7bff 100%);
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 10px 30px rgba(138, 99, 255, 0.45);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #6366f1;
-  border: 2px solid #6366f1;
+  color: #a45bff;
+  border: 2px solid #a45bff;
 }
 
 .btn-secondary:hover {
-  background: #6366f1;
+  background: linear-gradient(135deg, #a45bff 0%, #6b7bff 100%);
   color: white;
   transform: translateY(-3px);
 }
@@ -134,9 +134,9 @@
     #3b82f6,
     #6366f1
   );
-  animation: rotate 8s linear infinite;
   padding: 4px;
   z-index: 0;
+  will-change: transform;
 }
 
 .rotating-border::before {
@@ -157,6 +157,10 @@
   }
 }
 
+.rotating-border.spinning {
+  animation: rotate 1.6s linear;
+}
+
 .image-wrapper {
   position: relative;
   width: 380px;
@@ -164,13 +168,8 @@
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
-  transition: all 0.4s ease;
+  transition: box-shadow 0.4s ease;
   z-index: 2;
-}
-
-.image-wrapper:hover {
-  transform: scale(1.05);
-  box-shadow: 0 30px 80px rgba(99, 102, 241, 0.5);
 }
 
 .image-wrapper img {
@@ -178,6 +177,36 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+.image-container {
+  position: relative;
+}
+
+.image-tooltip {
+  position: absolute;
+  top: -36px;
+  right: -100px;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #e5e7eb;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+  opacity: 0;
+  transform: translate(34px, -8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.image-container:hover .image-tooltip,
+.image-container:focus-within .image-tooltip {
+  opacity: 1;
+  transform: translate(34px, 0);
 }
 
 .scroll-indicator {
@@ -205,21 +234,21 @@
 .scroll-mouse {
   width: 28px;
   height: 45px;
-  border: 2.5px solid #6366f1;
+  border: 2.5px solid #8d7cff;
   border-radius: 20px;
   position: relative;
-  background: rgba(99, 102, 241, 0.05);
+  background: rgba(141, 124, 255, 0.06);
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3),
-              0 0 40px rgba(139, 92, 246, 0.2),
-              inset 0 0 10px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 20px rgba(141, 124, 255, 0.3),
+              0 0 40px rgba(101, 126, 255, 0.22),
+              inset 0 0 10px rgba(141, 124, 255, 0.12);
   animation: mouse-glow 2s ease-in-out infinite;
 }
 
 .scroll-wheel {
   width: 3px;
   height: 10px;
-  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  background: linear-gradient(180deg, #a45bff, #6b7bff);
   border-radius: 2px;
   position: absolute;
   top: 8px;

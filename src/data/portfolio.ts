@@ -1,13 +1,11 @@
 ﻿import type { Project, WorkExperience, Education, Certification, Skill } from '../types';
 
-// Import project images
-import portfolioImage from '../assets/portfolio.jpg';
-import aiChatImage from '../assets/AI-Chat-Assistant.jpg';
-import calculatorImage from '../assets/calculator.avif';
-import fioraEditorImage from '../assets/fiora editor.png';
-import personalOrganizerImage from '../assets/Personal-organizer.webp';
-import opalMuseImage from '../assets/opal-muse.jpg';
-import moodMusicImage from '../assets/mood.jpg';
+// Import profile images
+import foodordering from '../assets/foodordering.png';
+import lumo from '../assets/lumo.png';
+import moodtune from '../assets/moodtune.png';
+import facial from '../assets/facial.png';
+import portfolio from '../assets/portfolio.png';
 
 export const personalInfo = {
   name: 'Mihiran Thilakarathna',
@@ -109,31 +107,22 @@ export const certifications: Certification[] = [
 
   {
   id: 2,
-  title: 'Designing Blockchain Solutions Using Amazon Managed Blockchain',
-  provider: 'AWS Skill Builder',
+  title: 'Supervised Machine Learning: Regression and  Classification',
+  provider: 'DeepLearning.AI',
   date: 'Nov 2025',
-  certificateUrl: 'https://skillbuilder.aws/learn/7YE74951Z4/designing-blockchain-solutions-using-amazon-managed-blockchain/V483HBRCSJ',
+  certificateUrl: 'https://www.coursera.org/account/accomplishments/verify/3VIPRPZ8VKZ1?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course',
   },
 
   {
   id: 3,
-  title: 'Gemini Certified University Student',
-  provider: 'Google',
+  title: 'Machine Learning I',
+  provider: 'Columbia University',
   date: 'Nov 2025',
-  certificateUrl: 'https://edu.google.accredible.com/4077cb29-febf-49e9-8cc9-36f6d0dba1d3#acc.yKnY8v2x',
+  certificateUrl: 'https://badges.plus.columbia.edu/03dccaeb-7eba-4099-9b0b-efeba35b9f11#acc.U3C6r4FQ',
   },
 
   {
-  id: 4,
-  title: 'Postman API Fundamentals Student Expert',
-  provider: 'Postman',
-  date: 'Nov 2025',
-  certificateUrl: 'https://badges.parchment.com/public/assertions/bOBqRDENSP-V6Q-cq2teMQ?identity__email=thmthilakarathna2%40gmail.com',
-  },
-
-
-  {
-    id: 5,
+    id: 4,
     title: 'AI Security & Governance',
     provider: 'Securiti',
     date: 'Sep 2025',
@@ -141,104 +130,79 @@ export const certifications: Certification[] = [
   },
 
   {
-    id: 6,
-    title: 'ReactJs - The Complete ReactJs Course For Beginners',
-    provider: 'Udemy',
-    date: 'Jun 2025',
-    certificateUrl: 'https://www.udemy.com/certificate/UC-fb6ef630-23d6-49ca-8cbc-4bb09ba407b8/',
+    id: 5,
+    title: 'LFS169: Introduction to GitOps',
+    provider: 'The Linux Foundation',
+    date: 'Mar 2026',
+    certificateUrl: 'https://www.credly.com/badges/724d690d-d720-45d8-b7f4-25f993406725/public_url',
   },
+  
+  {
+    id: 6,
+    title: ' Introduction to Kubernetes',
+    provider: 'The Linux Foundation',
+    date: 'Feb 2026',
+    certificateUrl: 'https://www.credly.com/badges/cc11904e-bba4-4a93-aeaa-7b082f5a3833/linked_in_profile',
+  },
+
   {
     id: 7,
-    title: 'SQL (Intermediate) Certificate',
-    provider: 'HackerRank',
-    date: 'Aug 2024',
-    certificateUrl: 'https://www.hackerrank.com/certificates/a193c5d67ada',
+    title: 'Postman API Fundamentals Student Expert',
+    provider: 'Postman',
+    date: 'Nov 2025',
+    certificateUrl: 'https://badges.parchment.com/public/assertions/bOBqRDENSP-V6Q-cq2teMQ?identity__email=thmthilakarathna2%40gmail.com',
   },
-  {
-    id: 8,
-    title: 'Mastering C & C++ Programming: From Fundamentals to Advanced',
-    provider: 'Udemy',
-    date: 'Jun 2024',
-    certificateUrl: 'https://www.udemy.com/certificate/UC-6270438e-d952-484d-82dd-636b972d666c/',
-  },
+
+  
+
 ];
 
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'Personal Portfolio Website',
-    date: 'October 2025',
-    description: 'A modern, responsive portfolio showcasing AI/ML and software development projects. Features smooth animations with Framer Motion, theme switching (default/light/dark), multi-category project filtering, and automated GitHub Pages deployment.',
-    image: portfolioImage,
-    categories: ['Web Application'],
-    tags: ['React', 'TypeScript', 'Vite', 'Framer Motion', 'CSS Modules', 'GitHub Pages'],
-    liveUrl: 'https://mihiran-thilakarathna.github.io/Mihiran-Portfolio/',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/Mihiran-Portfolio.git',
+    title: 'Food Ordering App',
+    description: 'Offline-first Android food app with browsing, cart, and profile management using Java, SQLite, and a clean UI.',
+    image: foodordering,
+    categories: ['Mobile Application'],
+    tags: ['Java', 'SQLite', 'Android Studio', 'Material Design'],
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/FoodOrderingApp.git',
   },
   {
     id: 2,
-    title: 'AI Chat Assistant',
-    date: 'October 2025',
-    description: 'A modern Android chat app powered by Google Gemini AI, featuring real-time conversations and synced chat history using Firebase Firestore.',
-    image: aiChatImage,
-    categories: ['AI/ML', 'Mobile Application'],
-    tags: ['Kotlin', 'Jetpack Compose', 'MVVM', 'Firebase Firestore', 'Google Gemini AI'],
-    liveUrl: 'https://github.com/Mihiran-Thilakarathna/AI-Chat-Assistant/releases',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/AI-Chat-Assistant.git',
+    title: 'Lumo AI Assistant',
+    description: 'Multimodal Android AI assistant in Jetpack Compose using Gemini for text, image, and PDF analysis with chat-style UX.',
+    image: lumo,
+    categories: ['Mobile Application'],
+    tags: ['Kotlin', 'Jetpack Compose', 'Google Gemini API', 'Multimodal AI'],
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/Lumo-AI-assistant.git',
   },
   {
     id: 3,
-    title: 'Java Swing Calculator',
-    date: 'September 2025',
-    description: 'A simple yet stylish desktop calculator built with Java 17 and Swing. Supports basic arithmetic operations, percentage, square root, and sign toggle with a clean, fixed-size UI.',
-    image: calculatorImage,
-  categories: ['Desktop Application'],
-    tags: ['Java', 'Swing', 'Maven', 'IntelliJ IDEA'],
-    liveUrl: 'https://github.com/Mihiran-Thilakarathna/Calculator/releases',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/Calculator.git',
+    title: 'MoodTune',
+    description: 'Android app that detects your emotion from facial cues and queues mood-matching music via ML Kit and TensorFlow Lite.',
+    image: moodtune,
+    categories: ['Mobile Application'],
+    tags: ['Kotlin', 'TensorFlow Lite', 'ML Kit', 'Music Recommendation'],
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/MoodTune.git',
   },
+  
   {
     id: 4,
-    title: 'Fiora Video Editor',
-    date: 'August 2025',
-    description: 'A modern desktop video editor built for the ICT2210 Mini Project, featuring real-time preview, interactive timeline, trimming, light and color adjustments, and one-click filters with export support.',
-    image: fioraEditorImage,
-  categories: ['Desktop Application'],
-    tags: ['Python', 'OpenCV', 'MoviePy', 'Tkinter'],
-    liveUrl: 'https://github.com/Mihiran-Thilakarathna/FioraVideoEditor/releases',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/FioraVideoEditor.git',
+    title: 'Facial Occlusion Classification for Restricted Environments',
+    description: 'MobileNetV2 model classifying clear face, helmet, or mask to support restricted-area security monitoring.',
+    image: facial,
+    categories: ['AI/ML'],
+    tags: ['Python', 'TensorFlow', 'MobileNetV2', 'Image Classification'],
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/Facial_Occlusion_Classification.git',
   },
+
   {
     id: 5,
-    title: 'Personal Organizer Application',
-    date: 'July 2025',
-    description: 'A Qt-based desktop application developed in C++ with SQLite integration. Helps users manage income, expenses, budgets, and academic schedules with modern UI and financial reports.',
-    image: personalOrganizerImage,
-  categories: ['Desktop Application'],
-    tags: ['C++', 'Qt', 'SQLite', 'Finance Tracker'],
-    liveUrl: 'https://github.com/Mihiran-Thilakarathna/PersonalOrganizer/releases',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/PersonalOrganizer.git',
-  },
-  {
-    id: 6,
-    title: 'Opal Muse Clothing Website',
-    date: 'June 2025',
-    description: 'A fully functional clothing shop website built with HTML, CSS, JavaScript, and PHP. Features user login, product listings, cart and checkout, and a responsive modern design with database integration.',
-    image: opalMuseImage,
-  categories: ['Web Application'],
-    tags: ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL'],
-    liveUrl: 'https://github.com/Mihiran-Thilakarathna/OpalMuse-Web-site',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/OpalMuse-Web-site.git',
-  },
-  {
-    id: 7,
-    title: 'Mood Music App',
-    date: 'In Development - 2025',
-    description: 'A React Native mobile app that detects facial expressions in real-time to recommend personalized music playlists. Built with React Native, TypeScript, and Vision Camera, with AI emotion detection planned using TensorFlow.js.',
-    image: moodMusicImage,
-  categories: ['AI/ML', 'Mobile Application'],
-    tags: ['React Native', 'TypeScript', 'TensorFlow.js', 'Vision Camera', 'AI/ML'],
-    liveUrl: 'https://github.com/Mihiran-Thilakarathna/MoodMusicApp',
-    codeUrl: 'https://github.com/Mihiran-Thilakarathna/MoodMusicApp.git',
+    title: 'Portfolio Website',
+    description: 'Responsive React + TypeScript portfolio with theme switching, smooth animations, and a curated project grid.',
+    image: portfolio,
+    categories: ['Web Application'],
+    tags: ['React', 'TypeScript', 'Vite', 'Framer Motion'],
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/My-Portfolio.git',
   },
 ];

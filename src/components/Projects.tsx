@@ -1,22 +1,30 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
+import { FiSmartphone, FiCpu, FiGlobe } from 'react-icons/fi';
+import { FiStar } from 'react-icons/fi';
 import { projects } from '../data/portfolio';
 import type { ProjectCategory } from '../types';
 import './Projects.css';
 
-type FilterType = 'All' | ProjectCategory;
+type FilterType = ProjectCategory | null;
 
 const Projects: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [filter, setFilter] = useState<FilterType>('All');
+  const [filter, setFilter] = useState<FilterType>(null);
 
-  const filteredProjects = filter === 'All'
-    ? projects
-    : projects.filter(project => project.categories.includes(filter));
+  const filters: ProjectCategory[] = Array.from(
+    new Set(projects.flatMap((project) => project.categories))
+  ) as ProjectCategory[];
 
-  const filters: FilterType[] = ['All', 'AI/ML', 'Web Application', 'Mobile Application', 'Desktop Application'];
+  const filteredProjects = filter
+    ? projects.filter((project) => project.categories.includes(filter))
+    : [];
+
+  const handleFilterClick = (filterName: ProjectCategory) => {
+    setFilter((prev) => (prev === filterName ? null : filterName));
+  };
 
   return (
     <section id="projects" className="projects" ref={ref}>
@@ -32,25 +40,40 @@ const Projects: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="filter-buttons"
+          className="category-rail"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {filters.map((filterName) => (
-            <button
-              key={filterName}
-              className={`filter-btn ${filter === filterName ? 'active' : ''}`}
-              onClick={() => setFilter(filterName)}
-            >
-              {filterName}
-            </button>
-          ))}
+          <div className="category-label">
+            <span className={`label-badge ${filter ? 'active' : ''}`}>
+              <FiStar />
+              {filter ? 'Category selected' : 'Select a category'}
+            </span>
+          </div>
+
+          <div className="category-tabs">
+            {filters.map((filterName) => (
+              <button
+                key={filterName}
+                className={`tab-btn ${filter === filterName ? 'active' : ''}`}
+                onClick={() => handleFilterClick(filterName)}
+              >
+                <span className="tab-icon">
+                  {filterName === 'Mobile Application' && <FiSmartphone />}
+                  {filterName === 'AI/ML' && <FiCpu />}
+                  {filterName === 'Web Application' && <FiGlobe />}
+                </span>
+                <span className="tab-label">{filterName}</span>
+              </button>
+            ))}
+          </div>
         </motion.div>
 
-        <motion.div layout className="projects-grid">
+        <motion.div layout className={`projects-grid ${filter ? 'has-selection' : ''}`}>
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+            {filter &&
+              filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
@@ -68,7 +91,6 @@ const Projects: React.FC = () => {
                 <div className="project-content">
                   <div className="project-header">
                     <h3>{project.title}</h3>
-                    <p className="project-date">{project.date}</p>
                   </div>
 
                   <p className="project-description">{project.description}</p>
@@ -80,30 +102,20 @@ const Projects: React.FC = () => {
                   </div>
 
                   <div className="project-links">
-                    {project.liveUrl && (
-                      <a 
-                        href={project.liveUrl} 
-                        className="project-link live"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaExternalLinkAlt /> LIVE
-                      </a>
-                    )}
-                    {project.codeUrl && (
-                      <a 
-                        href={project.codeUrl} 
-                        className="project-link code"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaGithub /> CODE
-                      </a>
-                    )}
-                  </div>
+                      {project.codeUrl && (
+                        <a
+                          href={project.codeUrl}
+                          className="project-link code"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaGithub /> View Project
+                        </a>
+                      )}
+                    </div>
                 </div>
               </motion.div>
-            ))}
+                ))}
           </AnimatePresence>
         </motion.div>
       </div>

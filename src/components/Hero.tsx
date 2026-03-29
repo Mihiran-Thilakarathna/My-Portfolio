@@ -7,11 +7,30 @@ import mihiranPhoto from '../assets/mihiran1.png';
 import './Hero.css';
 
 const Hero: React.FC = () => {
+  const spinTimeout = React.useRef<number | null>(null);
+  const [isSpinning, setIsSpinning] = React.useState(false);
+
+  const triggerSpin = React.useCallback(() => {
+    setIsSpinning(true);
+    if (spinTimeout.current) {
+      window.clearTimeout(spinTimeout.current);
+    }
+    spinTimeout.current = window.setTimeout(() => setIsSpinning(false), 1600);
+  }, []);
+
   const handleHireMeClick = React.useCallback(() => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      if (spinTimeout.current) {
+        window.clearTimeout(spinTimeout.current);
+      }
+    };
   }, []);
 
   return (
@@ -82,13 +101,27 @@ const Hero: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="image-container">
-            <div className="rotating-border"></div>
+          <div
+            className="image-container"
+            role="button"
+            tabIndex={0}
+            onClick={triggerSpin}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                triggerSpin();
+              }
+            }}
+          >
+            <div className={`rotating-border ${isSpinning ? 'spinning' : ''}`}></div>
             <div className="image-wrapper">
               <img
                 src={mihiranPhoto}
                 alt="Mihiran Thilakarathna"
               />
+            </div>
+            <div className="image-tooltip" aria-hidden="true">
+              Let&apos;s build something remarkable.
             </div>
           </div>
         </motion.div>

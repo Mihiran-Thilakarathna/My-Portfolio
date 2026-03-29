@@ -1,14 +1,13 @@
-export type ProjectCategory = 'AI/ML' | 'Web Application' | 'Mobile Application' | 'Desktop Application';
+export type ProjectCategory = 'AI/ML' | 'Web Application' | 'Mobile Application';
 
 export interface Project {
   id: number;
   title: string;
-  date: string;
   description: string;
   image: string;
   categories: ProjectCategory[];
   tags: string[];
-  liveUrl?: string;
+
   codeUrl?: string;
 }
 

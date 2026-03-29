@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const { showButton, scrollToTop } = useScrollToTop();
   
-  // Use the profile views hook to track and display views
+  // Track and display profile views
   const { views, lastUpdated } = useProfileViews(personalInfo.profileViews);
 
   const scrollToSection = (id: string) => {

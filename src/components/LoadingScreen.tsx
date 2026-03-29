@@ -1,87 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FaCode, FaUser, FaGithub } from 'react-icons/fa';
 import './LoadingScreen.css';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
 }
 
+const lineToSpans = (text: string) =>
+  text.split('').map((ch, idx) => (
+    <span key={`${text}-${idx}`} className="char" style={{ ['--d' as any]: `${idx * 40}ms` }}>
+      {ch === ' ' ? '\u00A0' : ch}
+    </span>
+  ));
+
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
-  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [iconsIn, setIconsIn] = useState(false);
+  const [textIn, setTextIn] = useState(false);
+  const [ripple, setRipple] = useState(false);
+
+  const line1 = useMemo(() => lineToSpans('Welcome To My'), []);
+  const line2 = useMemo(() => lineToSpans('Portfolio Website'), []);
 
   useEffect(() => {
-    const duration = 2500; // 2.5 seconds
-    const steps = 60;
-    const increment = 100 / steps;
-    const interval = duration / steps;
+    const timers: NodeJS.Timeout[] = [];
 
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + increment;
-        if (next >= 100) {
-          clearInterval(timer);
-          setTimeout(onLoadingComplete, 300);
-          return 100;
-        }
-        return next;
-      });
-    }, interval);
+    timers.push(setTimeout(() => setIconsIn(true), 150));
+    timers.push(setTimeout(() => setTextIn(true), 650));
+    timers.push(
+      setTimeout(() => {
+        setRipple(true);
+        onLoadingComplete();
+        timers.push(
+          setTimeout(() => {
+            setVisible(false);
+          }, 700)
+        );
+      }, 2000)
+    );
 
-    return () => clearInterval(timer);
+    return () => timers.forEach(clearTimeout);
   }, [onLoadingComplete]);
 
+  if (!visible) return null;
+
   return (
-    <div className="loading-screen">
-      <div className="loading-content">
-        {/* Animated Brain/AI Icon */}
-        <div className="ai-brain">
-          <div className="brain-core">
-            <div className="core-dot"></div>
-            <div className="pulse-ring"></div>
-            <div className="pulse-ring pulse-ring-2"></div>
-          </div>
-          
-          {/* Neural Network Lines */}
-          <svg className="neural-network" viewBox="0 0 200 200">
-            {/* Nodes */}
-            <circle cx="100" cy="100" r="8" className="node center-node" />
-            <circle cx="50" cy="60" r="5" className="node" />
-            <circle cx="150" cy="60" r="5" className="node" />
-            <circle cx="50" cy="140" r="5" className="node" />
-            <circle cx="150" cy="140" r="5" className="node" />
-            <circle cx="30" cy="100" r="4" className="node" />
-            <circle cx="170" cy="100" r="4" className="node" />
-            
-            {/* Connections */}
-            <line x1="100" y1="100" x2="50" y2="60" className="connection" />
-            <line x1="100" y1="100" x2="150" y2="60" className="connection" />
-            <line x1="100" y1="100" x2="50" y2="140" className="connection" />
-            <line x1="100" y1="100" x2="150" y2="140" className="connection" />
-            <line x1="100" y1="100" x2="30" y2="100" className="connection" />
-            <line x1="100" y1="100" x2="170" y2="100" className="connection" />
-            
-            {/* Animated particles */}
-            <circle cx="75" cy="80" r="2" className="particle particle-1" />
-            <circle cx="125" cy="80" r="2" className="particle particle-2" />
-            <circle cx="75" cy="120" r="2" className="particle particle-3" />
-            <circle cx="125" cy="120" r="2" className="particle particle-4" />
-          </svg>
+    <div className={`loading-screen ${ripple ? 'wipe-out' : ''}`}>
+      <div className="loading-overlay" />
+      <div className="loading-inner">
+        <div className={`icon-row ${iconsIn ? 'icons-in' : ''}`}>
+          {[FaCode, FaUser, FaGithub].map((Icon, idx) => (
+            <div key={idx} className="icon-pill">
+              <Icon />
+            </div>
+          ))}
         </div>
-
-        {/* Loading Text */}
-        <div className="loading-text">
-          <h2>Loading</h2>
-          <p>Mihiran Thilakarathna's Portfolio</p>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="progress-container">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
-          <span className="progress-text">{Math.round(progress)}%</span>
+        <div className="loading-title">
+          <p className={textIn ? 'show-title' : ''}>{line1}</p>
+          <h1 className={textIn ? 'show-title' : ''}>{line2}</h1>
         </div>
       </div>
     </div>
