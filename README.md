@@ -2,7 +2,8 @@
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-View_Site-2ea44f?style=for-the-badge)](https://mihiran-thilakarathna.github.io/My-Portfolio/)
+## 🌐 [View Live Demo](https://mihiran-thilakarathna.github.io/My-Portfolio/)
+
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -14,21 +15,27 @@
 
 A modern, responsive portfolio showcasing AI/ML and software development projects. Built with React, TypeScript, and Vite, featuring smooth animations, theme switching, and an intuitive contact hub.
 
+---
+
 ## ✨ Features
 
-- � **Theme Switcher** — Default, light, and dark color palettes
+- 🎨 **Theme Switcher** — Default, light, and dark color palettes
 - 🎭 **Smooth Animations** — Framer Motion with typewriter effects
 - 📱 **Fully Responsive** — Seamless experience from mobile to desktop
 - 🤖 **AI Chat Assistant** — Floating helper powered by prompt-driven responses
 
+---
+
 ## 🛠️ Tech Stack
 
 | Layer | Tools |
-| --- | --- |
+|-------|-------|
 | Core | React 19, TypeScript 5.9, Vite 7 |
 | Animations | Framer Motion, React Type Animation |
 | Styling | CSS Modules, CSS variables, Flexbox & Grid |
 | Icons | React Icons |
+
+---
 
 ## 🗂️ Project Structure
 
@@ -54,7 +61,11 @@ Portfolio/
 └── README.md
 ```
 
+---
+
 ## 🚀 Quick Start
+
+> **Requirements:** Node.js 18+ and npm (or pnpm/yarn)
 
 ```bash
 # Clone the repository
@@ -74,16 +85,18 @@ npm run build
 npm run preview
 ```
 
-> **Requirements:** Node.js 18+ and npm (or pnpm/yarn)
+---
 
 ## 📙 Available Scripts
 
 | Command | Description |
-| --- | --- |
+|---------|-------------|
 | `npm run dev` | Start Vite dev server with HMR |
 | `npm run build` | Type-check and build for production |
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Run ESLint |
+
+---
 
 ## 🎨 Customization
 
@@ -92,33 +105,43 @@ npm run preview
 - **Themes** — Tune CSS variables in `src/index.css`
 - **Animations** — Adjust Framer Motion configs in component files
 
+---
+
 ## 📦 Deployment
 
 This portfolio deploys automatically to GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`).
 
-**Manual deployment options:**
+**Manual deployment:**
 - **GitHub Pages** — Ensure Settings → Pages is set to "GitHub Actions"
+
+---
 
 ## 📬 Contact
 
-- **Email:** [thmthilakarathna@gmail.com](mailto:thmthilakarathna@gmail.com)
-- **WhatsApp:** [+94 76 045 3356](https://wa.me/94760453356)
-- **LinkedIn:** [Mihiran Thilakarathna](https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8)
-- **GitHub:** [@Mihiran-Thilakarathna](https://github.com/Mihiran-Thilakarathna)
+| Platform | Link |
+|----------|------|
+| 📧 Email | [thmthilakarathna@gmail.com](mailto:thmthilakarathna@gmail.com) |
+| 💬 WhatsApp | [+94 76 045 3356](https://wa.me/94760453356) |
+| 💼 LinkedIn | [Mihiran Thilakarathna](https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8) |
+| 🐙 GitHub | [@Mihiran-Thilakarathna](https://github.com/Mihiran-Thilakarathna) |
+
+---
 
 ## 👤 Author
 
 **Mihiran Thilakarathna**  
-IT Undergraduate | AI/ML Enthusiast | Full Stack Developer
+IT Undergraduate · AI/ML Enthusiast · Full Stack Developer
 
 [![GitHub](https://img.shields.io/badge/GitHub-@Mihiran--Thilakarathna-181717?style=flat&logo=github)](https://github.com/Mihiran-Thilakarathna)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Mihiran_Thilakarathna-0077b5?style=flat&logo=linkedin)](https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8)
 
-
+---
 
 ## 📄 License
 
 This project is open-source under the [MIT License](LICENSE).
+
+---
 
 ## ⭐ Support
 
@@ -129,6 +152,5 @@ If this project helped you, please consider giving it a ⭐️!
 <div align="center">
 
 **Made with ❤️ using React, TypeScript, and Vite**
-
 
 </div>
