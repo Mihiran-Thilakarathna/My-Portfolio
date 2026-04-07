@@ -68,88 +68,88 @@ const ChatAssistant: React.FC = () => {
       .map((item) => `• ${item.degree} – ${item.institution} (${item.startDate} – ${item.endDate})`)
       .join('\n');
 
-    // Greeting responses
+    // check if user says hello
     if (/(hello|hi|hey|ayubowan|good (morning|evening|afternoon))/i.test(message)) {
       return "Hello! Great to meet you. I'm Mihiran's AI assistant. I'm here to help you learn about his projects, skills, experience, and how to get in touch. What would you like to explore?";
     }
 
-    // GitHub link request
+    // check if user asks for github
     if (message.includes('github') || message.includes('git hub')) {
       return `You can find Mihiran on GitHub at: ${personalInfo.github}. His GitHub profile showcases various projects, including AI/ML applications, web development projects, and mobile apps. Feel free to explore and get in touch!`;
     }
 
-    // LinkedIn request
+    // check if user asks for linkedin
     if (message.includes('linkedin') || message.includes('linked in')) {
       return `Connect with Mihiran on LinkedIn: ${personalInfo.linkedin}. He actively shares updates about his projects and professional journey.`;
     }
 
-    // Projects
+    // show projects info
     if (message.includes('project')) {
       const allProjects = projects.map((p) => `• ${p.title} (${p.categories.join(', ')})`).join('\n');
       return `Here are Mihiran's featured projects:\n${allProjects}\n\nYou can explore detailed descriptions, live demos, and source code in the Projects section above. Each project showcases different aspects of his skills!`;
     }
 
-    // Skills
+    // show skills info
     if (message.includes('skill') || message.includes('technology') || message.includes('tech stack')) {
       return `Mihiran works with: ${skillHighlights}, and more!\n\nHe specializes in AI/ML development using Python, TensorFlow, and PyTorch, along with full-stack web development using React, TypeScript, and Node.js. He also builds mobile apps with React Native and Kotlin.`;
     }
 
-    // Contact information
+    // share contact details
     if (message.includes('contact') || message.includes('email') || message.includes('phone') || message.includes('reach') || message.includes('touch')) {
       return `You can reach Mihiran through:\n\n📧 Email: ${personalInfo.email}\n📱 Phone: ${personalInfo.phone}\n💼 LinkedIn: ${personalInfo.linkedin}\n🐙 GitHub: ${personalInfo.github}\n\nHe's always open to discussing new opportunities, collaborations, or just chatting about tech!`;
     }
 
-    // Work experience
+    // show work history
     if (message.includes('experience') || message.includes('work') || message.includes('job')) {
       return `Here's Mihiran's professional experience:\n\n${workHighlights}\n\nHe has hands-on experience in education technology and banking operations. Currently, he's focused on building AI-driven solutions and modern web applications.`;
     }
 
-    // Education
+    // show education history
     if (message.includes('education') || message.includes('study') || message.includes('degree') || message.includes('university') || message.includes('college')) {
       return `Mihiran's educational background:\n\n${educationSummary}\n\nHe's currently pursuing his Bachelor's degree in Information and Communication Technology at Rajarata University of Sri Lanka, specializing in AI/ML and software development.`;
     }
 
-    // Resume/CV request
+    // help user to find the cv
     if (message.includes('resume') || message.includes('cv') || message.includes('download')) {
       return "You can download Mihiran's CV by clicking the 'Download CV' button in the hero section at the top of the page. It contains detailed information about his education, experience, skills, and projects.";
     }
 
-    // AI/ML specific
+    // answers about ai and machine learning
     if (message.includes('ai') || message.includes('machine learning') || message.includes('ml') || message.includes('artificial intelligence')) {
       return "AI/ML is Mihiran's passion! He's working on:\n\n• AI Chat Assistant (Android app with Gemini AI)\n• Mood Music App (emotion-aware music recommendations)\n• Intelligent video editing tools\n\nHe uses Python, TensorFlow, PyTorch, and integrates AI APIs to build practical, real-world solutions.";
     }
 
-    // Web development
+    // answers about web development
     if (message.includes('web') || message.includes('website') || message.includes('react') || message.includes('frontend')) {
       return "Mihiran builds modern, responsive web applications using React, TypeScript, and Vite. This very portfolio showcases his web development skills with smooth animations, theme switching, and mobile-first design!";
     }
 
-    // Mobile development
+    // answers about mobile apps
     if (message.includes('mobile') || message.includes('app') || message.includes('android') || message.includes('kotlin')) {
       return "Mihiran develops mobile applications using:\n\n• Kotlin & Jetpack Compose for Android\n• React Native for cross-platform apps\n• Firebase for backend services\n\nCheck out his AI Chat Assistant and Mood Music App projects!";
     }
 
-    // Personal intro
+    // answer who am i questions
     if (message.includes('who') || message.includes('about')) {
       return `${personalInfo.name} is a passionate IT undergraduate at Rajarata University of Sri Lanka. He specializes in AI/ML, full-stack development, and mobile app development. His goal is to build intelligent systems that solve real-world problems using cutting-edge technologies.`;
     }
 
-    // Location
+    // answer where i live
     if (message.includes('location') || message.includes('where') || message.includes('live')) {
       return `Mihiran is based in ${personalInfo.location}. He's open to remote opportunities and collaborations worldwide!`;
     }
 
-    // Hire/collaborate
+    // answer messages about hiring
     if (message.includes('hire') || message.includes('collaborate') || message.includes('work together') || message.includes('opportunity')) {
       return `Mihiran is open to new opportunities and collaborations! You can reach out to him at ${personalInfo.email} or connect on LinkedIn: ${personalInfo.linkedin}. He's particularly interested in AI/ML projects, web development, and innovative tech solutions.`;
     }
 
-    // Thank you response
+    // handle thank you messages
     if (message.includes('thank')) {
       return "You're welcome! If you have any more questions about Mihiran's work, skills, or how to get in touch, just ask. I'm here to help!";
     }
 
-    // Default fallback response
+    // default message if nothing matches
     return `I can help you learn about:\n\n• Mihiran's projects and technical skills\n• His work experience and education\n• How to contact him or view his GitHub/LinkedIn\n• Downloading his CV\n\nWhat would you like to know more about?`;
   }, []);
 

@@ -1,29 +1,30 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { FiSmartphone, FiCpu, FiGlobe } from 'react-icons/fi';
 import { FiStar } from 'react-icons/fi';
 import { projects } from '../data/portfolio';
 import type { ProjectCategory } from '../types';
 import './Projects.css';
 
-type FilterType = ProjectCategory | null;
+type FilterType = ProjectCategory | 'All';
 
 const Projects: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [filter, setFilter] = useState<FilterType>(null);
+  const [filter, setFilter] = useState<FilterType>('All');
 
-  const filters: ProjectCategory[] = Array.from(
-    new Set(projects.flatMap((project) => project.categories))
-  ) as ProjectCategory[];
+  const filters: FilterType[] = [
+    'All',
+    ...Array.from(new Set(projects.flatMap((project) => project.categories)))
+  ] as FilterType[];
 
-  const filteredProjects = filter
-    ? projects.filter((project) => project.categories.includes(filter))
-    : [];
+  const filteredProjects = filter === 'All'
+    ? projects
+    : projects.filter((project) => project.categories.includes(filter as ProjectCategory));
 
-  const handleFilterClick = (filterName: ProjectCategory) => {
-    setFilter((prev) => (prev === filterName ? null : filterName));
+  const handleFilterClick = (filterName: FilterType) => {
+    setFilter(filterName);
   };
 
   return (
@@ -36,7 +37,6 @@ const Projects: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h2>Projects</h2>
-          <p>Showcasing my work and creative solutions</p>
         </motion.div>
 
         <motion.div
@@ -45,12 +45,7 @@ const Projects: React.FC = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="category-label">
-            <span className={`label-badge ${filter ? 'active' : ''}`}>
-              <FiStar />
-              {filter ? 'Category selected' : 'Select a category'}
-            </span>
-          </div>
+
 
           <div className="category-tabs">
             {filters.map((filterName) => (
@@ -60,6 +55,7 @@ const Projects: React.FC = () => {
                 onClick={() => handleFilterClick(filterName)}
               >
                 <span className="tab-icon">
+                  {filterName === 'All' && <FiStar />}
                   {filterName === 'Mobile Application' && <FiSmartphone />}
                   {filterName === 'AI/ML' && <FiCpu />}
                   {filterName === 'Web Application' && <FiGlobe />}
@@ -70,10 +66,9 @@ const Projects: React.FC = () => {
           </div>
         </motion.div>
 
-        <motion.div layout className={`projects-grid ${filter ? 'has-selection' : ''}`}>
+        <motion.div layout className="projects-grid has-selection">
           <AnimatePresence mode="popLayout">
-            {filter &&
-              filteredProjects.map((project, index) => (
+            {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
@@ -112,10 +107,21 @@ const Projects: React.FC = () => {
                           <FaGithub /> View Project
                         </a>
                       )}
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          className="project-link live"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ borderColor: 'var(--primary-light)', padding: '0.4rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--primary)', color: 'white', borderRadius: '8px', fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none', transition: 'all 0.3s ease' }}
+                        >
+                          <FaExternalLinkAlt /> Live Demo
+                        </a>
+                      )}
                     </div>
                 </div>
               </motion.div>
-                ))}
+            ))}
           </AnimatePresence>
         </motion.div>
       </div>

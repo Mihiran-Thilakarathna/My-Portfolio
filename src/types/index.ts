@@ -9,6 +9,7 @@ export interface Project {
   tags: string[];
 
   codeUrl?: string;
+  liveUrl?: string;
 }
 
 export interface WorkExperience {

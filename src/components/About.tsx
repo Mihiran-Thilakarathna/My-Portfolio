@@ -49,6 +49,40 @@ const skills = [
   { name: 'CSS3', icon: 'FaCss3Alt' },
 ];
 
+const AnimatedCounter = ({ value }: { value: string | number }) => {
+  const strValue = String(value);
+  const numberMatches = strValue.match(/(\d+)/);
+  const targetNumber = numberMatches ? parseInt(numberMatches[1], 10) : 0;
+  const suffix = strValue.replace(/\d+/g, '');
+  
+  const [count, setCount] = React.useState(0);
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  
+  React.useEffect(() => {
+    if (isInView && targetNumber > 0) {
+      let startTime: number | null = null;
+      const duration = 2000; // run for 2 seconds
+      
+      const step = (timestamp: number) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        // animation easing function
+        const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        setCount(Math.floor(easeProgress * targetNumber));
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      
+      window.requestAnimationFrame(step);
+    }
+  }, [isInView, targetNumber]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+};
+
 const About: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -63,7 +97,6 @@ const About: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h2>About Me</h2>
-          <p>Building Intelligent Solutions with Data</p>
         </motion.div>
 
         <div className="about-content">
@@ -86,30 +119,30 @@ const About: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <p>
-              I'm a passionate IT undergraduate at <strong>Rajarata University of Sri Lanka</strong>, 
+              I'm a passionate IT undergraduate at <strong className="text-highlight">Rajarata University of Sri Lanka</strong>. 
               My journey in technology began with a fascination for how intelligent systems can solve complex real-world problems.
             </p>
             <p>
-              Throughout my academic career, I've developed expertise in building ML models, creating 
-              web applications, and exploring the intersection of AI and software development. I believe 
+              Throughout my academic career, I've developed expertise in building <strong className="text-highlight">ML models</strong>, creating 
+              <strong className="text-highlight"> web applications</strong>, and exploring the intersection of AI and software development. I believe 
               in continuous learning and staying updated with the latest technologies.
             </p>
             <p>
-              When I'm not coding, I enjoy contributing to open-source projects, participating in 
-              hackathons, and sharing knowledge with the developer community.
+              When I'm not coding, I enjoy contributing to <strong className="text-highlight">open-source projects</strong>, participating in 
+              <strong className="text-highlight"> hackathons</strong>, and sharing knowledge with the developer community.
             </p>
 
             <div className="stats">
               <div className="stat-card">
-                <h3>{stats.yearsExperience}</h3>
+                <h3><AnimatedCounter value={stats.yearsExperience} /></h3>
                 <p>Years Learning</p>
               </div>
               <div className="stat-card">
-                <h3>{stats.projects}</h3>
+                <h3><AnimatedCounter value={stats.projects} /></h3>
                 <p>Projects</p>
               </div>
               <div className="stat-card">
-                <h3>{stats.repos}</h3>
+                <h3><AnimatedCounter value={stats.repos} /></h3>
                 <p>Public Repos</p>
               </div>
             </div>

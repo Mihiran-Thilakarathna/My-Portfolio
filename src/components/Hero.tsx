@@ -1,38 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaDownload } from 'react-icons/fa';
+import { FaDownload, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolio';
 import mihiranPhoto from '../assets/mihiran1.png';
 import './Hero.css';
 
 const Hero: React.FC = () => {
-  const spinTimeout = React.useRef<number | null>(null);
-  const [isSpinning, setIsSpinning] = React.useState(false);
-
-  const triggerSpin = React.useCallback(() => {
-    setIsSpinning(true);
-    if (spinTimeout.current) {
-      window.clearTimeout(spinTimeout.current);
-    }
-    spinTimeout.current = window.setTimeout(() => setIsSpinning(false), 1600);
-  }, []);
-
-  const handleHireMeClick = React.useCallback(() => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
-
-  React.useEffect(() => {
-    return () => {
-      if (spinTimeout.current) {
-        window.clearTimeout(spinTimeout.current);
-      }
-    };
-  }, []);
-
   return (
     <section id="home" className="hero">
       <div className="hero-content">
@@ -40,13 +14,13 @@ const Hero: React.FC = () => {
           className="hero-text"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
         >
           <motion.p
             className="greeting"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 1.4 }}
           >
             HELLO, I'M
           </motion.p>
@@ -55,12 +29,17 @@ const Hero: React.FC = () => {
             className="name"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 1.6 }}
           >
             {personalInfo.name}
           </motion.h1>
           
-          <div className="title">
+          <motion.div 
+            className="title"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.8 }}
+          >
             <TypeAnimation
               sequence={[
                 ...personalInfo.tagline.flatMap(title => [title, 2000])
@@ -69,13 +48,13 @@ const Hero: React.FC = () => {
               speed={50}
               repeat={Infinity}
             />
-          </div>
+          </motion.div>
           
           <motion.p
             className="bio"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 2.0 }}
           >
             {personalInfo.bio}
           </motion.p>
@@ -84,14 +63,19 @@ const Hero: React.FC = () => {
             className="hero-buttons"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
+            transition={{ delay: 2.2 }}
           >
             <button className="btn btn-primary">
               <FaDownload /> DOWNLOAD CV
             </button>
-            <button className="btn btn-secondary" onClick={handleHireMeClick}>
-              HIRE ME
-            </button>
+            <div className="hero-socials">
+              <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon-btn">
+                <FaLinkedin />
+              </a>
+              <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="social-icon-btn">
+                <FaGithub />
+              </a>
+            </div>
           </motion.div>
         </motion.div>
         
@@ -99,21 +83,9 @@ const Hero: React.FC = () => {
           className="hero-image"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
         >
-          <div
-            className="image-container"
-            role="button"
-            tabIndex={0}
-            onClick={triggerSpin}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                triggerSpin();
-              }
-            }}
-          >
-            <div className={`rotating-border ${isSpinning ? 'spinning' : ''}`}></div>
+          <div className="image-container">
             <div className="image-wrapper">
               <img
                 src={mihiranPhoto}
@@ -131,7 +103,7 @@ const Hero: React.FC = () => {
         className="scroll-indicator"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 2.8 }}
       >
         <div className="scroll-button">
           <div className="scroll-mouse">

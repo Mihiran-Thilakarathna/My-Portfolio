@@ -31,7 +31,6 @@ const Work: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h2>Work Experience</h2>
-          <p>My professional journey and key contributions</p>
         </motion.div>
 
         <div className="work-grid">
@@ -51,34 +50,36 @@ const Work: React.FC = () => {
                 <FaBriefcase />
               </div>
 
-              <h3>{work.role}</h3>
-              <h4>{work.company}</h4>
+              <div className="work-content">
+                <h3>{work.role}</h3>
+                <h4>{work.company}</h4>
 
-              <div className="work-details">
-                <div className="detail">
-                  <FaCalendarAlt />
-                  <span>{work.startDate} - {work.endDate}</span>
+                <div className="work-details">
+                  <div className="detail">
+                    <FaCalendarAlt />
+                    <span>{work.startDate} - {work.endDate}</span>
+                  </div>
+                  <div className="detail">
+                    <FaMapMarkerAlt />
+                    <span>{work.location}</span>
+                  </div>
                 </div>
-                <div className="detail">
-                  <FaMapMarkerAlt />
-                  <span>{work.location}</span>
-                </div>
+
+                <p className={`work-description ${expandedCards.has(work.id) ? 'expanded' : 'collapsed'}`}>
+                  {work.description}
+                </p>
+
+                <button 
+                  className="show-more-btn"
+                  onClick={() => toggleCard(work.id)}
+                >
+                  {expandedCards.has(work.id) ? (
+                    <>Show Less <FaChevronUp /></>
+                  ) : (
+                    <>Show More <FaChevronDown /></>
+                  )}
+                </button>
               </div>
-
-              <p className={`work-description ${expandedCards.has(work.id) ? 'expanded' : 'collapsed'}`}>
-                {work.description}
-              </p>
-
-              <button 
-                className="show-more-btn"
-                onClick={() => toggleCard(work.id)}
-              >
-                {expandedCards.has(work.id) ? (
-                  <>Show Less <FaChevronUp /></>
-                ) : (
-                  <>Show More <FaChevronDown /></>
-                )}
-              </button>
             </motion.div>
           ))}
         </div>

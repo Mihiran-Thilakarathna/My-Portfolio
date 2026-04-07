@@ -1,7 +1,6 @@
 .app {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
 main {
@@ -15,7 +14,7 @@ html {
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -23,21 +22,45 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #a45bff 0%, #6b7bff 100%);
+  background: rgba(17, 100, 102, 0.6);
   border-radius: 10px;
+  border: 2px solid var(--bg-color);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #8f6aff 0%, #5d6dff 100%);
+  background: var(--primary);
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(164, 91, 255, 0.28);
+  background: rgba(255, 203, 154, 0.3);
   color: var(--text-color);
 }
 
 ::-moz-selection {
-  background: rgba(164, 91, 255, 0.28);
+  background: rgba(255, 203, 154, 0.3);
   color: var(--text-color);
+}
+
+.app-fade-in {
+  opacity: 0;
+  animation: liquid-enter 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes liquid-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    filter: blur(12px);
+  }
+  99% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }

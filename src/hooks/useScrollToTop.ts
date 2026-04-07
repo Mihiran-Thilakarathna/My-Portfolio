@@ -5,7 +5,8 @@ export const useScrollToTop = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowButton(window.scrollY > 400);
+      const scrolled = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+      setShowButton(scrolled > 400);
     };
 
     window.addEventListener('scroll', handleScroll);

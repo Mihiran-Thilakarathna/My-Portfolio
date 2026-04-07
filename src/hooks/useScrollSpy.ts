@@ -5,9 +5,9 @@ export const useScrollSpy = (sectionIds: string[]) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // Offset accounts for sticky header height.
+      const scrollPosition = window.scrollY + 150; // add offset for the sticky nav bar
       
-      // Walk from bottom to find the section currently in view.
+      // check sections from bottom to top
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
         if (section) {
@@ -24,10 +24,10 @@ export const useScrollSpy = (sectionIds: string[]) => {
       }
     };
 
-    // Run once on mount to set the initial section.
+    // run when component loads
     handleScroll();
     
-    // Track scroll position changes while the hook is mounted.
+    // update active section when scrolling
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => window.removeEventListener('scroll', handleScroll);

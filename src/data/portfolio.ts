@@ -1,11 +1,12 @@
-﻿import type { Project, WorkExperience, Education, Certification, Skill } from '../types';
+import type { Project, WorkExperience, Education, Certification, Skill } from '../types';
 
-// Import profile images
+// import all images for projects
 import foodordering from '../assets/foodordering.png';
 import lumo from '../assets/lumo.png';
 import moodtune from '../assets/moodtune.png';
 import facial from '../assets/facial.png';
 import portfolio from '../assets/portfolio.png';
+import omnimodel from '../assets/OmniModel.png';
 
 export const personalInfo = {
   name: 'Mihiran Thilakarathna',
@@ -97,67 +98,113 @@ export const education: Education[] = [
 ];
 
 export const certifications: Certification[] = [
+  // top priority AI courses
   {
-  id: 1,
-  title: 'Google AI Essential Specialization',
-  provider: 'Coursera',
-  date: 'Nov 2025',
-  certificateUrl: 'https://www.coursera.org/account/accomplishments/specialization/F5EEQMFC08S1',
+    id: 1,
+    title: 'Python for Beginners',
+    provider: 'University of Moratuwa',
+    date: 'Apr 2026',
+    certificateUrl: '/certificates/Python.pdf',
   },
-
   {
-  id: 2,
-  title: 'Supervised Machine Learning: Regression and  Classification',
-  provider: 'DeepLearning.AI',
-  date: 'Nov 2025',
-  certificateUrl: 'https://www.coursera.org/account/accomplishments/verify/3VIPRPZ8VKZ1?utm_source=link&utm_medium=certificate&utm_content=cert_image&utm_campaign=sharing_cta&utm_product=course',
+    id: 2,
+    title: 'Google AI Essential Specialization',
+    provider: 'Coursera',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/google-ai-essential.pdf',
   },
-
   {
-  id: 3,
-  title: 'Machine Learning I',
-  provider: 'Columbia University',
-  date: 'Nov 2025',
-  certificateUrl: 'https://badges.plus.columbia.edu/03dccaeb-7eba-4099-9b0b-efeba35b9f11#acc.U3C6r4FQ',
+    id: 3,
+    title: 'Supervised Machine Learning: Regression and Classification',
+    provider: 'DeepLearning.AI',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/supervised-ml.pdf',
   },
-
   {
     id: 4,
+    title: 'Machine Learning I',
+    provider: 'Columbia University',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/machine-learning-1.pdf',
+  },
+  {
+    id: 5,
     title: 'AI Security & Governance',
     provider: 'Securiti',
     date: 'Sep 2025',
-    certificateUrl: 'https://education.securiti.ai/verification/13EF93075-13EF92EE4-1336A0CFD/',
+    certificateUrl: '/certificates/ai-security.pdf',
   },
-
+  
+  // other courses sorted by date
   {
-    id: 5,
+    id: 6,
+    title: 'Introduction to Android Mobile Application Development',
+    provider: 'Meta',
+    date: 'Apr 2026',
+    certificateUrl: '/certificates/Mobile-Application.pdf',
+  },
+  {
+    id: 7,
+    title: 'Hypothesis-Based Problem Solving (Intermediate Level)',
+    provider: 'SLASSCOM Academy',
+    date: 'Apr 2026',
+    certificateUrl: '/certificates/hypothesis-based-problem-solving.pdf',
+  },
+  {
+    id: 8,
+    title: 'Introduction to Cybersecurity',
+    provider: 'Cisco Networking Academy',
+    date: 'Apr 2026',
+    certificateUrl: '/certificates/introduction-to-cybersecurity.pdf',
+  },
+  {
+    id: 9,
     title: 'LFS169: Introduction to GitOps',
     provider: 'The Linux Foundation',
     date: 'Mar 2026',
-    certificateUrl: 'https://www.credly.com/badges/724d690d-d720-45d8-b7f4-25f993406725/public_url',
+    certificateUrl: '/certificates/gitops.pdf',
   },
-  
   {
-    id: 6,
-    title: ' Introduction to Kubernetes',
+    id: 10,
+    title: 'Introduction to Kubernetes',
     provider: 'The Linux Foundation',
     date: 'Feb 2026',
-    certificateUrl: 'https://www.credly.com/badges/cc11904e-bba4-4a93-aeaa-7b082f5a3833/linked_in_profile',
+    certificateUrl: '/certificates/kubernetes.pdf',
   },
-
   {
-    id: 7,
+    id: 11,
     title: 'Postman API Fundamentals Student Expert',
     provider: 'Postman',
     date: 'Nov 2025',
-    certificateUrl: 'https://badges.parchment.com/public/assertions/bOBqRDENSP-V6Q-cq2teMQ?identity__email=thmthilakarathna2%40gmail.com',
+    certificateUrl: '/certificates/postman-api.pdf',
   },
-
-  
-
+  {
+    id: 12,
+    title: 'Designing Blockchain Solutions using Amazon Managed Blockchain',
+    provider: 'AWS Training & Certification',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/Designing Blockchain Solutions.pdf',
+  },
+  {
+    id: 13,
+    title: 'ReactJs - The Complete Reacts Course For Beginners',
+    provider: 'Udemy',
+    date: 'Jun 2025',
+    certificateUrl: '/certificates/REACTJs.pdf',
+  },
 ];
 
 export const projects: Project[] = [
+  {
+    id: 6,
+    title: 'OmniModel Converter',
+    description: 'A production-grade, full-stack ML model conversion platform engineered to eliminate cross-framework deployment barriers. Automates translation across PyTorch, TensorFlow, ONNX, and TFLite using FastAPI and Next.js.',
+    image: omnimodel,
+    categories: ['AI/ML', 'Web Application'],
+    tags: ['Next.js', 'FastAPI', 'PyTorch', 'TensorFlow', 'Python'],
+    liveUrl: 'https://omnimodel-converter.vercel.app/',
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/omnimodel-converter.git',
+  },
   {
     id: 1,
     title: 'Food Ordering App',
@@ -204,5 +251,6 @@ export const projects: Project[] = [
     categories: ['Web Application'],
     tags: ['React', 'TypeScript', 'Vite', 'Framer Motion'],
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/My-Portfolio.git',
+    liveUrl: 'https://mihiran-thilakarathna.github.io/My-Portfolio/',
   },
 ];

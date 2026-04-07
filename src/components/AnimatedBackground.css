@@ -1,0 +1,65 @@
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(200px); /* Massive blur for subtle aurora effect */
+}
+
+/* Let's keep ONLY 2 light spots in the corners to keep the background mostly dark */
+.blob-1 {
+  background: var(--primary); /* Teal */
+  width: 55vw;
+  height: 55vw;
+  top: -20%;
+  left: -20%;
+  opacity: 0.06; /* Extremely faint glow */
+  animation: float-1 30s infinite ease-in-out alternate;
+}
+
+.blob-2 {
+  background: var(--primary-light); /* Peach/Gold */
+  width: 45vw;
+  height: 45vw;
+  bottom: -25%;
+  right: -15%;
+  opacity: 0.03; /* Extremely faint glow */
+  animation: float-2 35s infinite ease-in-out alternate;
+  animation-delay: -10s;
+}
+
+.blob-3, .blob-4 {
+  display: none; /* Removed completely to maintain the dark look everywhere else */
+}
+
+@keyframes float-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4vw, 6vh) scale(1.05); }
+  100% { transform: translate(-2vw, 4vh) scale(0.95); }
+}
+
+@keyframes float-2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .blob { filter: blur(120px); }
+  .blob-1 { width: 80vw; height: 80vw; }
+  .blob-2 { width: 70vw; height: 70vw; }
+}
+
+@media (max-width: 480px) {
+  .blob { filter: blur(90px); }
+  .blob-1 { width: 90vw; height: 90vw; }
+  .blob-2 { width: 80vw; height: 80vw; }
+}

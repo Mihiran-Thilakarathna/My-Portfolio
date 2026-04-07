@@ -1,17 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaWhatsapp, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaShareAlt, FaPaperPlane } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolio';
 import './Contact.css';
 
 const Contact: React.FC = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
   
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     message: '',
   });
 
@@ -28,12 +27,9 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setStatus('sending');
     
-    // TODO: Replace mock submit with a real email service (e.g., EmailJS).
     setTimeout(() => {
-      console.log('Form submitted:', formData);
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      
+      setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 3000);
     }, 1500);
   };
@@ -47,78 +43,28 @@ const Contact: React.FC = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2>Get In Touch</h2>
-          <p>Have a project in mind? Let's work together!</p>
+          <h2>Contact Me</h2>
         </motion.div>
 
         <div className="contact-content">
+          {/* Left Panel - Form */}
           <motion.div
-            className="contact-info"
-            initial={{ opacity: 0, x: -50 }}
+            className="contact-panel form-panel"
+            initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3>Connect with Me</h3>
-            <p className="connect-subtitle">Choose your preferred way to reach out</p>
-            
-            <div className="contact-methods">
-              <a href={personalInfo.github} className="contact-method github" target="_blank" rel="noreferrer">
-                <div className="method-icon">
-                  <FaGithub />
-                </div>
-                <div className="method-info">
-                  <h4>GitHub</h4>
-                  <p>github.com</p>
-                </div>
-              </a>
-
-              <a href={personalInfo.linkedin} className="contact-method linkedin" target="_blank" rel="noreferrer">
-                <div className="method-icon">
-                  <FaLinkedin />
-                </div>
-                <div className="method-info">
-                  <h4>LinkedIn</h4>
-                  <p>linkedin.com</p>
-                </div>
-              </a>
-
-              <a href={`https://wa.me/${personalInfo.phone?.replace(/\s/g, '')}`} className="contact-method whatsapp">
-                <div className="method-icon">
-                  <FaWhatsapp />
-                </div>
-                <div className="method-info">
-                  <h4>WhatsApp</h4>
-                  <p>{personalInfo.phone}</p>
-                </div>
-              </a>
-
-              <a href={`mailto:${personalInfo.email}`} className="contact-method email">
-                <div className="method-icon">
-                  <FaEnvelope />
-                </div>
-                <div className="method-info">
-                  <h4>Email</h4>
-                  <p>{personalInfo.email}</p>
-                </div>
-              </a>
+            <div className="panel-header">
+              <p>Have something to discuss? Send me a message and let's talk.</p>
+              <FaShareAlt className="share-icon" />
             </div>
-          </motion.div>
-
-          <motion.div
-            className="contact-form-wrapper"
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <h3>Send me a message</h3>
             
             <form onSubmit={handleSubmit} className="contact-form">
               <div className="form-group">
-                <label htmlFor="name">Name *</label>
                 <input
                   type="text"
-                  id="name"
                   name="name"
+                  placeholder="Your Name"
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -126,11 +72,10 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="email">Email *</label>
                 <input
                   type="email"
-                  id="email"
                   name="email"
+                  placeholder="Your Email"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -138,22 +83,9 @@ const Contact: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="subject">Subject *</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">Message *</label>
                 <textarea
-                  id="message"
                   name="message"
+                  placeholder="Your Message"
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
@@ -166,19 +98,64 @@ const Contact: React.FC = () => {
                 className="submit-btn"
                 disabled={status === 'sending'}
               >
-                {status === 'sending' ? 'SENDING...' : 'SEND MESSAGE'}
+                <FaPaperPlane /> {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
 
               {status === 'success' && (
-                <motion.p
-                  className="success-message"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  Message sent successfully! 🎉
-                </motion.p>
+                <p className="success-message">Message sent successfully! 🎉</p>
               )}
             </form>
+          </motion.div>
+
+          {/* Right Panel - Info */}
+          <motion.div
+            className="contact-panel info-panel"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="panel-header">
+              <p>Let's stay connected through these platforms.</p>
+              <FaShareAlt className="share-icon" />
+            </div>
+
+            <p className="panel-description">
+              Feel free to reach out through any of these channels. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            </p>
+
+            <div className="direct-contact">
+              <h4>Direct Contact</h4>
+              <a href={`mailto:${personalInfo.email}`} className="email-link">
+                <FaEnvelope /> {personalInfo.email}
+              </a>
+            </div>
+
+            <div className="social-media-container">
+              <h4>Social Media</h4>
+              <div className="social-media-box">
+                <div className="accent-line"></div>
+                
+                <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-card">
+                  <div className="social-icon linkedin">
+                    <FaLinkedin />
+                  </div>
+                  <div className="social-details">
+                    <span className="social-name">LinkedIn</span>
+                    <span className="social-handle">{personalInfo.name.replace(' ', '-').toLowerCase()}</span>
+                  </div>
+                </a>
+
+                <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="social-card">
+                  <div className="social-icon github">
+                    <FaGithub />
+                  </div>
+                  <div className="social-details">
+                    <span className="social-name">Github</span>
+                    <span className="social-handle">Mihiran-Thilakarathna</span>
+                  </div>
+                </a>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
