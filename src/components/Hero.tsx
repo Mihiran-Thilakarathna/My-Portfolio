@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FaDownload, FaGithub, FaLinkedin } from 'react-icons/fa';
@@ -7,6 +7,34 @@ import mihiranPhoto from '../assets/mihiran1.png';
 import './Hero.css';
 
 const Hero: React.FC = () => {
+  const [circularTextIndex, setCircularTextIndex] = useState(0);
+  const [textLength, setTextLength] = useState(0);
+  
+  const circularSentences = [
+    { text: "LETS BUILD SOMETHING REMARKABLE", fill: "#FFFFFF" },
+    { text: "TURNING IDEAS INTO REALITY", fill: "var(--text-secondary)" }
+  ];
+
+  useEffect(() => {
+    const currentSentence = circularSentences[circularTextIndex].text;
+    
+    if (textLength < currentSentence.length) {
+      const timer = setTimeout(() => {
+        setTextLength(prev => prev + 1);
+      }, 70); // type one letter every 70ms
+      return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => {
+        setTextLength(0);
+        setCircularTextIndex(prev => (prev + 1) % circularSentences.length);
+      }, 3000); // wait 3 seconds before the next sentence
+      return () => clearTimeout(timer);
+    }
+  }, [textLength, circularTextIndex]);
+
+  const currentItem = circularSentences[circularTextIndex];
+  const displayedText = currentItem.text.substring(0, textLength);
+
   return (
     <section id="home" className="hero">
       <div className="hero-content">
@@ -92,8 +120,22 @@ const Hero: React.FC = () => {
                 alt="Mihiran Thilakarathna"
               />
             </div>
-            <div className="image-tooltip" aria-hidden="true">
-              Let&apos;s build something remarkable.
+            <div className="circular-text-wrapper">
+              <svg viewBox="0 0 460 460" className="circular-text-svg" style={{ overflow: 'visible' }}>
+                <path 
+                  id="circularPath" 
+                  fill="none" 
+                  d="M 230, 20 a 210,210 0 1,1 0,420 a 210,210 0 1,1 0,-420" 
+                />
+                <text 
+                  className="circular-text-content"
+                  style={{ fill: currentItem.fill }}
+                >
+                  <textPath href="#circularPath" startOffset="11%" textAnchor="start">
+                    {displayedText}
+                  </textPath>
+                </text>
+              </svg>
             </div>
           </div>
         </motion.div>
