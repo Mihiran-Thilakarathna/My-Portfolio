@@ -1,48 +1,45 @@
-# Mihiran Thilakarathna | Portfolio
-
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-View_Site-2ea44f?style=for-the-badge)](https://mihiran-thilakarathna.github.io/My-Portfolio/)
+# Mihiran Thilakarathna | Portfolio 🚀
+
+A modern, responsive portfolio showcasing AI/ML and software development projects.  
+Built with React, TypeScript, and Vite — featuring smooth animations, theme switching, and a built-in AI assistant.
+
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-7-646cff?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+
+<br/>
+
+[![View Live Demo](https://img.shields.io/badge/-View%20Live%20Demo-2ea44f?style=flat-square&logoColor=white&labelColor=2ea44f)](https://mihiran-thilakarathna.github.io/My-Portfolio/)
 
 </div>
 
 ---
 
-A modern, responsive portfolio showcasing AI/ML and software development projects. Built with React, TypeScript, and Vite, featuring smooth animations, theme switching, and an intuitive contact hub.
-
 ## ✨ Features
 
-- � **Theme Switcher** — Default, light, and dark color palettes
+- 🎨 **Theme Switcher** — Default, light, and dark color palettes
 - 🎭 **Smooth Animations** — Framer Motion with typewriter effects
 - 📱 **Fully Responsive** — Seamless experience from mobile to desktop
 - 🤖 **AI Chat Assistant** — Floating helper powered by prompt-driven responses
 
-## 🛠️ Tech Stack
+---
 
-| Layer | Tools |
-| --- | --- |
-| Core | React 19, TypeScript 5.9, Vite 7 |
-| Animations | Framer Motion, React Type Animation |
-| Styling | CSS Modules, CSS variables, Flexbox & Grid |
-| Icons | React Icons |
-
-## 🗂️ Project Structure
+## 🏗️ Project Structure
 
 ```
-Portfolio/
+My-Portfolio/
 ├── public/
 │   └── favicon.svg
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── contexts/
-│   ├── data/
-│   ├── hooks/
-│   ├── types/
+│   ├── assets/          # Images and static files
+│   ├── components/      # Reusable UI components
+│   ├── contexts/        # React context providers
+│   ├── data/            # Portfolio content & data
+│   ├── hooks/           # Custom React hooks
+│   ├── types/           # TypeScript type definitions
 │   ├── App.tsx
 │   ├── App.css
 │   ├── index.css
@@ -50,85 +47,85 @@ Portfolio/
 ├── package.json
 ├── tsconfig.app.json
 ├── tsconfig.node.json
-├── vite.config.ts
-└── README.md
+└── vite.config.ts
 ```
 
-## 🚀 Quick Start
+---
 
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Core Framework | React 19 + TypeScript 5.9 |
+| Build Tool | Vite 7 |
+| Animations | Framer Motion, React Type Animation |
+| Styling | CSS Modules, CSS Variables, Flexbox & Grid |
+| Icons | React Icons |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
 ```bash
-# Clone the repository
-git clone https://github.com/Mihiran-Thilakarathna/Mihiran-Portfolio.git
-cd Mihiran-Portfolio
-
-# Install dependencies
-npm install
-
-# Run in development mode
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+git clone https://github.com/Mihiran-Thilakarathna/My-Portfolio.git
+cd My-Portfolio
 ```
 
-> **Requirements:** Node.js 18+ and npm (or pnpm/yarn)
+### 2. Install dependencies
+```bash
+npm install
+```
 
-## 📙 Available Scripts
+### 3. Run in development mode
+```bash
+npm run dev
+```
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start Vite dev server with HMR |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint |
+### 4. Build for production
+```bash
+npm run build
+```
 
-## 🎨 Customization
-
-- **Content** — Edit `src/data/portfolio.ts` for personal info, projects, experience, and skills
-- **Branding** — Replace images in `src/assets/` and `public/favicon.svg`
-- **Themes** — Tune CSS variables in `src/index.css`
-- **Animations** — Adjust Framer Motion configs in component files
+---
 
 ## 📦 Deployment
 
-This portfolio deploys automatically to GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`).
+This portfolio deploys automatically to **GitHub Pages** via GitHub Actions.
 
-**Manual deployment options:**
-- **GitHub Pages** — Ensure Settings → Pages is set to "GitHub Actions"
+> Ensure **Settings → Pages** is set to **"GitHub Actions"** in your repository settings.
 
-## 📬 Contact
+---
 
-- **Email:** [thmthilakarathna@gmail.com](mailto:thmthilakarathna@gmail.com)
-- **WhatsApp:** [+94 76 045 3356](https://wa.me/94760453356)
-- **LinkedIn:** [Mihiran Thilakarathna](https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8)
-- **GitHub:** [@Mihiran-Thilakarathna](https://github.com/Mihiran-Thilakarathna)
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!  
+Feel free to check the [issues page](https://github.com/Mihiran-Thilakarathna/My-Portfolio/issues).
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
 
 ## 👤 Author
 
 **Mihiran Thilakarathna**  
-IT Undergraduate | AI/ML Enthusiast | Full Stack Developer
+IT Undergraduate · AI/ML Enthusiast · Full Stack Developer
 
-[![GitHub](https://img.shields.io/badge/GitHub-@Mihiran--Thilakarathna-181717?style=flat&logo=github)](https://github.com/Mihiran-Thilakarathna)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mihiran_Thilakarathna-0077b5?style=flat&logo=linkedin)](https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8)
+[![GitHub](https://img.shields.io/badge/GitHub-Mihiran--Thilakarathna-181717?style=for-the-badge&logo=github)](https://github.com/Mihiran-Thilakarathna)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mihiran%20Thilakarathna-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8)
 
-
+---
 
 ## 📄 License
 
-This project is open-source under the [MIT License](LICENSE).
-
-## ⭐ Support
-
-If this project helped you, please consider giving it a ⭐️!
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
-
-**Made with ❤️ using React, TypeScript, and Vite**
-
-
+  <sub>Made with ❤️ using React, TypeScript, and Vite</sub>
 </div>
