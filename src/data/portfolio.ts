@@ -246,7 +246,7 @@ export const projects: Project[] = [
   {
     id: 5,
     title: 'Portfolio Website',
-    description: 'Responsive React + TypeScript portfolio with theme switching, smooth animations, and a curated project grid.',
+    description: 'Responsive React + TypeScript portfolio with smooth animations, an AI chatbot, working contact form, and a curated project grid.',
     image: portfolio,
     categories: ['Web Application'],
     tags: ['React', 'TypeScript', 'Vite', 'Framer Motion'],

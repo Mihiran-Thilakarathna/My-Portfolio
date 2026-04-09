@@ -3,7 +3,7 @@
 # Mihiran Thilakarathna | Portfolio 🚀
 
 A modern, responsive portfolio showcasing AI/ML and software development projects.  
-Built with React, TypeScript, and Vite — featuring smooth animations, theme switching, and a built-in AI assistant.
+Built with React, TypeScript, and Vite — featuring smooth animations, a working contact form, and a built-in AI assistant.
 
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
@@ -20,10 +20,13 @@ Built with React, TypeScript, and Vite — featuring smooth animations, theme sw
 
 ## ✨ Features
 
-- 🎨 **Theme Switcher** — Default, light, and dark color palettes
-- 🎭 **Smooth Animations** — Framer Motion with typewriter effects
+- 🎭 **Smooth Animations** — Framer Motion page transitions, scroll-triggered reveals, and typewriter effects
 - 📱 **Fully Responsive** — Seamless experience from mobile to desktop
-- 🤖 **AI Chat Assistant** — Floating helper powered by prompt-driven responses
+- 🤖 **AI Chat Assistant** — Floating chatbot with quick prompts to explore projects, skills, and contact info
+- 📩 **Working Contact Form** — Messages sent directly via EmailJS to the owner's inbox
+- 📜 **Certificate Viewer** — View and download certifications as PDFs
+- 🗂️ **Project Filtering** — Filter projects by category (AI/ML, Web, Mobile)
+- 🧭 **Scroll Spy Navigation** — Active section highlighting in the navbar
 
 ---
 
@@ -32,18 +35,37 @@ Built with React, TypeScript, and Vite — featuring smooth animations, theme sw
 ```
 My-Portfolio/
 ├── public/
+│   ├── certificates/    # Certificate PDF files
 │   └── favicon.svg
 ├── src/
 │   ├── assets/          # Images and static files
-│   ├── components/      # Reusable UI components
-│   ├── contexts/        # React context providers
+│   ├── components/      # UI components
+│   │   ├── Header.tsx        # Navigation bar with scroll spy
+│   │   ├── Hero.tsx          # Landing section with circular text animation
+│   │   ├── About.tsx         # Bio, stats, and skill carousel
+│   │   ├── Work.tsx          # Work experience cards
+│   │   ├── Education.tsx     # Education timeline & certifications grid
+│   │   ├── Projects.tsx      # Filterable project gallery
+│   │   ├── Contact.tsx       # Contact form (EmailJS) & social links
+│   │   ├── Footer.tsx        # Footer with back-to-top button
+│   │   ├── ChatAssistant.tsx # AI chat assistant
+│   │   ├── LoadingScreen.tsx # Initialization loading animation
+│   │   ├── AnimatedBackground.tsx
+│   │   └── SectionDivider.tsx
+│   ├── contexts/        # React context providers (Theme)
 │   ├── data/            # Portfolio content & data
 │   ├── hooks/           # Custom React hooks
+│   │   ├── useScrollSpy.ts    # Active section detection
+│   │   ├── useScrollToTop.ts  # Back-to-top button logic
+│   │   └── useProfileViews.ts # Profile view counter
 │   ├── types/           # TypeScript type definitions
 │   ├── App.tsx
 │   ├── App.css
 │   ├── index.css
 │   └── main.tsx
+├── .github/workflows/
+│   └── deploy.yml       # GitHub Pages auto-deploy
+├── .env                 # EmailJS credentials (git-ignored)
 ├── package.json
 ├── tsconfig.app.json
 ├── tsconfig.node.json
@@ -59,8 +81,10 @@ My-Portfolio/
 | Core Framework | React 19 + TypeScript 5.9 |
 | Build Tool | Vite 7 |
 | Animations | Framer Motion, React Type Animation |
-| Styling | CSS Modules, CSS Variables, Flexbox & Grid |
-| Icons | React Icons |
+| Styling | Vanilla CSS with CSS Variables, Flexbox & Grid |
+| Icons | React Icons (FontAwesome, Feather) |
+| Contact Form | EmailJS |
+| Deployment | GitHub Pages via GitHub Actions |
 
 ---
 
@@ -77,12 +101,23 @@ cd My-Portfolio
 npm install
 ```
 
-### 3. Run in development mode
+### 3. Set up environment variables
+
+Create a `.env` file in the project root:
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+> Get these from [emailjs.com](https://www.emailjs.com/) — sign up, connect Gmail, create a template, and copy the IDs.
+
+### 4. Run in development mode
 ```bash
 npm run dev
 ```
 
-### 4. Build for production
+### 5. Build for production
 ```bash
 npm run build
 ```
@@ -91,9 +126,17 @@ npm run build
 
 ## 📦 Deployment
 
-This portfolio deploys automatically to **GitHub Pages** via GitHub Actions.
+This portfolio deploys automatically to **GitHub Pages** via GitHub Actions on every push to `main`.
 
-> Ensure **Settings → Pages** is set to **"GitHub Actions"** in your repository settings.
+### Setup:
+
+1. Go to your GitHub repo → **Settings** → **Pages** → set source to **GitHub Actions**
+2. Go to **Settings** → **Secrets and variables** → **Actions** → add these repository secrets:
+   - `VITE_EMAILJS_SERVICE_ID`
+   - `VITE_EMAILJS_TEMPLATE_ID`
+   - `VITE_EMAILJS_PUBLIC_KEY`
+
+The workflow automatically sets the correct base path for GitHub Pages and injects EmailJS credentials at build time.
 
 ---
 
@@ -127,5 +170,5 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ---
 
 <div align="center">
-  <sub>Made with ❤️ using React, TypeScript, and Vite</sub>
+  <sub>Designed & Developed by Mihiran Thilakarathna using React, TypeScript, and Vite</sub>
 </div>

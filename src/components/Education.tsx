@@ -102,7 +102,7 @@ const Education: React.FC = () => {
 
                 {cert.certificateUrl && (
                   <a 
-                    href={cert.certificateUrl} 
+                    href={`${import.meta.env.BASE_URL}${cert.certificateUrl.replace(/^\//, '')}`}
                     className="view-certificate"
                     target="_blank"
                     rel="noopener noreferrer"
