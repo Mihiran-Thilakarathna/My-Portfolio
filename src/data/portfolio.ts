@@ -7,6 +7,7 @@ import moodtune from '../assets/moodtune.png';
 import facial from '../assets/facial.png';
 import portfolio from '../assets/portfolio.png';
 import omnimodel from '../assets/OmniModel.png';
+import vendora from '../assets/vendora.png';
 
 export const personalInfo = {
   name: 'Mihiran Thilakarathna',
@@ -195,6 +196,16 @@ export const certifications: Certification[] = [
 ];
 
 export const projects: Project[] = [
+  {
+    id: 7,
+    title: 'Vendora',
+    description: 'A modern, full-stack e-commerce admin/staff dashboard designed to seamlessly manage products, orders, and operational notifications with strict role-based access control (RBAC).',
+    image: vendora,
+    categories: ['Web Application'],
+    tags: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS'],
+    liveUrl: 'https://vendora-saa-s-e-commerce-dashboard.vercel.app/',
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/Vendora----SaaS-E-Commerce-Dashboard.git',
+  },
   {
     id: 6,
     title: 'OmniModel Converter',

@@ -1,10 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6366f1" />
-      <stop offset="100%" stop-color="#8b5cf6" />
+    <radialGradient id="bg" cx="50%" cy="38%" r="68%">
+      <stop offset="0%" stop-color="#123535"/>
+      <stop offset="65%" stop-color="#081514"/>
+      <stop offset="100%" stop-color="#030606"/>
+    </radialGradient>
+
+    <linearGradient id="ring" x1="18" y1="18" x2="110" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1EE8D3"/>
+      <stop offset="100%" stop-color="#0A7D78"/>
     </linearGradient>
+
+    <linearGradient id="mgrad" x1="36" y1="40" x2="92" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F2FFFD"/>
+      <stop offset="100%" stop-color="#73E7DB"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="dotGlow" x="-150%" y="-150%" width="400%" height="400%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="64" height="64" rx="16" ry="16" fill="url(#grad)" />
-  <path d="M18 48V16h6l8 14 8-14h6v32h-6V30l-8 14-8-14v18h-6z" fill="#ffffff" />
+
+  <!-- Background -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#bg)"/>
+
+  <!-- Pulse aura -->
+  <circle cx="64" cy="64" r="39" fill="none" stroke="#19CDBF" stroke-opacity="0.12" stroke-width="10" filter="url(#softGlow)">
+    <animate attributeName="stroke-opacity" values="0.08;0.22;0.08" dur="2.4s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="37;41;37" dur="2.4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Main ring -->
+  <circle cx="64" cy="64" r="42" fill="none" stroke="url(#ring)" stroke-width="3" filter="url(#softGlow)">
+    <animate attributeName="stroke-opacity" values="0.82;1;0.82" dur="2.2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Monogram -->
+  <path d="M36 88 V40 H46 L64 64 L82 40 H92 V88 H82 V58 L64 84 L46 58 V88 Z"
+        fill="url(#mgrad)"/>
+
+  <!-- Orbiting accent -->
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="0 64 64" to="360 64 64" dur="3.6s" repeatCount="indefinite"/>
+    <circle cx="64" cy="22" r="4.6" fill="#FFD08A" filter="url(#dotGlow)">
+      <animate attributeName="r" values="4.2;5.3;4.2" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.85;1;0.85" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
 </svg>

@@ -13,6 +13,13 @@ const Projects: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [filter, setFilter] = useState<FilterType>('All');
+  const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
+
+  const toggleProjectExpansion = (id: number) => {
+    setExpandedProjects((prev) =>
+      prev.includes(id) ? prev.filter((pId) => pId !== id) : [...prev, id]
+    );
+  };
 
   const filters: FilterType[] = [
     'All',
@@ -68,7 +75,11 @@ const Projects: React.FC = () => {
 
         <motion.div layout className="projects-grid has-selection">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+            {filteredProjects.map((project, index) => {
+              const isExpanded = expandedProjects.includes(project.id);
+              const needsExpansion = project.description.length > 130;
+              
+              return (
               <motion.div
                 key={project.id}
                 layout
@@ -88,7 +99,19 @@ const Projects: React.FC = () => {
                     <h3>{project.title}</h3>
                   </div>
 
-                  <p className="project-description">{project.description}</p>
+                  <div className="project-description-container">
+                    <p className={`project-description ${isExpanded ? 'expanded' : ''}`}>
+                      {project.description}
+                    </p>
+                    {needsExpansion && (
+                      <button 
+                        className="read-more-toggle" 
+                        onClick={() => toggleProjectExpansion(project.id)}
+                      >
+                        {isExpanded ? 'Show less' : 'Read more'}
+                      </button>
+                    )}
+                  </div>
 
                   <div className="project-tags">
                     {project.tags.map((tag, i) => (
@@ -121,7 +144,7 @@ const Projects: React.FC = () => {
                     </div>
                 </div>
               </motion.div>
-            ))}
+            )})}
           </AnimatePresence>
         </motion.div>
       </div>
