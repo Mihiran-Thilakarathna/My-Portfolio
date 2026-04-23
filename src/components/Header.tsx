@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaHome, FaUser, FaBriefcase, FaGraduationCap, FaCode, FaEnvelope } from 'react-icons/fa';
+import { FaHome, FaUser, FaBriefcase, FaGraduationCap, FaCode, FaEnvelope, FaTrophy } from 'react-icons/fa';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import './Header.css';
 
@@ -10,6 +10,7 @@ const navItems = [
   { id: 'work', label: 'Work', icon: <FaBriefcase /> },
   { id: 'education', label: 'Education', icon: <FaGraduationCap /> },
   { id: 'projects', label: 'Projects', icon: <FaCode /> },
+  { id: 'achievements', label: 'Achievements', icon: <FaTrophy /> },
   { id: 'contact', label: 'Contact', icon: <FaEnvelope /> },
 ];
 

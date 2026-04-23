@@ -68,3 +68,18 @@ export interface PersonalInfo {
 }
 
 export type Theme = 'light' | 'dark' | 'default';
+
+export interface Competition {
+  id: number;
+  name: string;
+  year: string;
+  result: string;
+  resultType: 'winner' | 'finalist' | 'participant';
+  organizer: string;
+  venue: string;
+  team: string;
+  university: string;
+  description: string;
+  tags: string[];
+  photos: string[];
+}

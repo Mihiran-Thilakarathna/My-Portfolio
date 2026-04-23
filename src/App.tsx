@@ -11,6 +11,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatAssistant from './components/ChatAssistant';
+import Achievements from './components/Achievements';
 import './App.css';
 
 function App() {
@@ -46,6 +47,8 @@ function App() {
             <Education />
             <SectionDivider />
             <Projects />
+            <SectionDivider />
+            <Achievements />
             <SectionDivider />
             <Contact />
           </main>

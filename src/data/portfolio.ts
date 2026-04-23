@@ -1,4 +1,4 @@
-import type { Project, WorkExperience, Education, Certification, Skill } from '../types';
+import type { Project, WorkExperience, Education, Certification, Skill, Competition } from '../types';
 
 // import all images for projects
 import foodordering from '../assets/foodordering.png';
@@ -263,5 +263,29 @@ export const projects: Project[] = [
     tags: ['React', 'TypeScript', 'Vite', 'Framer Motion'],
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/My-Portfolio.git',
     liveUrl: 'https://mihiran-thilakarathna.github.io/My-Portfolio/',
+  },
+];
+
+export const competitions: Competition[] = [
+  {
+    id: 1,
+    name: 'InnovateX 2025 Grand Finale',
+    year: '2025',
+    result: 'Grand Finalist',
+    resultType: 'finalist',
+    organizer: 'Zebra Technologies',
+    venue: 'Galle Face Hotel, Colombo',
+    team: 'Team LoopCode',
+    university: 'Rajarata University of Sri Lanka',
+    description:
+      'Proud to represent Team LoopCode from Rajarata University of Sri Lanka at the InnovateX 2025 Grand Finale — an incredible opportunity to demonstrate innovation, problem-solving, and collaboration skills among the brightest minds in Sri Lanka.',
+    tags: ['Innovation', 'Problem Solving', 'Collaboration', 'Tech Challenge'],
+    photos: [
+      '/competitions/innovatex- 1.jpg',
+      '/competitions/innovatex- 2.jpg',
+      '/competitions/innovatex- 3.jpg',
+      '/competitions/innovatex- 4.jpg',
+      '/competitions/innovatex- 5.jpg',
+    ],
   },
 ];
