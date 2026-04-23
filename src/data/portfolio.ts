@@ -281,11 +281,11 @@ export const competitions: Competition[] = [
       'Proud to represent Team LoopCode from Rajarata University of Sri Lanka at the InnovateX 2025 Grand Finale — an incredible opportunity to demonstrate innovation, problem-solving, and collaboration skills among the brightest minds in Sri Lanka.',
     tags: ['Innovation', 'Problem Solving', 'Collaboration', 'Tech Challenge'],
     photos: [
-      '/competitions/innovatex- 1.jpg',
-      '/competitions/innovatex- 2.jpg',
-      '/competitions/innovatex- 3.jpg',
-      '/competitions/innovatex- 4.jpg',
-      '/competitions/innovatex- 5.jpg',
+      `${import.meta.env.BASE_URL}competitions/innovatex- 1.jpg`,
+      `${import.meta.env.BASE_URL}competitions/innovatex- 2.jpg`,
+      `${import.meta.env.BASE_URL}competitions/innovatex- 3.jpg`,
+      `${import.meta.env.BASE_URL}competitions/innovatex- 4.jpg`,
+      `${import.meta.env.BASE_URL}competitions/innovatex- 5.jpg`,
     ],
   },
 ];
