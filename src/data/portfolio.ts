@@ -19,7 +19,7 @@ export const personalInfo = {
   discord: 'mihiranthilakarathna',
   location: 'Sri Lanka',
   github: 'https://github.com/Mihiran-Thilakarathna',
-  linkedin: 'https://www.linkedin.com/in/mihiran-thilakarathna-9478302a8',
+  linkedin: 'https://www.linkedin.com/in/mihiran-thilakarathna',
   kaggle: 'https://www.kaggle.com',
   twitter: 'https://twitter.com',
   facebook: '#',
