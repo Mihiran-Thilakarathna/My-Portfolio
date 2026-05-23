@@ -94,7 +94,7 @@ const Hero: React.FC = () => {
             transition={{ delay: 2.2 }}
           >
             <a
-              href="/Mihiran_Thilakarathna_CV.pdf"
+              href={`${import.meta.env.BASE_URL}Mihiran_Thilakarathna_CV.pdf`}
               download="Mihiran_Thilakarathna_CV.pdf"
               className="btn btn-primary"
             >
