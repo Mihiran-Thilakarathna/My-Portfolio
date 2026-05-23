@@ -93,9 +93,13 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2 }}
           >
-            <button className="btn btn-primary">
+            <a
+              href="/Mihiran_Thilakarathna_CV.pdf"
+              download="Mihiran_Thilakarathna_CV.pdf"
+              className="btn btn-primary"
+            >
               <FaDownload /> DOWNLOAD CV
-            </button>
+            </a>
             <div className="hero-socials">
               <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon-btn">
                 <FaLinkedin />

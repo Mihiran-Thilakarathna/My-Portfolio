@@ -6,6 +6,8 @@ import {
   skills,
   workExperience,
   education,
+  certifications,
+  competitions,
 } from '../data/portfolio';
 import './ChatAssistant.css';
 
@@ -26,12 +28,186 @@ const createMessage = (sender: 'user' | 'assistant', text: string): Message => (
   timestamp: formatTimestamp(new Date()),
 });
 
+// Lookbehind-only match: "skill" matches "skills" but "hi" won't match inside "mihiran"
+const has = (msg: string, ...words: string[]) =>
+  words.some((w) =>
+    new RegExp(`(?<![a-z])${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'i').test(msg)
+  );
+
+// Patterns for off-topic questions — unrelated to the portfolio
+const OFF_TOPIC_PATTERNS = [
+  /\b(weather|temperature|forecast|climate)\b/,
+  /\b(recipe|cook|food|restaurant|eat)\b/,
+  /\b(movie|film|series|netflix|tv show|song|music|artist|album)\b/,
+  /\b(sport|football|cricket|game|player|match|score|team)\b/,
+  /\b(news|politics|election|government|president|minister)\b/,
+  /\b(stock|crypto|bitcoin|invest|finance|forex)\b/,
+  /\b(joke|funny|meme|prank|riddle)\b/,
+  /\b(relationship|love|girlfriend|boyfriend|marriage|dating)\b/,
+  /\b(religion|god|prayer|church|temple|mosque)\b/,
+  /\b(health|medicine|doctor|hospital|disease|symptom|drug)\b/,
+  /\b(translate|language|grammar|spell)\b/,
+  /\b(fight|war|conflict|army|weapon|violence)\b/,
+  /\b(animal|pet|dog|cat|bird)\b/,
+  /\b(travel|hotel|flight|vacation|tour)\b/,
+  /\b(solve|calculate|equation|math|homework|assignment)\b/,
+  /\b(elon|musk|bill gates|zuckerberg|bezos|obama|trump)\b/,
+];
+
+function isOffTopic(msg: string): boolean {
+  return OFF_TOPIC_PATTERNS.some((re) => re.test(msg));
+}
+
+function generateResponse(rawMessage: string): string {
+  const msg = rawMessage.toLowerCase().trim();
+
+  // greetings
+  if (has(msg, 'hello', 'hi', 'hey', 'ayubowan', 'good morning', 'good evening', 'good afternoon', 'howdy', 'sup')) {
+    return `Hello! 👋 I'm Mihiran's AI assistant.\n\nI can help you explore his professional profile — projects, skills, education, work experience, certifications, and contact info.\n\nWhat would you like to know?`;
+  }
+
+  // education
+  if (has(msg, 'education', 'study', 'degree', 'university', 'college', 'school', 'qualification', 'academic', 'gce', 'a level', 'o level', 'rajarata')) {
+    const eduList = education.map((e) =>
+      `🎓 **${e.degree}**\n🏫 ${e.institution}\n📅 ${e.startDate} – ${e.endDate} ${e.status === 'ONGOING' ? '*(Ongoing)*' : '*(Completed)*'}`
+    ).join('\n\n');
+    return `🎓 **Educational Background**\n\n${eduList}`;
+  }
+
+  // skills
+  if (has(msg, 'skill', 'technology', 'tech stack', 'tools', 'framework', 'stack', 'programming', 'knowledge')) {
+    const allSkills = skills.map((s) => s.name).join(', ');
+    return `🛠️ **Technical Skills**\n\n${allSkills}\n\n🔹 AI/ML: Python, TensorFlow, PyTorch, Scikit-learn, ML Kit\n🔹 Web: React, TypeScript, Node.js, Flask, Next.js\n🔹 Mobile: Kotlin, Jetpack Compose, React Native\n🔹 Databases: MongoDB, MySQL, Firebase\n🔹 DevOps: Git, Docker, GitOps, Kubernetes`;
+  }
+
+  // work experience
+  if (has(msg, 'experience', 'career', 'employment', 'internship', 'trainee', 'peoples bank', "people's bank")) {
+    const expList = workExperience.map((w) =>
+      `🏢 **${w.role}** @ ${w.company}\n📅 ${w.startDate} – ${w.current ? 'Present' : w.endDate}\n📍 ${w.location}\n\n${w.description}`
+    ).join('\n\n──────\n\n');
+    return `💼 **Work Experience**\n\n${expList}`;
+  }
+
+  // certifications
+  if (has(msg, 'certification', 'certificate', 'course', 'credential', 'coursera', 'udemy', 'moratuwa', 'deeplearning', 'aws', 'postman', 'cisco')) {
+    const certList = certifications
+      .slice(0, 8)
+      .map((c) => `• **${c.title}** — ${c.provider} (${c.date})`)
+      .join('\n');
+    return `🏅 **Certifications & Courses**\n\n${certList}\n${certifications.length > 8 ? `\n...and ${certifications.length - 8} more! Check the Achievements section for the full list.` : '\nView all certificates in the Achievements section!'}`;
+  }
+
+  // competitions & achievements
+  if (has(msg, 'competition', 'achievement', 'award', 'hackathon', 'innovatex', 'finalist', 'contest', 'challenge')) {
+    const compList = competitions.map((c) =>
+      `🏆 **${c.name}** (${c.year})\n🎖️ Result: ${c.result}\n🏢 Organiser: ${c.organizer}\n📍 Venue: ${c.venue}\n👥 Team: ${c.team}\n\n${c.description}`
+    ).join('\n\n');
+    return `🏆 **Competition Achievements**\n\n${compList}`;
+  }
+
+  // contact info
+  if (has(msg, 'contact', 'email', 'phone', 'reach', 'touch', 'telegram', 'messenger', 'discord', 'whatsapp')) {
+    return `📬 **Contact Mihiran**\n\n📧 Email: ${personalInfo.email}\n📱 Phone: ${personalInfo.phone}\n💼 LinkedIn: ${personalInfo.linkedin}\n🐙 GitHub: ${personalInfo.github}\n✈️ Telegram: ${personalInfo.telegram}\n💬 Messenger: ${personalInfo.messenger}\n🎮 Discord: ${personalInfo.discord}\n\nHe's always open to new opportunities, collaborations, or just a tech chat!`;
+  }
+
+  // location
+  if (has(msg, 'location', 'country', 'based', 'city')) {
+    return `📍 Mihiran is based in **${personalInfo.location}**.\n\nHe is open to remote opportunities and global collaborations!`;
+  }
+
+  // github
+  if (has(msg, 'github', 'git hub', 'repository', 'repo', 'source code')) {
+    return `🐙 **GitHub Profile**\n\n${personalInfo.github}\n\nHis GitHub showcases all his projects — AI/ML models, web apps, and mobile apps with 12+ repositories!`;
+  }
+
+  // linkedin
+  if (has(msg, 'linkedin', 'linked in', 'network')) {
+    return `💼 **LinkedIn Profile**\n\n${personalInfo.linkedin}\n\nConnect with Mihiran to stay updated on his professional journey!`;
+  }
+
+  // cv / resume
+  if (has(msg, 'resume', 'curriculum', 'download cv', 'download resume')) {
+    return `📄 **Mihiran's CV**\n\nYou can download his CV by clicking the **"Download CV"** button in the hero section at the top of the page.\n\nIt includes his full education history, work experience, skills, projects, and certifications.`;
+  }
+
+  // specific project by name or tag
+  const matchedProject = projects.find((p) =>
+    msg.includes(p.title.toLowerCase()) ||
+    p.tags.some((t) => msg.includes(t.toLowerCase()))
+  );
+  if (matchedProject) {
+    return `📦 **${matchedProject.title}**\n\n📝 ${matchedProject.description}\n\n🏷️ Tech Stack: ${matchedProject.tags.join(', ')}\n🗂️ Category: ${matchedProject.categories.join(', ')}${matchedProject.liveUrl ? `\n🌐 Live Demo: ${matchedProject.liveUrl}` : ''}${matchedProject.codeUrl ? `\n🐙 Source: ${matchedProject.codeUrl}` : ''}`;
+  }
+
+  // all projects
+  if (has(msg, 'project', 'portfolio')) {
+    const list = projects
+      .map((p) => `• **${p.title}** — ${p.categories.join(', ')}\n  ${p.description.slice(0, 80)}...`)
+      .join('\n\n');
+    return `🚀 **Mihiran's Projects (${projects.length})**\n\n${list}\n\nVisit the Projects section above for live demos and source code links!`;
+  }
+
+  // ai / ml
+  if (has(msg, 'artificial intelligence', 'machine learning', 'deep learning', 'neural network', 'tensorflow', 'pytorch', 'computer vision')) {
+    const aiProjects = projects.filter((p) => p.categories.includes('AI/ML'));
+    const aiList = aiProjects.map((p) => `• **${p.title}** — ${p.description.slice(0, 90)}...`).join('\n');
+    return `🤖 **AI/ML Expertise**\n\nMihiran is deeply passionate about AI & Machine Learning!\n\n🔬 AI/ML Projects:\n${aiList}\n\n🛠️ AI Tools: Python, TensorFlow, PyTorch, Scikit-learn, ML Kit, TensorFlow Lite, MobileNetV2, Gemini API\n\n📜 Relevant Certifications: Google AI Essential Specialization, Supervised ML (DeepLearning.AI), ML I (Columbia University)`;
+  }
+
+  // web development
+  if (has(msg, 'website', 'frontend', 'backend', 'fullstack', 'full stack', 'next.js', 'vite', 'web app')) {
+    const webProjects = projects.filter((p) => p.categories.includes('Web Application'));
+    const webList = webProjects.map((p) => `• **${p.title}**${p.liveUrl ? ` → ${p.liveUrl}` : ''}`).join('\n');
+    return `🌐 **Web Development**\n\nMihiran builds modern, high-performance web applications!\n\n🖥️ Web Projects:\n${webList}\n\n🛠️ Stack: React, TypeScript, Next.js, Node.js, Express.js, Flask, MongoDB, Tailwind CSS, Vite, Framer Motion`;
+  }
+
+  // mobile apps
+  if (has(msg, 'mobile', 'android', 'kotlin', 'jetpack', 'react native')) {
+    const mobileProjects = projects.filter((p) => p.categories.includes('Mobile Application'));
+    const mobileList = mobileProjects.map((p) => `• **${p.title}** — ${p.description.slice(0, 80)}...`).join('\n');
+    return `📱 **Mobile App Development**\n\nMihiran develops native & cross-platform mobile apps!\n\n📱 Mobile Projects:\n${mobileList}\n\n🛠️ Stack: Kotlin, Jetpack Compose, Java, Android Studio, React Native, Firebase, SQLite, Material Design`;
+  }
+
+  // hire / collaborate
+  if (has(msg, 'hire', 'collaborate', 'work together', 'opportunity', 'freelance', 'recruit')) {
+    return `🤝 **Open to Opportunities!**\n\nMihiran is open to:\n• Full-time roles in AI/ML or Full-Stack development\n• Freelance & contract projects\n• Research collaborations\n• Open-source contributions\n\n📧 Reach out: ${personalInfo.email}\n💼 LinkedIn: ${personalInfo.linkedin}`;
+  }
+
+  // stats
+  if (has(msg, 'how many', 'stats', 'statistic', 'number of', 'count', 'total')) {
+    return `📊 **Profile Stats**\n\n• 🚀 Projects: ${projects.length} featured projects\n• 🏅 Certifications: ${certifications.length} completed courses\n• 🏆 Competitions: ${competitions.length} major competition (Grand Finalist)\n• 💼 Work Experience: ${workExperience.length} professional role\n• 🛠️ Skills: ${skills.length}+ technologies\n• 📚 GitHub Repos: 12+`;
+  }
+
+  // general "who is" — checked last so specific topics take priority
+  if (has(msg, 'who is', 'about mihiran', 'introduce', 'tell me about', 'describe')) {
+    return `👨‍💻 **${personalInfo.name}**\n\n${personalInfo.bio}\n\n🎯 Specialisations: ${personalInfo.tagline.join(' • ')}\n📍 Based in: ${personalInfo.location}\n\nHe is passionate about building intelligent systems that solve real-world problems using cutting-edge AI and web technologies.`;
+  }
+
+  // thank you
+  if (has(msg, 'thank', 'thanks', 'appreciate', 'awesome', 'well done')) {
+    return `You're very welcome! 😊\n\nI'm always here if you have more questions about Mihiran's work, skills, or how to get in touch. Feel free to explore the portfolio too!`;
+  }
+
+  // goodbye
+  if (has(msg, 'bye', 'goodbye', 'see you', 'take care', 'cya')) {
+    return `Goodbye! 👋 Thanks for visiting Mihiran's portfolio. Feel free to come back anytime. Have a great day! 😊`;
+  }
+
+  // off-topic guard
+  if (isOffTopic(msg)) {
+    return `I appreciate your curiosity! 😊 However, I'm specifically designed to assist with questions about **Mihiran's professional profile**.\n\nI can help you with:\n• 🚀 His projects & technical work\n• 🛠️ Skills & tech stack\n• 🎓 Education & certifications\n• 💼 Work experience\n• 📬 Contact information\n• 🏆 Achievements & competitions\n\nWhat would you like to know about Mihiran?`;
+  }
+
+  // fallback
+  return `I'm not quite sure about that, but I'm happy to help with anything related to **Mihiran's professional profile**! 🙂\n\nHere's what I can answer:\n• 🚀 **Projects** — "Show me all projects"\n• 🛠️ **Skills** — "What are your skills?"\n• 🎓 **Education** — "Tell me about your education"\n• 💼 **Experience** — "What is your work experience?"\n• 🏅 **Certifications** — "List your certifications"\n• 🏆 **Achievements** — "Tell me about competitions"\n• 📬 **Contact** — "How can I contact you?"\n\nTry one of the quick prompts below or type your question!`;
+}
+
 const ChatAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(() => [
     createMessage(
       'assistant',
-      "👋 Hi! I'm Mihiran's AI assistant. I can help you learn about his projects, skills, work experience, education, and how to get in touch. What would you like to know?"
+      `👋 Hi! I'm **Mihiran's AI assistant**.\n\nI can help you explore his professional profile — projects, skills, education, work experience, certifications, and more.\n\nWhat would you like to know?`
     ),
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -42,137 +218,30 @@ const ChatAssistant: React.FC = () => {
     () => [
       'Show me all projects',
       'What are your skills?',
-      'Give me GitHub link',
+      'Tell me about your education',
+      'List your certifications',
       'How can I contact you?',
-      'Tell me about your experience',
     ],
     []
   );
 
-  const generateResponse = useCallback((rawMessage: string) => {
-    const message = rawMessage.toLowerCase();
-
-    const skillHighlights = skills
-      .slice(0, 8)
-      .map((skill) => skill.name)
-      .join(', ');
-
-    const workHighlights = workExperience
-      .map(
-        (work) =>
-          `• ${work.role} @ ${work.company} (${work.startDate} – ${work.current ? 'Present' : work.endDate})`
-      )
-      .join('\n');
-
-    const educationSummary = education
-      .map((item) => `• ${item.degree} – ${item.institution} (${item.startDate} – ${item.endDate})`)
-      .join('\n');
-
-    // check if user says hello
-    if (/(hello|hi|hey|ayubowan|good (morning|evening|afternoon))/i.test(message)) {
-      return "Hello! Great to meet you. I'm Mihiran's AI assistant. I'm here to help you learn about his projects, skills, experience, and how to get in touch. What would you like to explore?";
-    }
-
-    // check if user asks for github
-    if (message.includes('github') || message.includes('git hub')) {
-      return `You can find Mihiran on GitHub at: ${personalInfo.github}. His GitHub profile showcases various projects, including AI/ML applications, web development projects, and mobile apps. Feel free to explore and get in touch!`;
-    }
-
-    // check if user asks for linkedin
-    if (message.includes('linkedin') || message.includes('linked in')) {
-      return `Connect with Mihiran on LinkedIn: ${personalInfo.linkedin}. He actively shares updates about his projects and professional journey.`;
-    }
-
-    // show projects info
-    if (message.includes('project')) {
-      const allProjects = projects.map((p) => `• ${p.title} (${p.categories.join(', ')})`).join('\n');
-      return `Here are Mihiran's featured projects:\n${allProjects}\n\nYou can explore detailed descriptions, live demos, and source code in the Projects section above. Each project showcases different aspects of his skills!`;
-    }
-
-    // show skills info
-    if (message.includes('skill') || message.includes('technology') || message.includes('tech stack')) {
-      return `Mihiran works with: ${skillHighlights}, and more!\n\nHe specializes in AI/ML development using Python, TensorFlow, and PyTorch, along with full-stack web development using React, TypeScript, and Node.js. He also builds mobile apps with React Native and Kotlin.`;
-    }
-
-    // share contact details
-    if (message.includes('contact') || message.includes('email') || message.includes('phone') || message.includes('reach') || message.includes('touch')) {
-      return `You can reach Mihiran through:\n\n📧 Email: ${personalInfo.email}\n📱 Phone: ${personalInfo.phone}\n💼 LinkedIn: ${personalInfo.linkedin}\n🐙 GitHub: ${personalInfo.github}\n\nHe's always open to discussing new opportunities, collaborations, or just chatting about tech!`;
-    }
-
-    // show work history
-    if (message.includes('experience') || message.includes('work') || message.includes('job')) {
-      return `Here's Mihiran's professional experience:\n\n${workHighlights}\n\nHe has hands-on experience in education technology and banking operations. Currently, he's focused on building AI-driven solutions and modern web applications.`;
-    }
-
-    // show education history
-    if (message.includes('education') || message.includes('study') || message.includes('degree') || message.includes('university') || message.includes('college')) {
-      return `Mihiran's educational background:\n\n${educationSummary}\n\nHe's currently pursuing his Bachelor's degree in Information and Communication Technology at Rajarata University of Sri Lanka, specializing in AI/ML and software development.`;
-    }
-
-    // help user to find the cv
-    if (message.includes('resume') || message.includes('cv') || message.includes('download')) {
-      return "You can download Mihiran's CV by clicking the 'Download CV' button in the hero section at the top of the page. It contains detailed information about his education, experience, skills, and projects.";
-    }
-
-    // answers about ai and machine learning
-    if (message.includes('ai') || message.includes('machine learning') || message.includes('ml') || message.includes('artificial intelligence')) {
-      return "AI/ML is Mihiran's passion! He's working on:\n\n• AI Chat Assistant (Android app with Gemini AI)\n• Mood Music App (emotion-aware music recommendations)\n• Intelligent video editing tools\n\nHe uses Python, TensorFlow, PyTorch, and integrates AI APIs to build practical, real-world solutions.";
-    }
-
-    // answers about web development
-    if (message.includes('web') || message.includes('website') || message.includes('react') || message.includes('frontend')) {
-      return "Mihiran builds modern, responsive web applications using React, TypeScript, and Vite. This very portfolio showcases his web development skills with smooth animations, theme switching, and mobile-first design!";
-    }
-
-    // answers about mobile apps
-    if (message.includes('mobile') || message.includes('app') || message.includes('android') || message.includes('kotlin')) {
-      return "Mihiran develops mobile applications using:\n\n• Kotlin & Jetpack Compose for Android\n• React Native for cross-platform apps\n• Firebase for backend services\n\nCheck out his AI Chat Assistant and Mood Music App projects!";
-    }
-
-    // answer who am i questions
-    if (message.includes('who') || message.includes('about')) {
-      return `${personalInfo.name} is a passionate IT undergraduate at Rajarata University of Sri Lanka. He specializes in AI/ML, full-stack development, and mobile app development. His goal is to build intelligent systems that solve real-world problems using cutting-edge technologies.`;
-    }
-
-    // answer where i live
-    if (message.includes('location') || message.includes('where') || message.includes('live')) {
-      return `Mihiran is based in ${personalInfo.location}. He's open to remote opportunities and collaborations worldwide!`;
-    }
-
-    // answer messages about hiring
-    if (message.includes('hire') || message.includes('collaborate') || message.includes('work together') || message.includes('opportunity')) {
-      return `Mihiran is open to new opportunities and collaborations! You can reach out to him at ${personalInfo.email} or connect on LinkedIn: ${personalInfo.linkedin}. He's particularly interested in AI/ML projects, web development, and innovative tech solutions.`;
-    }
-
-    // handle thank you messages
-    if (message.includes('thank')) {
-      return "You're welcome! If you have any more questions about Mihiran's work, skills, or how to get in touch, just ask. I'm here to help!";
-    }
-
-    // default message if nothing matches
-    return `I can help you learn about:\n\n• Mihiran's projects and technical skills\n• His work experience and education\n• How to contact him or view his GitHub/LinkedIn\n• Downloading his CV\n\nWhat would you like to know more about?`;
-  }, []);
-
   const handleSend = useCallback(
     (text?: string) => {
       const trimmed = (text ?? inputValue).trim();
-      if (!trimmed) {
-        return;
-      }
+      if (!trimmed) return;
 
       setMessages((prev) => [...prev, createMessage('user', trimmed)]);
       setInputValue('');
       setIsThinking(true);
 
-      const typingDelay = 500 + Math.random() * 600;
-
+      const delay = 500 + Math.random() * 600;
       setTimeout(() => {
         const reply = generateResponse(trimmed);
         setMessages((prev) => [...prev, createMessage('assistant', reply)]);
         setIsThinking(false);
-      }, typingDelay);
+      }, delay);
     },
-    [generateResponse, inputValue]
+    [inputValue]
   );
 
   const handleSubmit = useCallback(
@@ -188,24 +257,33 @@ const ChatAssistant: React.FC = () => {
   }, [messages, isThinking]);
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handler = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsOpen(false);
-      }
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
     };
-
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [isOpen]);
 
   return (
-    <div className="chat-assistant" aria-live="polite">
+    <>
+      {/* Transparent backdrop — click outside to close */}
       {isOpen && (
-        <div className="chat-window" role="dialog" aria-modal="true" aria-label="Mihiran AI assistant">
+        <div
+          className="chat-backdrop"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Chat window */}
+      {isOpen && (
+        <div
+          className="chat-window"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mihiran AI assistant"
+        >
           <div className="chat-header">
             <div className="assistant-meta">
               <div className="assistant-avatar" aria-hidden>
@@ -261,7 +339,7 @@ const ChatAssistant: React.FC = () => {
               type="text"
               className="chat-input"
               value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
+              onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask me anything about Mihiran..."
               aria-label="Type your question"
             />
@@ -277,17 +355,19 @@ const ChatAssistant: React.FC = () => {
         </div>
       )}
 
-      <button
-        type="button"
-        className={`chat-toggle ${isOpen ? 'open' : ''}`}
-        onClick={() => setIsOpen((prev) => !prev)}
-        aria-expanded={isOpen}
-        aria-controls="chat-window"
-        aria-label="Toggle Mihiran AI chat assistant"
-      >
-        <FaRobot />
-      </button>
-    </div>
+      {/* Toggle button */}
+      <div className="chat-assistant" aria-live="polite">
+        <button
+          type="button"
+          className={`chat-toggle ${isOpen ? 'open' : ''}`}
+          onClick={() => setIsOpen((prev) => !prev)}
+          aria-expanded={isOpen}
+          aria-label="Toggle Mihiran AI chat assistant"
+        >
+          <FaRobot />
+        </button>
+      </div>
+    </>
   );
 };
 

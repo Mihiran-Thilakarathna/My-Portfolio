@@ -1,6 +1,5 @@
 import type { Project, WorkExperience, Education, Certification, Skill, Competition } from '../types';
 
-// import all images for projects
 import foodordering from '../assets/foodordering.png';
 import lumo from '../assets/lumo.png';
 import moodtune from '../assets/moodtune.png';
@@ -99,7 +98,6 @@ export const education: Education[] = [
 ];
 
 export const certifications: Certification[] = [
-  // top priority AI courses
   {
     id: 1,
     title: 'Python for Beginners',
@@ -136,7 +134,6 @@ export const certifications: Certification[] = [
     certificateUrl: '/certificates/ai-security.pdf',
   },
   
-  // other courses sorted by date
   {
     id: 6,
     title: 'Introduction to Android Mobile Application Development',
