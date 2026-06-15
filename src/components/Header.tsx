@@ -33,7 +33,10 @@ const Header: React.FC = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span style={{ color: 'var(--primary)' }}>Mihiran's</span>&nbsp;Portfolio
+          <div className="logo-inner">
+            <span className="logo-m">M</span>
+            <span className="logo-t">T</span>
+          </div>
         </motion.div>
         
         <nav className="nav">

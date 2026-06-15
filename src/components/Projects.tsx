@@ -121,7 +121,7 @@ const ProjectCard: React.FC<{
 const Projects: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [filter, setFilter] = useState<FilterType>('All');
+  const [filter, setFilter] = useState<FilterType | null>(null);
 
   const filters: FilterType[] = [
     'All',
@@ -129,7 +129,9 @@ const Projects: React.FC = () => {
   ] as FilterType[];
 
   const filteredProjects =
-    filter === 'All'
+    filter === null
+      ? projects.slice(0, 3)
+      : filter === 'All'
       ? projects
       : projects.filter((project) =>
           project.categories.includes(filter as ProjectCategory)

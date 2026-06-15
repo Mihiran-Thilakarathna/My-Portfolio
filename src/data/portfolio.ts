@@ -99,41 +99,26 @@ export const education: Education[] = [
 
 export const certifications: Certification[] = [
   {
+    id: 14,
+    title: 'Data Science Essentials with Python',
+    provider: 'Cisco Networking Academy',
+    date: 'Jun 2026',
+    certificateUrl: '/certificates/DataScienceEssentialswithPython.pdf',
+  },
+  {
+    id: 15,
+    title: 'Modern AI',
+    provider: 'Cisco Networking Academy',
+    date: 'May 2026',
+    certificateUrl: '/certificates/modernAI.pdf',
+  },
+  {
     id: 1,
     title: 'Python for Beginners',
     provider: 'University of Moratuwa',
     date: 'Apr 2026',
     certificateUrl: '/certificates/Python.pdf',
   },
-  {
-    id: 2,
-    title: 'Google AI Essential Specialization',
-    provider: 'Coursera',
-    date: 'Nov 2025',
-    certificateUrl: '/certificates/google-ai-essential.pdf',
-  },
-  {
-    id: 3,
-    title: 'Supervised Machine Learning: Regression and Classification',
-    provider: 'DeepLearning.AI',
-    date: 'Nov 2025',
-    certificateUrl: '/certificates/supervised-ml.pdf',
-  },
-  {
-    id: 4,
-    title: 'Machine Learning I',
-    provider: 'Columbia University',
-    date: 'Nov 2025',
-    certificateUrl: '/certificates/machine-learning-1.pdf',
-  },
-  {
-    id: 5,
-    title: 'AI Security & Governance',
-    provider: 'Securiti',
-    date: 'Sep 2025',
-    certificateUrl: '/certificates/ai-security.pdf',
-  },
-  
   {
     id: 6,
     title: 'Introduction to Android Mobile Application Development',
@@ -170,6 +155,27 @@ export const certifications: Certification[] = [
     certificateUrl: '/certificates/kubernetes.pdf',
   },
   {
+    id: 2,
+    title: 'Google AI Essential Specialization',
+    provider: 'Coursera',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/google-ai-essential.pdf',
+  },
+  {
+    id: 3,
+    title: 'Supervised Machine Learning: Regression and Classification',
+    provider: 'DeepLearning.AI',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/supervised-ml.pdf',
+  },
+  {
+    id: 4,
+    title: 'Machine Learning I',
+    provider: 'Columbia University',
+    date: 'Nov 2025',
+    certificateUrl: '/certificates/machine-learning-1.pdf',
+  },
+  {
     id: 11,
     title: 'Postman API Fundamentals Student Expert',
     provider: 'Postman',
@@ -182,6 +188,13 @@ export const certifications: Certification[] = [
     provider: 'AWS Training & Certification',
     date: 'Nov 2025',
     certificateUrl: '/certificates/Designing Blockchain Solutions.pdf',
+  },
+  {
+    id: 5,
+    title: 'AI Security & Governance',
+    provider: 'Securiti',
+    date: 'Sep 2025',
+    certificateUrl: '/certificates/ai-security.pdf',
   },
   {
     id: 13,

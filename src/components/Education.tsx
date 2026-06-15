@@ -1,15 +1,65 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaCertificate, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaCertificate, FaExternalLinkAlt, FaUniversity, FaBuilding, FaBrain, FaShieldAlt } from 'react-icons/fa';
+import { SiCisco, SiMeta, SiCoursera, SiUdemy, SiAmazon, SiLinuxfoundation, SiPostman } from 'react-icons/si';
 import { education, certifications } from '../data/portfolio';
 import './Education.css';
+
+const getProviderIcon = (provider: string) => {
+  if (provider.includes('Cisco')) return <SiCisco color="#1BA0D7" />;
+  if (provider.includes('Meta')) return <SiMeta color="#0668E1" />;
+  if (provider.includes('Coursera')) return <SiCoursera color="#0056D2" />;
+  if (provider.includes('Udemy')) return <SiUdemy color="#A435F0" />;
+  if (provider.includes('AWS')) return <SiAmazon color="#FF9900" />;
+  if (provider.includes('Linux Foundation')) return <SiLinuxfoundation color="#FDBE02" />;
+  if (provider.includes('Postman')) return <SiPostman color="#FF6C37" />;
+  if (provider.includes('University')) return <FaUniversity color="#D9B08C" />;
+  if (provider.includes('SLASSCOM')) return <FaBuilding color="#D9B08C" />;
+  if (provider.includes('DeepLearning.AI')) return <FaBrain color="#00C09A" />;
+  if (provider.includes('Securiti')) return <FaShieldAlt color="#0096ED" />;
+  return <FaCertificate color="#D9B08C" />;
+};
+
+const getProviderDomain = (provider: string) => {
+  if (provider.includes('Cisco')) return 'netacad.com';
+  if (provider.includes('Meta')) return 'meta.com';
+  if (provider.includes('Coursera')) return 'coursera.org';
+  if (provider.includes('Udemy')) return 'udemy.com';
+  if (provider.includes('AWS')) return 'aws.amazon.com';
+  if (provider.includes('Linux Foundation')) return 'linuxfoundation.org';
+  if (provider.includes('Postman')) return 'postman.com';
+  if (provider.includes('Moratuwa')) return 'uom.lk';
+  if (provider.includes('Columbia')) return 'columbia.edu';
+  if (provider.includes('SLASSCOM')) return 'slasscom.lk';
+  if (provider.includes('DeepLearning.AI')) return 'deeplearning.ai';
+  if (provider.includes('Securiti')) return 'securiti.ai';
+  return null;
+};
+
+const ProviderLogo = ({ provider }: { provider: string }) => {
+  const domain = getProviderDomain(provider);
+  const [error, setError] = useState(false);
+
+  if (!domain || error) {
+    return <>{getProviderIcon(provider)}</>;
+  }
+
+  return (
+    <img 
+      src={`https://www.google.com/s2/favicons?domain=${domain}&sz=128`} 
+      alt={`${provider} logo`} 
+      onError={() => setError(true)}
+      className="real-provider-logo"
+    />
+  );
+};
 
 const Education: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [showAllCertificates, setShowAllCertificates] = useState(false);
 
-  const displayedCertificates = showAllCertificates ? certifications : certifications.slice(0, 8);
+  const displayedCertificates = showAllCertificates ? certifications : certifications.slice(0, 4);
 
   return (
     <section id="education" className="education" ref={ref}>
@@ -93,7 +143,7 @@ const Education: React.FC = () => {
                 transition={{ duration: 0.5, delay: 0.6 + (index % 3) * 0.1 }}
               >
                 <div className="cert-icon">
-                  <FaCertificate />
+                  <ProviderLogo provider={cert.provider} />
                 </div>
 
                 <h4>{cert.title}</h4>
@@ -115,7 +165,7 @@ const Education: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {certifications.length > 8 && (
+          {certifications.length > 4 && (
             <motion.div 
               className="show-more-container"
               initial={{ opacity: 0 }}
@@ -126,7 +176,7 @@ const Education: React.FC = () => {
                 className="view-certificate show-more-btn"
                 onClick={() => setShowAllCertificates(!showAllCertificates)}
               >
-                {showAllCertificates ? 'Show Less' : 'Show More Certificates'}
+                {showAllCertificates ? 'Show Less' : 'Show All Certificates'}
               </button>
             </motion.div>
           )}
