@@ -2,7 +2,7 @@
   background: var(--card-bg);
   padding: 6rem 2rem 2rem;
   position: relative;
-  border-top: 1px solid rgba(217, 176, 140, 0.05); /* Subtle separation */
+  border-top: 1px solid rgba(217, 176, 140, 0.05);
 }
 
 .footer-container {
@@ -10,16 +10,32 @@
   margin: 0 auto;
 }
 
-/* Footer Bottom Default */
 .footer-bottom {
   text-align: center;
   padding: 1rem 0 2rem 0;
-  border-bottom: 2px solid rgba(217, 176, 140, 0.15); /* Line moved below */
+  border-bottom: 2px solid rgba(217, 176, 140, 0.15);
   color: rgba(209, 232, 226, 0.5);
   font-size: 0.85rem;
 }
 
-/* Back to Top Button */
+.footer-tagline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.4rem, 4vw, 3rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 203, 154, 0.25);
+  background: linear-gradient(180deg, rgba(255, 203, 154, 0.30), rgba(255, 255, 255, 0.06));
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 14px rgba(255, 203, 154, 0.07));
+  margin: 0 0 1.2rem 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
 .back-to-top {
   position: fixed;
   bottom: 6rem;
@@ -39,7 +55,6 @@
   z-index: 99;
 }
 
-/* Responsiveness */
 @media (max-width: 968px) {
   .footer-content {
     grid-template-columns: 1fr;

@@ -35,7 +35,6 @@ const Achievements: React.FC = () => {
     <section id="achievements" className="achievements" ref={ref}>
       <div className="achievements-container">
 
-        {/* Section Header */}
         <motion.div
           className="section-header"
           initial={{ opacity: 0, y: 30 }}
@@ -48,7 +47,6 @@ const Achievements: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* Tab selector if multiple competitions */}
         {competitions.length > 1 && (
           <motion.div
             className="comp-tabs"
@@ -68,7 +66,6 @@ const Achievements: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Main Competition Card */}
         <motion.div
           key={currentComp.id}
           className="comp-hero-card"
@@ -76,7 +73,6 @@ const Achievements: React.FC = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          {/* Left: Info Panel */}
           <div className="comp-info-panel">
             <div className="comp-badge-row">
               <span className="comp-year-badge">{currentComp.year}</span>
@@ -126,11 +122,9 @@ const Achievements: React.FC = () => {
             </div>
           </div>
 
-          {/* Right: Photo Gallery */}
           <div className="comp-gallery-panel">
             <div className="gallery-label">📸 Event Photos</div>
 
-            {/* Hero photo */}
             <motion.div
               className="gallery-hero"
               whileHover={{ scale: 1.02 }}
@@ -142,7 +136,6 @@ const Achievements: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Thumbnail strip */}
             {currentComp.photos.length > 1 && (
               <div className="gallery-thumbs">
                 {currentComp.photos.slice(1, 4).map((photo, i) => (
@@ -164,7 +157,6 @@ const Achievements: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {lightboxOpen && (
           <motion.div

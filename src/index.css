@@ -1,26 +1,13 @@
-/* reset browser defaults */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* site color settings */
 :root {
-  --bg-color: #111513; /* main dark background */
-  --card-bg: rgba(22, 28, 25, 0.45); /* semi transparent card background */
-  --text-color: #D1E8E2;
-  --text-secondary: #D9B08C;
-  --primary: #116466;
-  --primary-light: #FFCB9A;
-  --page-gradient: var(--bg-color); 
-  --glass-border: rgba(255, 203, 154, 0.1); 
-  --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.3);
-}
-
-[data-theme='light'],
-[data-theme='dark'] {
-  --bg-color: #111513;
+  --bg-color: #000000;
   --card-bg: rgba(22, 28, 25, 0.45);
   --text-color: #D1E8E2;
   --text-secondary: #D9B08C;
@@ -31,7 +18,7 @@
   --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* base element styles */
+
 body {
   margin: 0;
   font-family: 'JetBrains Mono', monospace;
@@ -45,19 +32,30 @@ body {
   width: 100%;
 }
 
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
 }
 
-/* font and text setup */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   font-weight: 700;
   line-height: 1.2;
 }
 
-h1, .section-header h2 {
+h1,
+.section-header h2 {
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 1px;
 }
@@ -83,20 +81,17 @@ button {
   cursor: pointer;
 }
 
-/* helper classes */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-/* default spacing for sections */
 .section-header h2 {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
-/* responsive adjustments for mobile */
 @media (max-width: 768px) {
   .container {
     padding: 0 1.5rem;
@@ -134,46 +129,4 @@ button {
     font-size: 1.5rem;
   }
 }
-
-/* keyframe animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+

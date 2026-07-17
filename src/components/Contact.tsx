@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaEnvelope, FaGithub, FaLinkedin, FaShareAlt, FaPaperPlane } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram, FaShareAlt, FaPaperPlane } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import { personalInfo } from '../data/portfolio';
 import './Contact.css';
@@ -62,7 +62,6 @@ const Contact: React.FC = () => {
         </motion.div>
 
         <div className="contact-content">
-          {/* Left Panel - Form */}
           <motion.div
             className="contact-panel form-panel"
             initial={{ opacity: 0, x: -30 }}
@@ -125,7 +124,6 @@ const Contact: React.FC = () => {
             </form>
           </motion.div>
 
-          {/* Right Panel - Info */}
           <motion.div
             className="contact-panel info-panel"
             initial={{ opacity: 0, x: 30 }}
@@ -170,6 +168,16 @@ const Contact: React.FC = () => {
                   <div className="social-details">
                     <span className="social-name">Github</span>
                     <span className="social-handle">Mihiran-Thilakarathna</span>
+                  </div>
+                </a>
+
+                <a href={personalInfo.instagram} target="_blank" rel="noopener noreferrer" className="social-card">
+                  <div className="social-icon instagram">
+                    <FaInstagram />
+                  </div>
+                  <div className="social-details">
+                    <span className="social-name">Instagram</span>
+                    <span className="social-handle">@{personalInfo.name.replace(' ', '_').toLowerCase()}</span>
                   </div>
                 </a>
               </div>

@@ -63,8 +63,6 @@ export interface PersonalInfo {
   instagram?: string;
   medium?: string;
   footerBio?: string;
-  profileViews?: number;
-  profileViewsUpdatedAt?: string;
 }
 
 export type Theme = 'light' | 'dark' | 'default';

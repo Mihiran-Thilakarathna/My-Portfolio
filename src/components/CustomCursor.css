@@ -1,0 +1,40 @@
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-light);
+    border-radius: 50%;
+    margin-left: -4px;
+    margin-top: -4px;
+    pointer-events: none;
+    z-index: 999999;
+    box-shadow: 0 0 10px rgba(255, 203, 154, 0.8), 0 0 20px rgba(255, 203, 154, 0.4);
+}
+
+.cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid rgba(255, 203, 154, 0.4);
+    border-radius: 50%;
+    margin-left: -18px;
+    margin-top: -18px;
+    pointer-events: none;
+    z-index: 999998;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.cursor-ring.hovering {
+    background-color: rgba(255, 203, 154, 0.15);
+    border-color: rgba(255, 203, 154, 0.9);
+}
+
+.cursor-ring.text-hovering {
+    background-color: #ffffff;
+    border-color: transparent;
+    mix-blend-mode: difference;
+}

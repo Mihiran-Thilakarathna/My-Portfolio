@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const useScrollSpy = (sectionIds: string[]) => {
   const [activeSection, setActiveSection] = useState(sectionIds[0]);
+  const activeSectionRef = useRef(sectionIds[0]);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // add offset for the sticky nav bar
-      
-      // check sections from bottom to top
+      const scrollPosition = window.scrollY + 150;
+
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
         if (section) {
@@ -15,7 +15,8 @@ export const useScrollSpy = (sectionIds: string[]) => {
           const sectionBottom = sectionTop + section.offsetHeight;
           
           if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-            if (activeSection !== sectionIds[i]) {
+            if (activeSectionRef.current !== sectionIds[i]) {
+              activeSectionRef.current = sectionIds[i];
               setActiveSection(sectionIds[i]);
             }
             break;
@@ -24,14 +25,12 @@ export const useScrollSpy = (sectionIds: string[]) => {
       }
     };
 
-    // run when component loads
     handleScroll();
-    
-    // update active section when scrolling
+
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sectionIds, activeSection]);
+  }, [sectionIds]);
 
   return activeSection;
 };

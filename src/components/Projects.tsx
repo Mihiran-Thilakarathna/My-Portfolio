@@ -8,7 +8,6 @@ import './Projects.css';
 
 type FilterType = ProjectCategory | 'All';
 
-// Per-card component so each card manages its own overflow ref
 const ProjectCard: React.FC<{
   project: (typeof projects)[number];
   index: number;
@@ -26,7 +25,6 @@ const ProjectCard: React.FC<{
   }, []);
 
   useEffect(() => {
-    // Small delay to ensure CSS line-clamp has been applied
     const timer = setTimeout(checkOverflow, 50);
     window.addEventListener('resize', checkOverflow);
     return () => {
@@ -120,6 +118,7 @@ const ProjectCard: React.FC<{
 
 const Projects: React.FC = () => {
   const ref = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [filter, setFilter] = useState<FilterType | null>(null);
 
@@ -127,6 +126,8 @@ const Projects: React.FC = () => {
     'All',
     ...Array.from(new Set(projects.flatMap((project) => project.categories))),
   ] as FilterType[];
+
+  const isShowAll = filter === 'All';
 
   const filteredProjects =
     filter === null
@@ -137,9 +138,24 @@ const Projects: React.FC = () => {
           project.categories.includes(filter as ProjectCategory)
         );
 
+  const handleFilterClick = (filterName: FilterType) => {
+    if (filterName === 'All' && filter === 'All') {
+      // Collapse back to default
+      setFilter(null);
+      sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      setFilter(filterName);
+    }
+  };
+
+  const handleShowLess = () => {
+    setFilter(null);
+    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <section id="projects" className="projects" ref={ref}>
-      <div className="projects-container">
+    <section id="projects" className="projects" ref={sectionRef}>
+      <div className="projects-container" ref={ref}>
         <motion.div
           className="section-header"
           initial={{ opacity: 0, y: 30 }}
@@ -160,7 +176,7 @@ const Projects: React.FC = () => {
               <button
                 key={filterName}
                 className={`tab-btn ${filter === filterName ? 'active' : ''}`}
-                onClick={() => setFilter(filterName)}
+                onClick={() => handleFilterClick(filterName)}
               >
                 <span className="tab-icon">
                   {filterName === 'All' && <FiStar />}
@@ -181,6 +197,22 @@ const Projects: React.FC = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        <AnimatePresence>
+          {isShowAll && (
+            <motion.div
+              className="show-less-wrapper"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button className="show-less-btn" onClick={handleShowLess}>
+                ↑ Show Less
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

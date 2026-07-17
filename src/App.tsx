@@ -12,30 +12,27 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatAssistant from './components/ChatAssistant';
 import Achievements from './components/Achievements';
+import CustomCursor from './components/CustomCursor';
 import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasEntered, setHasEntered] = useState(false);
 
-  const [animationFinished, setAnimationFinished] = useState(false);
-
   const handleLoadingComplete = () => {
     setIsLoading(false);
     setTimeout(() => {
       setHasEntered(true);
-      setTimeout(() => {
-        setAnimationFinished(true);
-      }, 1500);
-    }, 50); // short delay to show content smoothly
+    }, 50);
   };
 
   return (
     <ThemeProvider>
+      <CustomCursor />
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
-      
+
       {!isLoading && (
-        <div className={`app ${hasEntered && !animationFinished ? 'app-fade-in' : ''}`}>
+        <div className={`app ${hasEntered ? 'app-fade-in' : ''}`}>
           <Header />
           <main>
             <Hero />

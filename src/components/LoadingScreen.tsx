@@ -10,16 +10,14 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   const [shrinking, setShrinking] = useState(false);
 
   useEffect(() => {
-    // wait before starting animation
     const timer = setTimeout(() => {
       setShrinking(true);
-      
-      // wait for the fade out to finish
+
       setTimeout(() => {
-        onLoadingComplete(); // show main content
+        onLoadingComplete();
         setVisible(false);
-      }, 1000); // 1 second exit animation
-    }, 2800); 
+      }, 1000);
+    }, 2800);
 
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);
@@ -29,8 +27,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   return (
     <div className={`loading-wrapper ${shrinking ? 'exit-modern' : ''}`}>
       <div className="modern-backdrop"></div>
-      
-      {/* Modern High-Tech Content */}
+
       <div className="loading-content-modern">
         <div className="modern-spinner">
           <div className="spinner-ring"></div>

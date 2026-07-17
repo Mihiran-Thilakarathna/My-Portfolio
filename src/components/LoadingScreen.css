@@ -78,7 +78,7 @@
   font-weight: 700;
   opacity: 0.9;
   animation: pulse-text 2s ease-in-out infinite alternate;
-  margin-left: 0.6rem; /* optical align for letter spacing */
+  margin-left: 0.6rem;
 }
 
 @keyframes spin { 
@@ -101,7 +101,6 @@
   100% { opacity: 1; text-shadow: 0 0 15px rgba(255, 203, 154, 0.5); } 
 }
 
-/* Exit Animations */
 .exit-modern .loading-content-modern {
   animation: swoosh-out 0.8s cubic-bezier(0.8, 0, 0.2, 1) forwards;
 }

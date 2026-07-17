@@ -158,7 +158,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: sepia(0.1) contrast(1.05); /* Matte photo look */
+  filter: sepia(0.1) contrast(1.05);
 }
 
 .project-card:hover .project-image img {
@@ -307,6 +307,35 @@
   transform: translateY(-2px);
 }
 
+.show-less-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.show-less-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  border: 1px solid rgba(217, 176, 140, 0.35);
+  border-radius: 50px;
+  color: var(--primary-light);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.show-less-btn:hover {
+  background: rgba(217, 176, 140, 0.08);
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
 @media (max-width: 768px) {
   .projects { padding: 4rem 1.5rem; }
   .category-rail { padding: 1.2rem 1.3rem; gap: 0.8rem; }
@@ -326,6 +355,7 @@
 @media (max-width: 480px) {
   .category-rail { padding: 1rem 0.9rem; }
   .category-label { flex-direction: column; align-items: flex-start; }
-  .category-tabs { grid-template-columns: 1fr; }
+  .category-tabs { grid-template-columns: repeat(2, 1fr); }
   .category-tag { font-size: 0.65rem; padding: 0.3rem 0.7rem; }
+  .tab-btn { min-height: 68px; padding: 0.9rem 1rem; font-size: 0.88rem; }
 }

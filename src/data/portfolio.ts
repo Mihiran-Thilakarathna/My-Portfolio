@@ -23,11 +23,9 @@ export const personalInfo = {
   kaggle: 'https://www.kaggle.com',
   twitter: 'https://twitter.com',
   facebook: '#',
-  instagram: '#',
+  instagram: 'https://www.instagram.com/mihiran_thilakarathna?igsh=emZmb2Zpb2Zxa2xt',
   medium: '#',
   footerBio: 'Building intelligent solutions with AI, ML, and modern web technologies.',
-  profileViews: 0,
-  profileViewsUpdatedAt: '2025-10-19T06:00:00+05:30',
 };
 
 export const skills: Skill[] = [
@@ -56,18 +54,26 @@ export const stats = {
 };
 
 export const workExperience: WorkExperience[] = [
-
+  {
+    id: 1,
+    company: 'Department of Computing, Rajarata University of Sri Lanka',
+    role: 'Batch Coordinator',
+    startDate: 'Jun 2026',
+    endDate: 'Present',
+    location: 'Mihintale, Sri Lanka',
+    description: "Serving as the Batch Coordinator for the Department of Computing, acting as the primary liaison between the academic staff, administration, and students. Responsible for managing course coordination, schedule adjustments, resolving student issues, and organizing department-level academic activities and peer discussions.",
+    current: true,
+  },
   {
     id: 2,
-    company: 'Peoples Bank',
+    company: "People's Bank",
     role: 'Trainee',
     startDate: 'Dec 2022',
     endDate: 'Jul 2023',
     location: 'Avissawella, Sri Lanka',
-    description: "Before entering university, I had the opportunity to work as a trainee at the People's Bank of Sri Lanka. During this six-month training program, I gained valuable hands-on experience in banking operations, customer service, and financial documentation. This experience strengthened my communication, teamwork, and professional skills, giving me a strong foundation for my future academic and career journey.",
+    description: "Before entering university, I worked as a trainee at People's Bank of Sri Lanka. Handled customer inquiries, administrative documentation, and basic banking assistance, building a strong foundation in professional communication, organization, and professional responsibility.",
     current: false,
   },
-  
 ];
 
 export const education: Education[] = [
@@ -253,7 +259,7 @@ export const projects: Project[] = [
     tags: ['Kotlin', 'TensorFlow Lite', 'ML Kit', 'Music Recommendation'],
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/MoodTune.git',
   },
-  
+
   {
     id: 4,
     title: 'Facial Occlusion Classification for Restricted Environments',

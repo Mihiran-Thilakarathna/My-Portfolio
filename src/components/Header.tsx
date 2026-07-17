@@ -32,13 +32,15 @@ const Header: React.FC = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
+          onClick={() => scrollToSection('home')}
+          style={{ cursor: 'pointer' }}
         >
-          <div className="logo-inner">
+          <div className="logo-box">
             <span className="logo-m">M</span>
-            <span className="logo-t">T</span>
           </div>
+          <span className="logo-text">Mihiran</span>
         </motion.div>
-        
+
         <nav className="nav">
           {navItems.map((item, index) => (
             <motion.button

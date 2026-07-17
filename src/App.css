@@ -7,12 +7,8 @@ main {
   width: 100%;
 }
 
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
 
-/* Scrollbar styling */
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -31,7 +27,6 @@ html {
   background: var(--primary);
 }
 
-/* Selection styling */
 ::selection {
   background: rgba(255, 203, 154, 0.3);
   color: var(--text-color);

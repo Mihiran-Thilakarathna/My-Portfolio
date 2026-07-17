@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaCertificate, FaExternalLinkAlt, FaUniversity, FaBuilding, FaBrain, FaShieldAlt } from 'react-icons/fa';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { FaCertificate, FaExternalLinkAlt, FaUniversity, FaBuilding, FaBrain, FaShieldAlt, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { SiCisco, SiMeta, SiCoursera, SiUdemy, SiAmazon, SiLinuxfoundation, SiPostman } from 'react-icons/si';
 import { education, certifications } from '../data/portfolio';
 import './Education.css';
@@ -45,21 +45,273 @@ const ProviderLogo = ({ provider }: { provider: string }) => {
   }
 
   return (
-    <img 
-      src={`https://www.google.com/s2/favicons?domain=${domain}&sz=128`} 
-      alt={`${provider} logo`} 
+    <img
+      src={`https://www.google.com/s2/favicons?domain=${domain}&sz=128`}
+      alt={`${provider} logo`}
       onError={() => setError(true)}
       className="real-provider-logo"
     />
   );
 };
 
+const getBrandColor = (provider: string) => {
+  if (provider.includes('Cisco')) return { rgb: '27, 160, 215', hex: '#1BA0D7' };
+  if (provider.includes('Meta')) return { rgb: '6, 104, 225', hex: '#0668E1' };
+  if (provider.includes('Coursera')) return { rgb: '0, 86, 210', hex: '#0056D2' };
+  if (provider.includes('Udemy')) return { rgb: '164, 53, 240', hex: '#A435F0' };
+  if (provider.includes('AWS')) return { rgb: '255, 153, 0', hex: '#FF9900' };
+  if (provider.includes('Linux Foundation')) return { rgb: '253, 190, 2', hex: '#FDBE02' };
+  if (provider.includes('Postman')) return { rgb: '255, 108, 55', hex: '#FF6C37' };
+  if (provider.includes('DeepLearning.AI')) return { rgb: '0, 192, 154', hex: '#00C09A' };
+  if (provider.includes('Securiti')) return { rgb: '0, 150, 237', hex: '#0096ED' };
+  return { rgb: '217, 176, 140', hex: '#D9B08C' };
+};
+
+const CertificateStack: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollTimeout = useRef<any>(null);
+  const isHovered = useRef(false);
+  const currentIndexRef = useRef(0);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleMouseEnter = () => { isHovered.current = true; };
+    const handleMouseLeave = () => { isHovered.current = false; };
+
+    // Only intercept wheel when user is hovering the card area
+    const handleWheel = (e: WheelEvent) => {
+      if (!isHovered.current) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      const idx = currentIndexRef.current;
+      const atStart = idx === 0 && delta < -15;
+      const atEnd = idx === certifications.length - 1 && delta > 15;
+
+      if (atStart || atEnd) return;
+
+      e.preventDefault();
+      if (scrollTimeout.current) return;
+
+      if (delta > 15) {
+        setCurrentIndex(prev => Math.min(prev + 1, certifications.length - 1));
+        scrollTimeout.current = setTimeout(() => { scrollTimeout.current = null; }, 350);
+      } else if (delta < -15) {
+        setCurrentIndex(prev => Math.max(prev - 1, 0));
+        scrollTimeout.current = setTimeout(() => { scrollTimeout.current = null; }, 350);
+      }
+    };
+
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
+    // passive:false only needed for e.preventDefault, but we guard with isHovered
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('wheel', handleWheel);
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    };
+  }, []);
+
+  const handleDragEnd = (_e: any, info: any) => {
+    const threshold = 55;
+    if (info.offset.x < -threshold) {
+      setCurrentIndex(prev => Math.min(prev + 1, certifications.length - 1));
+    } else if (info.offset.x > threshold) {
+      setCurrentIndex(prev => Math.max(prev - 1, 0));
+    }
+  };
+
+  return (
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div className="certificate-stack-container" ref={containerRef}>
+        {certifications.map((cert, index) => {
+          const offset = index - currentIndex;
+          const isMobile = windowWidth < 768;
+          const isVisible = isMobile ? (offset >= -1 && offset <= 1) : (offset >= -2 && offset <= 2);
+
+          if (!isVisible) return null;
+
+          const isTablet = windowWidth >= 768 && windowWidth < 1024;
+
+          let x = 0;
+          let scale = 1;
+          let opacity = 1;
+          let zIndex = certifications.length - index;
+          // blur is applied via CSS class, not animated, to avoid GPU repaints
+          let blurClass = '';
+
+          if (offset === 0) {
+            x = 0;
+            scale = isMobile ? 1.05 : 1.1;
+            zIndex = 30;
+            opacity = 1;
+            blurClass = '';
+          } else if (offset === -1) {
+            x = isMobile ? -100 : isTablet ? -175 : -230;
+            scale = isMobile ? 0.8 : 0.86;
+            zIndex = 20;
+            opacity = isMobile ? 0.45 : 0.65;
+            blurClass = 'blur-sm';
+          } else if (offset === 1) {
+            x = isMobile ? 100 : isTablet ? 175 : 230;
+            scale = isMobile ? 0.8 : 0.86;
+            zIndex = 20;
+            opacity = isMobile ? 0.45 : 0.65;
+            blurClass = 'blur-sm';
+          } else if (offset === -2) {
+            x = isMobile ? -170 : isTablet ? -310 : -410;
+            scale = isMobile ? 0.65 : 0.7;
+            zIndex = 10;
+            opacity = isMobile ? 0 : 0.25;
+            blurClass = 'blur-md';
+          } else if (offset === 2) {
+            x = isMobile ? 170 : isTablet ? 310 : 410;
+            scale = isMobile ? 0.65 : 0.7;
+            zIndex = 10;
+            opacity = isMobile ? 0 : 0.25;
+            blurClass = 'blur-md';
+          }
+
+          const brand = getBrandColor(cert.provider);
+
+          return (
+            <motion.div
+              key={cert.id}
+              className={`certification-card stack-card ${offset === 0 ? 'active-card' : ''} ${blurClass}`}
+              initial={false}
+              animate={{
+                x,
+                scale,
+                zIndex,
+                opacity,
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
+              style={{
+                '--brand-color': brand.hex,
+                '--brand-rgb': brand.rgb,
+                cursor: offset === 0 ? 'default' : 'pointer',
+                pointerEvents: Math.abs(offset) > 1 ? 'none' : 'auto'
+              } as React.CSSProperties}
+              onClick={() => {
+                if (offset !== 0) {
+                  setCurrentIndex(index);
+                }
+              }}
+            >
+              <div className="card-cyber-grid" />
+              
+              <div className="card-tech-accent top-left" />
+              <div className="card-tech-accent top-right" />
+              <div className="card-tech-accent bottom-left" />
+              <div className="card-tech-accent bottom-right" />
+
+              <div className="card-badge-ring">
+                <div className="badge-ring-glow" />
+                <div className="cert-icon-inner">
+                  <ProviderLogo provider={cert.provider} />
+                </div>
+              </div>
+
+              <div className="cert-card-info">
+                <h4>{cert.title}</h4>
+                <p className="provider">{cert.provider}</p>
+                <div className="card-divider" />
+                <p className="date">{cert.date}</p>
+              </div>
+
+              {cert.certificateUrl && (
+                <a
+                  href={`${import.meta.env.BASE_URL}${cert.certificateUrl.replace(/^\//, '')}`}
+                  className="view-certificate"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    pointerEvents: offset === 0 ? 'auto' : 'none'
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  Verify Credentials <FaExternalLinkAlt />
+                </a>
+              )}
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <div className="capsule-dock" style={{
+        '--brand-rgb': getBrandColor(certifications[currentIndex].provider).rgb
+      } as React.CSSProperties}>
+        <button
+          className="dock-arrow-btn left"
+          onClick={() => setCurrentIndex(prev => Math.max(prev - 1, 0))}
+          disabled={currentIndex === 0}
+          aria-label="Previous Certification"
+        >
+          <FaChevronLeft />
+        </button>
+
+        <div className="dock-divider" />
+
+        <div className="dock-content">
+          <div className="dock-logo-container">
+            <ProviderLogo provider={certifications[currentIndex].provider} />
+          </div>
+          <div className="dock-text">
+            <div className="dock-title">{certifications[currentIndex].title}</div>
+            <div className="dock-subtitle">{certifications[currentIndex].provider}</div>
+          </div>
+        </div>
+
+        <div className="dock-divider" />
+
+        <button
+          className="dock-arrow-btn right"
+          onClick={() => setCurrentIndex(prev => Math.min(prev + 1, certifications.length - 1))}
+          disabled={currentIndex === certifications.length - 1}
+          aria-label="Next Certification"
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+
+      <div className="stack-indicators">
+        {certifications.map((_, idx) => (
+          <div
+            key={idx}
+            className={`indicator ${idx === currentIndex ? 'active' : ''}`}
+            onClick={() => setCurrentIndex(idx)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Education: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [showAllCertificates, setShowAllCertificates] = useState(false);
-
-  const displayedCertificates = showAllCertificates ? certifications : certifications.slice(0, 4);
 
   return (
     <section id="education" className="education" ref={ref}>
@@ -73,7 +325,6 @@ const Education: React.FC = () => {
           <h2>Education & Certifications</h2>
         </motion.div>
 
-        {/* Education Timeline */}
         <div className="education-section">
           <motion.h3
             initial={{ opacity: 0, x: -30 }}
@@ -83,9 +334,9 @@ const Education: React.FC = () => {
           >
             Education
           </motion.h3>
-          
+
           <div className="education-timeline">
-            <motion.div 
+            <motion.div
               className="timeline-line"
               initial={{ scaleY: 0 }}
               animate={isInView ? { scaleY: 1 } : {}}
@@ -106,14 +357,19 @@ const Education: React.FC = () => {
                   <div className="timeline-node">
                     <div className="node-inner"></div>
                   </div>
-                  
+
                   <div className="timeline-content education-card">
                     <span className={`status-badge ${edu.status.toLowerCase()}`}>
                       {edu.status}
                     </span>
                     <h4>{edu.institution}</h4>
                     <p className="degree">{edu.degree}</p>
-                    <p className="duration">{edu.startDate} - {edu.endDate}</p>
+                    <div className="education-details">
+                      <div className="detail">
+                        <FaCalendarAlt />
+                        <span>{edu.startDate} - {edu.endDate}</span>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               );
@@ -121,7 +377,6 @@ const Education: React.FC = () => {
           </div>
         </div>
 
-        {/* Certifications */}
         <div className="certifications-section">
           <motion.h3
             initial={{ opacity: 0, x: -30 }}
@@ -131,55 +386,8 @@ const Education: React.FC = () => {
           >
             Certifications
           </motion.h3>
-          
-          <div className="certifications-grid">
-            <AnimatePresence>
-              {displayedCertificates.map((cert, index) => (
-              <motion.div
-                key={cert.id}
-                className="certification-card"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.6 + (index % 3) * 0.1 }}
-              >
-                <div className="cert-icon">
-                  <ProviderLogo provider={cert.provider} />
-                </div>
 
-                <h4>{cert.title}</h4>
-                <p className="provider">{cert.provider}</p>
-                <p className="date">{cert.date}</p>
-
-                {cert.certificateUrl && (
-                  <a 
-                    href={`${import.meta.env.BASE_URL}${cert.certificateUrl.replace(/^\//, '')}`}
-                    className="view-certificate"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Certificate <FaExternalLinkAlt />
-                  </a>
-                )}
-              </motion.div>
-            ))}
-            </AnimatePresence>
-          </div>
-
-          {certifications.length > 4 && (
-            <motion.div 
-              className="show-more-container"
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              <button 
-                className="view-certificate show-more-btn"
-                onClick={() => setShowAllCertificates(!showAllCertificates)}
-              >
-                {showAllCertificates ? 'Show Less' : 'Show All Certificates'}
-              </button>
-            </motion.div>
-          )}
+          <CertificateStack />
         </div>
       </div>
     </section>

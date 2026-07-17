@@ -10,15 +10,13 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        
-        {/* Footer Bottom */}
         <div className="footer-bottom">
+          <p className="footer-tagline">Build. Learn. Evolve.</p>
           <p>© {new Date().getFullYear()} Mihiran Thilakarathna. All Rights Reserved.</p>
         </div>
 
       </div>
 
-      {/* Back to Top Button */}
       {showButton && (
         <motion.button
           className="back-to-top"
