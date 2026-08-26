@@ -122,7 +122,7 @@ const About: React.FC = () => {
         initial="hidden"
         animate={isInView ? "show" : "hidden"}
       >
-        {/* TOP HEADER */}
+
         <motion.div className="about-top-header" variants={itemVariants}>
           <motion.div
             className="section-header"
@@ -272,7 +272,7 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Skills Flow Bar */}
+
         <div className="skills-split-row">
           <motion.div className="skills-copy" variants={itemVariants}>
             <h3>Code with purpose.</h3>

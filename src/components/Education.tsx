@@ -85,12 +85,36 @@ const CertificateStack: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const scrollInterval = useRef<any>(null);
+  const scrollDirection = useRef<'left' | 'right' | null>(null);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleMouseEnter = () => { isHovered.current = true; };
-    const handleMouseLeave = () => { isHovered.current = false; };
+    const handleMouseLeave = () => { 
+      isHovered.current = false; 
+      scrollDirection.current = null;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isHovered.current) return;
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      
+      const percentage = x / rect.width;
+      
+      // Deadzone between 25% and 75% width
+
+      if (percentage < 0.25) {
+        scrollDirection.current = 'left';
+      } else if (percentage > 0.75) {
+        scrollDirection.current = 'right';
+      } else {
+        scrollDirection.current = null;
+      }
+    };
 
     // Only intercept wheel when user is hovering the card area
     const handleWheel = (e: WheelEvent) => {
@@ -117,14 +141,26 @@ const CertificateStack: React.FC = () => {
 
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
-    // passive:false only needed for e.preventDefault, but we guard with isHovered
+    container.addEventListener('mousemove', handleMouseMove);
+    // passive:false is required to use e.preventDefault() for wheel events
     window.addEventListener('wheel', handleWheel, { passive: false });
+
+    // Set up interval for edge scrolling
+    scrollInterval.current = setInterval(() => {
+      if (scrollDirection.current === 'left') {
+        setCurrentIndex(prev => Math.max(prev - 1, 0));
+      } else if (scrollDirection.current === 'right') {
+        setCurrentIndex(prev => Math.min(prev + 1, certifications.length - 1));
+      }
+    }, 350); // 350ms interval for faster scrolling
 
     return () => {
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('wheel', handleWheel);
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+      if (scrollInterval.current) clearInterval(scrollInterval.current);
     };
   }, []);
 
@@ -153,7 +189,7 @@ const CertificateStack: React.FC = () => {
           let scale = 1;
           let opacity = 1;
           let zIndex = certifications.length - index;
-          // blur is applied via CSS class, not animated, to avoid GPU repaints
+          // Apply blur via class to prevent GPU repaints
           let blurClass = '';
 
           if (offset === 0) {

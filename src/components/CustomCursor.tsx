@@ -67,7 +67,7 @@ const CustomCursor: React.FC = () => {
                         return;
                     }
                 } catch (err) {
-                    // Fallback to normal behavior
+
                 }
             }
 

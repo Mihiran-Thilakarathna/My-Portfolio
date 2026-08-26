@@ -1,4 +1,4 @@
-.chat-backdrop {
+ .chat-backdrop {
   position: fixed;
   inset: 0;
   z-index: 1199;
@@ -10,7 +10,7 @@
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  z-index: 1200;
+  z-index: 1300;
 }
 
 .chat-toggle {
@@ -27,7 +27,7 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   cursor: pointer;
   position: relative;
-  z-index: 1200;
+  z-index: 1300;
 }
 
 .chat-toggle svg {
