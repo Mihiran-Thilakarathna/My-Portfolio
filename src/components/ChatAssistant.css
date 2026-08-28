@@ -121,8 +121,8 @@
 
 .close-button {
   border: none;
-  background: rgba(0, 0, 0, 0.15);
-  color: #000000;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   width: 34px;
   height: 34px;
   border-radius: 50%;

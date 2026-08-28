@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import { FaRobot, FaTimes } from 'react-icons/fa';
 import {
   personalInfo,
   projects,
@@ -203,7 +203,7 @@ const ChatAssistant: React.FC = () => {
       `Hi! I'm Mihiran's Personal Assistant.\n\nI can help you explore his professional profile — projects, skills, education, work experience, certifications, and more.\n\nWhat would you like to know?`
     ),
   ]);
-  const [inputValue, setInputValue] = useState('');
+
   const [isThinking, setIsThinking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
