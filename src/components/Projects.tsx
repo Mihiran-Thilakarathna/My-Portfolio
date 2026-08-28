@@ -98,8 +98,6 @@ const ProjectCard: React.FC<{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                background: 'var(--primary)',
-                color: 'white',
                 borderRadius: '8px',
                 fontSize: '0.85rem',
                 fontWeight: 600,

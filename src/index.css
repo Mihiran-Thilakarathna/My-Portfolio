@@ -8,14 +8,14 @@
 
 :root {
   --bg-color: #000000;
-  --card-bg: rgba(22, 28, 25, 0.45);
-  --text-color: #D1E8E2;
+  --card-bg: rgba(20, 20, 20, 0.6);
+  --text-color: #EEEEEE;
   --text-secondary: #D9B08C;
-  --primary: #116466;
-  --primary-light: #FFCB9A;
+  --primary: #CCFF00;
+  --primary-light: #A0A0A0;
   --page-gradient: var(--bg-color);
-  --glass-border: rgba(255, 203, 154, 0.1);
-  --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.3);
+  --glass-border: rgba(204, 255, 0, 0.15);
+  --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.5);
 }
 
 
@@ -129,4 +129,3 @@ button {
     font-size: 1.5rem;
   }
 }
-

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowRight, FaDownload, FaLinkedin, FaGithub, FaBlogger, FaInstagram } from 'react-icons/fa';
+import { FaArrowRight, FaDownload, FaLinkedin, FaGithub, FaBlogger, FaInstagram, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
 import mihiranPhoto from '../assets/mihiran115.png';
 import './Hero.css';
 
@@ -24,6 +24,10 @@ const Hero: React.FC = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
+      if (id === 'contact') {
+        element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        return;
+      }
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
@@ -36,10 +40,11 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="hero">
+      <div className="hero-watermark">MIHIRAN</div>
       <div className="hero-content">
         <motion.div
           className="hero-text"
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -75 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
@@ -163,7 +168,7 @@ const Hero: React.FC = () => {
 
               <div className="cv-options">
                 <a href={`${import.meta.env.BASE_URL}FullStack Engineer Intern.pdf`} download="Mihiran_FullStack_Engineer.pdf" className="cv-option-card">
-                  <div className="cv-option-icon">💻</div>
+                  <div className="cv-option-icon"><FaLaptopCode /></div>
                   <div className="cv-option-details">
                     <h4>Full Stack Developer</h4>
                     <span>Frontend & Backend Focus</span>
@@ -172,7 +177,7 @@ const Hero: React.FC = () => {
                 </a>
 
                 <a href={`${import.meta.env.BASE_URL}Software Engineering Intern.pdf`} download="Mihiran_Software_Engineer.pdf" className="cv-option-card">
-                  <div className="cv-option-icon">⚙️</div>
+                  <div className="cv-option-icon"><FaCogs /></div>
                   <div className="cv-option-details">
                     <h4>Software Engineering</h4>
                     <span>System Design & Architecture</span>
@@ -181,7 +186,7 @@ const Hero: React.FC = () => {
                 </a>
 
                 <a href={`${import.meta.env.BASE_URL}AI & Automation Intern.pdf`} download="Mihiran_AI_ML.pdf" className="cv-option-card">
-                  <div className="cv-option-icon">🤖</div>
+                  <div className="cv-option-icon"><FaBrain /></div>
                   <div className="cv-option-details">
                     <h4>AI / ML Engineer</h4>
                     <span>Machine Learning & Data Science</span>

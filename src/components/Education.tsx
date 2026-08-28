@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll } from 'framer-motion';
 import { FaCertificate, FaExternalLinkAlt, FaUniversity, FaBuilding, FaBrain, FaShieldAlt, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { SiCisco, SiMeta, SiCoursera, SiUdemy, SiAmazon, SiLinuxfoundation, SiPostman } from 'react-icons/si';
 import { education, certifications } from '../data/portfolio';
@@ -54,16 +54,7 @@ const ProviderLogo = ({ provider }: { provider: string }) => {
   );
 };
 
-const getBrandColor = (provider: string) => {
-  if (provider.includes('Cisco')) return { rgb: '27, 160, 215', hex: '#1BA0D7' };
-  if (provider.includes('Meta')) return { rgb: '6, 104, 225', hex: '#0668E1' };
-  if (provider.includes('Coursera')) return { rgb: '0, 86, 210', hex: '#0056D2' };
-  if (provider.includes('Udemy')) return { rgb: '164, 53, 240', hex: '#A435F0' };
-  if (provider.includes('AWS')) return { rgb: '255, 153, 0', hex: '#FF9900' };
-  if (provider.includes('Linux Foundation')) return { rgb: '253, 190, 2', hex: '#FDBE02' };
-  if (provider.includes('Postman')) return { rgb: '255, 108, 55', hex: '#FF6C37' };
-  if (provider.includes('DeepLearning.AI')) return { rgb: '0, 192, 154', hex: '#00C09A' };
-  if (provider.includes('Securiti')) return { rgb: '0, 150, 237', hex: '#0096ED' };
+const getBrandColor = (_provider: string) => {
   return { rgb: '217, 176, 140', hex: '#D9B08C' };
 };
 
@@ -93,8 +84,8 @@ const CertificateStack: React.FC = () => {
     if (!container) return;
 
     const handleMouseEnter = () => { isHovered.current = true; };
-    const handleMouseLeave = () => { 
-      isHovered.current = false; 
+    const handleMouseLeave = () => {
+      isHovered.current = false;
       scrollDirection.current = null;
     };
 
@@ -102,9 +93,9 @@ const CertificateStack: React.FC = () => {
       if (!isHovered.current) return;
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
-      
+
       const percentage = x / rect.width;
-      
+
       // Deadzone between 25% and 75% width
 
       if (percentage < 0.25) {
@@ -255,7 +246,7 @@ const CertificateStack: React.FC = () => {
               }}
             >
               <div className="card-cyber-grid" />
-              
+
               <div className="card-tech-accent top-left" />
               <div className="card-tech-accent top-right" />
               <div className="card-tech-accent bottom-left" />
@@ -345,9 +336,39 @@ const CertificateStack: React.FC = () => {
   );
 };
 
+const TimelineNode = () => {
+  return (
+    <motion.div
+      className="timeline-node"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, margin: "1000px 0px -50% 0px" }}
+      variants={{
+        hidden: { borderColor: "rgba(255, 255, 255, 0.15)", boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)" },
+        visible: { borderColor: "#CCFF00", boxShadow: "0 0 20px rgba(204, 255, 0, 0.4)" }
+      }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.div 
+        className="node-inner"
+        variants={{
+          hidden: { scale: 0, backgroundColor: "rgba(255, 255, 255, 0.4)" },
+          visible: { scale: 1, backgroundColor: "#CCFF00" }
+        }}
+        transition={{ duration: 0.3 }}
+      ></motion.div>
+    </motion.div>
+  );
+};
+
 const Education: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const timelineRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start center", "end center"]
+  });
 
   return (
     <section id="education" className="education" ref={ref}>
@@ -371,13 +392,13 @@ const Education: React.FC = () => {
             Education
           </motion.h3>
 
-          <div className="education-timeline">
-            <motion.div
-              className="timeline-line"
-              initial={{ scaleY: 0 }}
-              animate={isInView ? { scaleY: 1 } : {}}
-              transition={{ duration: 1.5, delay: 0.4, ease: "easeInOut" }}
-            ></motion.div>
+          <div className="education-timeline" ref={timelineRef}>
+            <div className="timeline-line">
+              <motion.div
+                className="timeline-line-fill"
+                style={{ scaleY: scrollYProgress, transformOrigin: "top" }}
+              />
+            </div>
 
             {education.map((edu, index) => {
               const isRight = index % 2 === 0;
@@ -385,14 +406,12 @@ const Education: React.FC = () => {
                 <motion.div
                   key={edu.id}
                   className={`timeline-item ${isRight ? 'right' : 'left'}`}
-                  initial={{ opacity: 0, x: isRight ? 50 : -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.7, delay: 0.3 + index * 0.2 }}
                 >
-                  <div className="timeline-node">
-                    <div className="node-inner"></div>
-                  </div>
+                  <TimelineNode />
 
                   <div className="timeline-content education-card">
                     <span className={`status-badge ${edu.status.toLowerCase()}`}>

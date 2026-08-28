@@ -14,7 +14,7 @@
   text-align: center;
   padding: 1rem 0 2rem 0;
   border-bottom: 2px solid rgba(217, 176, 140, 0.15);
-  color: rgba(209, 232, 226, 0.5);
+  color: rgba(238, 238, 238, 0.5);
   font-size: 0.85rem;
 }
 
@@ -23,13 +23,13 @@
   font-size: clamp(1.4rem, 4vw, 3rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 203, 154, 0.25);
-  background: linear-gradient(180deg, rgba(255, 203, 154, 0.30), rgba(255, 255, 255, 0.06));
+  -webkit-text-stroke: 1.5px rgba(204, 255, 0, 0.4);
+  background: linear-gradient(180deg, rgba(204, 255, 0, 0.15), rgba(255, 255, 255, 0.06));
   -webkit-background-clip: text;
   background-clip: text;
   letter-spacing: -0.04em;
   text-transform: uppercase;
-  filter: drop-shadow(0 0 14px rgba(255, 203, 154, 0.07));
+  filter: drop-shadow(0 0 12px rgba(204, 255, 0, 0.2));
   margin: 0 0 1.2rem 0;
   max-width: 100%;
   overflow-wrap: break-word;

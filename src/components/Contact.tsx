@@ -135,10 +135,6 @@ const Contact: React.FC = () => {
               <FaShareAlt className="share-icon" />
             </div>
 
-            <p className="panel-description">
-              Feel free to reach out through any of these channels. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-            </p>
-
             <div className="direct-contact">
               <h4>Direct Contact</h4>
               <a href={`mailto:${personalInfo.email}`} className="email-link">
@@ -150,36 +146,17 @@ const Contact: React.FC = () => {
               <h4>Social Media</h4>
               <div className="social-media-box">
                 <div className="accent-line"></div>
-                
-                <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-card">
-                  <div className="social-icon linkedin">
+                <div className="social-icons-row">
+                  <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
                     <FaLinkedin />
-                  </div>
-                  <div className="social-details">
-                    <span className="social-name">LinkedIn</span>
-                    <span className="social-handle">{personalInfo.name.replace(' ', '-').toLowerCase()}</span>
-                  </div>
-                </a>
-
-                <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="social-card">
-                  <div className="social-icon github">
+                  </a>
+                  <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="social-icon github">
                     <FaGithub />
-                  </div>
-                  <div className="social-details">
-                    <span className="social-name">Github</span>
-                    <span className="social-handle">Mihiran-Thilakarathna</span>
-                  </div>
-                </a>
-
-                <a href={personalInfo.instagram} target="_blank" rel="noopener noreferrer" className="social-card">
-                  <div className="social-icon instagram">
+                  </a>
+                  <a href={personalInfo.instagram} target="_blank" rel="noopener noreferrer" className="social-icon instagram">
                     <FaInstagram />
-                  </div>
-                  <div className="social-details">
-                    <span className="social-name">Instagram</span>
-                    <span className="social-handle">@{personalInfo.name.replace(' ', '_').toLowerCase()}</span>
-                  </div>
-                </a>
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>

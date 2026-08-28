@@ -1,5 +1,5 @@
-
 import React, { useRef, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt, FaUsers } from 'react-icons/fa';
 import { FiX } from 'react-icons/fi';
@@ -166,14 +166,10 @@ const WorkModal: React.FC<{ work: any; onClose: () => void }> = ({ work, onClose
 
   const isCoordinator = work.role.includes('Coordinator');
 
-  return (
+  return createPortal(
     <div className="work-modal-backdrop" onClick={onClose}>
-      <motion.div
-        className="work-modal-content glass-panel"
-        initial={{ opacity: 0, scale: 0.9, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 30 }}
-        transition={{ type: "spring", damping: 25, stiffness: 280 }}
+      <div
+        className="work-modal-content"
         onClick={(e) => e.stopPropagation()}
       >
         <button className="work-modal-close-btn" onClick={onClose} aria-label="Close modal">
@@ -215,8 +211,9 @@ const WorkModal: React.FC<{ work: any; onClose: () => void }> = ({ work, onClose
             Close Details
           </button>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </div>,
+    document.body
   );
 };
 

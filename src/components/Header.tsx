@@ -38,7 +38,6 @@ const Header: React.FC = () => {
           <div className="logo-box">
             <span className="logo-m">M</span>
           </div>
-          <span className="logo-text">Mihiran</span>
         </motion.div>
 
         <nav className="nav">

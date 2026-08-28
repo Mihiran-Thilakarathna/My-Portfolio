@@ -17,12 +17,12 @@
   width: 62px;
   height: 62px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 203, 154, 0.4);
+  border: 1px solid rgba(80, 80, 80, 0.4);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: var(--primary);
-  color: #ffffff;
+  color: #000000;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   cursor: pointer;
@@ -32,13 +32,18 @@
 
 .chat-toggle svg {
   font-size: 1.5rem;
-  color: var(--primary-light);
+  color: #000000;
 }
 
 .chat-toggle:hover {
   transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-  background: #0d4d4f;
+  box-shadow: 0 12px 30px rgba(204, 255, 0, 0.3);
+  background: #000000;
+  border-color: var(--primary);
+}
+
+.chat-toggle:hover svg {
+  color: var(--primary);
 }
 
 .chat-toggle.open {
@@ -75,7 +80,7 @@
 .chat-header {
   padding: 1rem 1.2rem;
   background: var(--primary);
-  color: #ffffff;
+  color: #000000;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -112,8 +117,8 @@
 
 .close-button {
   border: none;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.15);
+  color: #000000;
   width: 34px;
   height: 34px;
   border-radius: 50%;
@@ -174,7 +179,7 @@
 .chat-message.user {
   align-self: flex-end;
   background: var(--primary);
-  color: #ffffff;
+  color: #000000;
   border-bottom-right-radius: 6px;
 }
 
@@ -185,7 +190,7 @@
 
 .chat-message.user .timestamp {
   text-align: right;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .typing-indicator {
@@ -269,7 +274,7 @@
 .chat-input:focus {
   outline: none;
   border-color: var(--primary-light);
-  box-shadow: 0 0 0 2px rgba(255, 203, 154, 0.15);
+  box-shadow: 0 0 0 2px rgba(80, 80, 80, 0.15);
 }
 
 .send-button {
@@ -278,7 +283,7 @@
   border: none;
   border-radius: 50%;
   background: var(--primary);
-  color: #ffffff;
+  color: #000000;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -286,7 +291,7 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  flex-overflow: hidden;
+  overflow: hidden;
   flex-shrink: 0;
 }
 

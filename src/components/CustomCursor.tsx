@@ -66,8 +66,8 @@ const CustomCursor: React.FC = () => {
                         setIsTextHovering(true);
                         return;
                     }
-                } catch (err) {
-
+                } catch {
+                    // Ignore errors during range selection
                 }
             }
 
