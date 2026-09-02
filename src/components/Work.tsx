@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt, FaUsers } from 'react-icons/fa';
 import { FiX } from 'react-icons/fi';
-import { workExperience } from '../data/portfolio';
+import { useWorkExperienceData } from '../hooks/usePortfolioData';
 import './Work.css';
 
 interface WorkCardProps {
@@ -221,6 +221,7 @@ const Work: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeModalWork, setActiveModalWork] = useState<any | null>(null);
+  const workExperience = useWorkExperienceData();
 
   return (
     <section id="work" className="work" ref={ref}>

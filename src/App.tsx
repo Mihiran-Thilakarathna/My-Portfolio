@@ -32,6 +32,7 @@ function App() {
 
   return (
     <ThemeProvider>
+      <div className="portfolio-shell">
       <CustomCursor />
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
 
@@ -79,6 +80,7 @@ function App() {
           </AnimatePresence>
         </>
       )}
+      </div>
     </ThemeProvider>
   );
 }

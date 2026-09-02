@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mihiran Thilakarathna</title>
+    <script>
+      // GitHub Pages has no server-side routing, so client-side routes 404 directly. Stash and redirect.
+      var path = location.pathname + location.search + location.hash;
+      sessionStorage.redirectPath = path;
+      location.replace('/');
+    </script>
+  </head>
+  <body></body>
+</html>

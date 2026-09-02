@@ -32,8 +32,12 @@ body {
   width: 100%;
 }
 
+/* Native cursor is hidden only within the portfolio site, which renders its
+   own CustomCursor. The admin dashboard has no custom cursor, so it keeps
+   the normal system pointer. */
 @media (pointer: fine) {
-  * {
+  .portfolio-shell,
+  .portfolio-shell * {
     cursor: none !important;
   }
 }

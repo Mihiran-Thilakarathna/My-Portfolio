@@ -33,6 +33,16 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Restores the path public/404.html stashed before GitHub Pages redirected here.
+      if (sessionStorage.redirectPath) {
+        var redirectPath = sessionStorage.redirectPath;
+        delete sessionStorage.redirectPath;
+        if (redirectPath !== location.pathname + location.search + location.hash) {
+          history.replaceState(null, '', redirectPath);
+        }
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 export type ProjectCategory = 'AI/ML' | 'Web Application' | 'Mobile Application';
 
 export interface Project {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string;
@@ -13,7 +13,7 @@ export interface Project {
 }
 
 export interface WorkExperience {
-  id: number;
+  id: string;
   company: string;
   role: string;
   startDate: string;
@@ -24,7 +24,7 @@ export interface WorkExperience {
 }
 
 export interface Education {
-  id: number;
+  id: string;
   institution: string;
   degree: string;
   startDate: string;
@@ -33,7 +33,7 @@ export interface Education {
 }
 
 export interface Certification {
-  id: number;
+  id: string;
   title: string;
   provider: string;
   date: string;
@@ -68,7 +68,7 @@ export interface PersonalInfo {
 export type Theme = 'light' | 'dark' | 'default';
 
 export interface Competition {
-  id: number;
+  id: string;
   name: string;
   year: string;
   result: string;

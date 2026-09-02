@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FaTrophy, FaUsers, FaMapMarkerAlt, FaBuilding, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { competitions } from '../data/portfolio';
+import { useCompetitionsData } from '../hooks/usePortfolioData';
 import './Achievements.css';
 
 const Achievements: React.FC = () => {
@@ -12,7 +12,10 @@ const Achievements: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [activeComp, setActiveComp] = useState(0);
 
+  const competitions = useCompetitionsData();
   const currentComp = competitions[activeComp];
+
+  if (!currentComp) return null;
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);

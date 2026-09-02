@@ -55,7 +55,7 @@ export const stats = {
 
 export const workExperience: WorkExperience[] = [
   {
-    id: 1,
+    id: '1',
     company: 'Department of Computing, Rajarata University of Sri Lanka',
     role: 'Batch Coordinator',
     startDate: 'Jun 2026',
@@ -65,7 +65,7 @@ export const workExperience: WorkExperience[] = [
     current: true,
   },
   {
-    id: 2,
+    id: '2',
     company: "People's Bank",
     role: 'Trainee',
     startDate: 'Dec 2022',
@@ -78,7 +78,7 @@ export const workExperience: WorkExperience[] = [
 
 export const education: Education[] = [
   {
-    id: 1,
+    id: '1',
     institution: 'Rajarata University of Sri Lanka',
     degree: 'Bachelor of Information and Communication Technology',
     startDate: '2022',
@@ -86,7 +86,7 @@ export const education: Education[] = [
     status: 'ONGOING',
   },
   {
-    id: 2,
+    id: '2',
     institution: 'Eheliyagoda National School',
     degree: 'G.C.E. Advanced Level',
     startDate: '2019',
@@ -94,7 +94,7 @@ export const education: Education[] = [
     status: 'COMPLETED',
   },
   {
-    id: 3,
+    id: '3',
     institution: 'Eheliyagoda National School',
     degree: 'G.C.E. Ordinary Level',
     startDate: '2009',
@@ -105,105 +105,105 @@ export const education: Education[] = [
 
 export const certifications: Certification[] = [
   {
-    id: 14,
+    id: '14',
     title: 'Data Science Essentials with Python',
     provider: 'Cisco Networking Academy',
     date: 'Jun 2026',
     certificateUrl: '/certificates/DataScienceEssentialswithPython.pdf',
   },
   {
-    id: 15,
+    id: '15',
     title: 'Modern AI',
     provider: 'Cisco Networking Academy',
     date: 'May 2026',
     certificateUrl: '/certificates/modernAI.pdf',
   },
   {
-    id: 1,
+    id: '1',
     title: 'Python for Beginners',
     provider: 'University of Moratuwa',
     date: 'Apr 2026',
     certificateUrl: '/certificates/Python.pdf',
   },
   {
-    id: 6,
+    id: '6',
     title: 'Introduction to Android Mobile Application Development',
     provider: 'Meta',
     date: 'Apr 2026',
     certificateUrl: '/certificates/Mobile-Application.pdf',
   },
   {
-    id: 7,
+    id: '7',
     title: 'Hypothesis-Based Problem Solving (Intermediate Level)',
     provider: 'SLASSCOM Academy',
     date: 'Apr 2026',
     certificateUrl: '/certificates/hypothesis-based-problem-solving.pdf',
   },
   {
-    id: 8,
+    id: '8',
     title: 'Introduction to Cybersecurity',
     provider: 'Cisco Networking Academy',
     date: 'Apr 2026',
     certificateUrl: '/certificates/introduction-to-cybersecurity.pdf',
   },
   {
-    id: 9,
+    id: '9',
     title: 'LFS169: Introduction to GitOps',
     provider: 'The Linux Foundation',
     date: 'Mar 2026',
     certificateUrl: '/certificates/gitops.pdf',
   },
   {
-    id: 10,
+    id: '10',
     title: 'Introduction to Kubernetes',
     provider: 'The Linux Foundation',
     date: 'Feb 2026',
     certificateUrl: '/certificates/kubernetes.pdf',
   },
   {
-    id: 2,
+    id: '2',
     title: 'Google AI Essential Specialization',
     provider: 'Coursera',
     date: 'Nov 2025',
     certificateUrl: '/certificates/google-ai-essential.pdf',
   },
   {
-    id: 3,
+    id: '3',
     title: 'Supervised Machine Learning: Regression and Classification',
     provider: 'DeepLearning.AI',
     date: 'Nov 2025',
     certificateUrl: '/certificates/supervised-ml.pdf',
   },
   {
-    id: 4,
+    id: '4',
     title: 'Machine Learning I',
     provider: 'Columbia University',
     date: 'Nov 2025',
     certificateUrl: '/certificates/machine-learning-1.pdf',
   },
   {
-    id: 11,
+    id: '11',
     title: 'Postman API Fundamentals Student Expert',
     provider: 'Postman',
     date: 'Nov 2025',
     certificateUrl: '/certificates/postman-api.pdf',
   },
   {
-    id: 12,
+    id: '12',
     title: 'Designing Blockchain Solutions using Amazon Managed Blockchain',
     provider: 'AWS Training & Certification',
     date: 'Nov 2025',
     certificateUrl: '/certificates/Designing Blockchain Solutions.pdf',
   },
   {
-    id: 5,
+    id: '5',
     title: 'AI Security & Governance',
     provider: 'Securiti',
     date: 'Sep 2025',
     certificateUrl: '/certificates/ai-security.pdf',
   },
   {
-    id: 13,
+    id: '13',
     title: 'ReactJs - The Complete Reacts Course For Beginners',
     provider: 'Udemy',
     date: 'Jun 2025',
@@ -213,7 +213,7 @@ export const certifications: Certification[] = [
 
 export const projects: Project[] = [
   {
-    id: 7,
+    id: '7',
     title: 'Vendora',
     description: 'A modern, full-stack e-commerce admin/staff dashboard designed to seamlessly manage products, orders, and operational notifications with strict role-based access control (RBAC).',
     image: vendora,
@@ -223,7 +223,7 @@ export const projects: Project[] = [
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/Vendora----SaaS-E-Commerce-Dashboard.git',
   },
   {
-    id: 6,
+    id: '6',
     title: 'OmniModel Converter',
     description: 'A production-grade, full-stack ML model conversion platform engineered to eliminate cross-framework deployment barriers. Automates translation across PyTorch, TensorFlow, ONNX, and TFLite using FastAPI and Next.js.',
     image: omnimodel,
@@ -233,7 +233,7 @@ export const projects: Project[] = [
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/omnimodel-converter.git',
   },
   {
-    id: 1,
+    id: '1',
     title: 'Food Ordering App',
     description: 'Offline-first Android food app with browsing, cart, and profile management using Java, SQLite, and a clean UI.',
     image: foodordering,
@@ -242,7 +242,7 @@ export const projects: Project[] = [
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/FoodOrderingApp.git',
   },
   {
-    id: 2,
+    id: '2',
     title: 'Lumo AI Assistant',
     description: 'Multimodal Android AI assistant in Jetpack Compose using Gemini for text, image, and PDF analysis with chat-style UX.',
     image: lumo,
@@ -251,7 +251,7 @@ export const projects: Project[] = [
     codeUrl: 'https://github.com/Mihiran-Thilakarathna/Lumo-AI-assistant.git',
   },
   {
-    id: 3,
+    id: '3',
     title: 'MoodTune',
     description: 'Android app that detects your emotion from facial cues and queues mood-matching music via ML Kit and TensorFlow Lite.',
     image: moodtune,
@@ -261,7 +261,7 @@ export const projects: Project[] = [
   },
 
   {
-    id: 4,
+    id: '4',
     title: 'Facial Occlusion Classification for Restricted Environments',
     description: 'MobileNetV2 model classifying clear face, helmet, or mask to support restricted-area security monitoring.',
     image: facial,
@@ -271,7 +271,7 @@ export const projects: Project[] = [
   },
 
   {
-    id: 5,
+    id: '5',
     title: 'Portfolio Website',
     description: 'Responsive React + TypeScript portfolio with smooth animations, an AI chatbot, working contact form, and a curated project grid.',
     image: portfolio,
@@ -284,7 +284,7 @@ export const projects: Project[] = [
 
 export const competitions: Competition[] = [
   {
-    id: 1,
+    id: '1',
     name: 'InnovateX 2025 Grand Finale',
     year: '2025',
     result: 'Grand Finalist',

@@ -2,14 +2,14 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { FiSmartphone, FiCpu, FiGlobe, FiStar } from 'react-icons/fi';
-import { projects } from '../data/portfolio';
-import type { ProjectCategory } from '../types';
+import { useProjectsData } from '../hooks/usePortfolioData';
+import type { Project, ProjectCategory } from '../types';
 import './Projects.css';
 
 type FilterType = ProjectCategory | 'All';
 
 const ProjectCard: React.FC<{
-  project: (typeof projects)[number];
+  project: Project;
   index: number;
 }> = ({ project, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -119,6 +119,7 @@ const Projects: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [filter, setFilter] = useState<FilterType | null>(null);
+  const projects = useProjectsData();
 
   const filters: FilterType[] = [
     'All',

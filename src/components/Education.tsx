@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView, useScroll } from 'framer-motion';
 import { FaCertificate, FaExternalLinkAlt, FaUniversity, FaBuilding, FaBrain, FaShieldAlt, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { SiCisco, SiMeta, SiCoursera, SiUdemy, SiAmazon, SiLinuxfoundation, SiPostman } from 'react-icons/si';
-import { education, certifications } from '../data/portfolio';
+import { useEducationData, useCertificationsData } from '../hooks/usePortfolioData';
+import type { Certification } from '../types';
 import './Education.css';
 
 const getProviderIcon = (provider: string) => {
@@ -58,7 +59,7 @@ const getBrandColor = (_provider: string) => {
   return { rgb: '217, 176, 140', hex: '#D9B08C' };
 };
 
-const CertificateStack: React.FC = () => {
+const CertificateStack: React.FC<{ certifications: Certification[] }> = ({ certifications }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollTimeout = useRef<any>(null);
@@ -369,6 +370,8 @@ const Education: React.FC = () => {
     target: timelineRef,
     offset: ["start center", "end center"]
   });
+  const education = useEducationData();
+  const certifications = useCertificationsData();
 
   return (
     <section id="education" className="education" ref={ref}>
@@ -442,7 +445,7 @@ const Education: React.FC = () => {
             Certifications
           </motion.h3>
 
-          <CertificateStack />
+          <CertificateStack certifications={certifications} />
         </div>
       </div>
     </section>
