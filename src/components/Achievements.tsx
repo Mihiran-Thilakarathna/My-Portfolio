@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FaTrophy, FaUsers, FaMapMarkerAlt, FaBuilding, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FiCamera } from 'react-icons/fi';
 import { useCompetitionsData } from '../hooks/usePortfolioData';
 import './Achievements.css';
 
@@ -126,7 +127,10 @@ const Achievements: React.FC = () => {
           </div>
 
           <div className="comp-gallery-panel">
-            <div className="gallery-label">📸 Event Photos</div>
+            <div className="gallery-label">
+              <span className="gallery-label-icon"><FiCamera /></span>
+              Event Photos
+            </div>
 
             <motion.div
               className="gallery-hero"

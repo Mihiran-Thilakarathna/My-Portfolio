@@ -318,6 +318,8 @@
   position: relative;
   box-shadow: 0 0 18px rgba(var(--brand-rgb), 0.12);
   z-index: 2;
+  /* don't squash the circle for long titles */
+  flex-shrink: 0;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -369,6 +371,15 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   font-family: 'Outfit', sans-serif;
   letter-spacing: -0.2px;
+}
+
+/* clamp long titles to two lines */
+.cert-card-info h4 span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .cert-card-info .provider {

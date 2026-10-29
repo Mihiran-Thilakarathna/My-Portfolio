@@ -120,6 +120,8 @@ const CertificateStack: React.FC<{ certifications: Certification[] }> = ({ certi
       if (atStart || atEnd) return;
 
       e.preventDefault();
+      // stop Lenis from scrolling the page too
+      (e as WheelEvent & { lenisStopPropagation?: boolean }).lenisStopPropagation = true;
       if (scrollTimeout.current) return;
 
       if (delta > 15) {
@@ -134,8 +136,8 @@ const CertificateStack: React.FC<{ certifications: Certification[] }> = ({ certi
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
     container.addEventListener('mousemove', handleMouseMove);
-    // passive:false is required to use e.preventDefault() for wheel events
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    // passive: false for preventDefault; capture so this runs before Lenis
+    window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
 
     // Set up interval for edge scrolling
     scrollInterval.current = setInterval(() => {
@@ -150,7 +152,7 @@ const CertificateStack: React.FC<{ certifications: Certification[] }> = ({ certi
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
       container.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('wheel', handleWheel, { capture: true });
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
       if (scrollInterval.current) clearInterval(scrollInterval.current);
     };
@@ -261,7 +263,7 @@ const CertificateStack: React.FC<{ certifications: Certification[] }> = ({ certi
               </div>
 
               <div className="cert-card-info">
-                <h4>{cert.title}</h4>
+                <h4 title={cert.title}><span>{cert.title}</span></h4>
                 <p className="provider">{cert.provider}</p>
                 <div className="card-divider" />
                 <p className="date">{cert.date}</p>

@@ -191,11 +191,27 @@
 }
 
 .gallery-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
+}
+
+.gallery-label-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(204, 255, 0, 0.08);
+  border: 1px solid rgba(204, 255, 0, 0.22);
+  color: var(--primary);
+  font-size: 0.95rem;
 }
 
 .gallery-hero {
