@@ -28,13 +28,19 @@ const HALO = 12;
 const LIFT_GAP = 30;
 // wet trail length, as a fraction of the total
 const WET_SPAN = 0.1;
+// light that runs along the finished strokes, as a fraction of the total
+const GLINT_SPAN = 0.09;
 
 // Seconds
 const START = 0.3; // pause before writing
 const WRITE = 3.4;
 const SETTLE = 0.3; // let the last ink dry
+const GLINT = 1.2; // light runs along the letters
 const HOLD = 0.6;
 const EXIT = 1.6; // fade out to the site
+
+// dots in the loading row
+const DOTS = 14;
 
 interface Plan {
   width: number;
@@ -156,6 +162,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [plan, setPlan] = useState<Plan>();
   const [exiting, setExiting] = useState(false);
+  const percentRef = useRef<HTMLSpanElement>(null);
+  const dotsRef = useRef<HTMLDivElement>(null);
 
   // wait for the font (max 2.5s) before measuring
   useEffect(() => {
@@ -218,6 +226,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
     };
     const inked = maskOf();
     const wetness = maskOf();
+    const glint = maskOf();
     const scratch = deviceCanvas();
     const sctx = scratch.getContext('2d')!;
 
@@ -254,37 +263,82 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
       ctx.drawImage(scratch, 0, 0);
     };
 
+    // bright band travelling through the written strokes in writing order
+    let lit = 0;
+    let passed = 0;
+    const glintSpan = total * GLINT_SPAN;
+    const glintAt = (at: number) => {
+      for (; lit < order.length && inkedAt[order[lit]] <= at; lit++);
+      for (; passed < lit && inkedAt[order[passed]] < at - glintSpan; passed++) {
+        glint.data.data[order[passed] * 4 + 3] = 0;
+      }
+      for (let i = passed; i < lit; i++) {
+        const x = (at - inkedAt[order[i]]) / glintSpan;
+        glint.data.data[order[i] * 4 + 3] = Math.round(Math.sin(Math.PI * x) * 255);
+      }
+      glint.ctx.putImageData(glint.data, 0, 0);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(ink, 0, 0);
+      sctx.clearRect(0, 0, canvas.width, canvas.height);
+      through(sctx, glint.canvas, wet);
+      // added on top so the light reads brighter than the ink
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(scratch, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+    };
+
     const finish = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(ink, 0, 0);
     };
 
+    let shown = -1;
+    const progress = (p: number) => {
+      const percent = Math.round(clamp01(p) * 100);
+      if (percent === shown) return;
+      shown = percent;
+      if (percentRef.current) percentRef.current.textContent = `${percent}%`;
+      const dots = dotsRef.current?.children;
+      if (dots) {
+        const on = Math.floor((percent / 100) * DOTS);
+        for (let i = 0; i < dots.length; i++) dots[i].classList.toggle('is-on', i < on);
+      }
+    };
+
     if (reduceMotion) {
       finish();
+      progress(1);
       markIntroWritten();
       const timer = setTimeout(() => setExiting(true), 1200);
       return () => clearTimeout(timer);
     }
 
-    const done = START + WRITE + SETTLE + HOLD;
+    const written = START + WRITE + SETTLE;
+    const done = written + GLINT + HOLD;
     let raf = 0;
     let begin = 0;
 
     const frame = (now: number) => {
       if (!begin) begin = now;
       const t = (now - begin) / 1000;
+      // reaches 100% before the hold, where heavy setup may drop frames
+      progress(t / (written + GLINT));
 
       if (t < START) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-      } else if (t < START + WRITE + SETTLE) {
+      } else if (t < written) {
         // eased pen position, plus a short drying tail after writing
         writeUpTo(easeInOut((t - START) / WRITE) * total + Math.max(0, t - START - WRITE) / SETTLE * wetSpan);
+      } else if (t < written + GLINT) {
+        glintAt(easeInOut((t - written) / GLINT) * (total + glintSpan));
       } else if (t < done) {
         finish();
         // signature is still now: let heavy setup (the About card) run here
         markIntroWritten();
       } else {
         finish();
+        progress(1);
         setExiting(true);
         return;
       }
@@ -310,6 +364,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
       transition={{ duration: EXIT, ease: [0.4, 0, 0.2, 1] }}
       role="img"
       aria-label={NAME}
+      style={plan ? ({ '--stage-h': `${plan.height * plan.scale}px` } as React.CSSProperties) : undefined}
     >
       <motion.div
         className="intro-stage"
@@ -320,6 +375,18 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
       >
         <canvas ref={canvasRef} className="intro-signature" />
       </motion.div>
+
+      <div className="intro-loader" aria-hidden="true">
+        <div className="intro-loader-row">
+          <span>Loading</span>
+          <span ref={percentRef}>0%</span>
+        </div>
+        <div className="intro-loader-dots" ref={dotsRef}>
+          {Array.from({ length: DOTS }, (_, i) => (
+            <span key={i} />
+          ))}
+        </div>
+      </div>
     </motion.div>
   );
 };
