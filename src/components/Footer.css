@@ -19,10 +19,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 1.4rem 1.5rem 1.6rem;
+  padding: 2.4rem 1.5rem 1.6rem;
   text-align: center;
-  border-top: 1px solid rgba(204, 255, 0, 0.08);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.35));
+  /* plain black behind the text, fading out at the top (no box edge) */
+  background: linear-gradient(to top, #000 60%, transparent);
   pointer-events: none;
 }
 
@@ -38,7 +38,18 @@
     height: 240px;
   }
 
+  /* two lines, kept clear of the floating chat button */
+  .footer-bottom {
+    padding: 2rem 72px 1.4rem;
+  }
+
   .footer-bottom p {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: rgba(238, 238, 238, 0.7);
+  }
+
+  .footer-bottom p span {
+    display: block;
   }
 }

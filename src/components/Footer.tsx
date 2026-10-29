@@ -32,17 +32,23 @@ const Footer: React.FC = () => {
             morph={0.2}
             markers="none"
             glitch={0}
-            // background only, no mouse interaction
-            mouseInteraction={false}
+            mouseInteraction
+            hoverEffect="lift"
+            mouseRadius={1}
+            mouseStrength={0.6}
+            trail={0.3}
             parallax={0}
-            clickEffect="none"
+            clickEffect="pulse"
             intro
           />
         )}
       </div>
 
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} Mihiran Thilakarathna. All Rights Reserved.</p>
+        <p>
+          <span>© {new Date().getFullYear()} Mihiran Thilakarathna.</span>{' '}
+          <span>All Rights Reserved.</span>
+        </p>
       </div>
     </footer>
   );
