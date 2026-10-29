@@ -1,4 +1,4 @@
-import type { CSSProperties, FC } from 'react';
+import type { CSSProperties, FC, RefObject } from 'react';
 
 export interface LanyardProps {
   frontImage?: string;
@@ -27,6 +27,10 @@ export interface LanyardProps {
   dropDelay?: number;
   /** Keeps the drop paused (out of view) while true. */
   hold?: boolean;
+  /** Element that gets the strap's top angle as the `--strap-tilt` CSS variable each frame. */
+  strapTiltRef?: RefObject<HTMLElement | null>;
+  /** Pin the strap this many px below the top edge (default: just above it). */
+  anchorDepth?: number;
   className?: string;
   style?: CSSProperties;
 }

@@ -127,9 +127,11 @@ const About: React.FC = () => {
   const stageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  // hanger fold; Lanyard rotates it to follow the strap
+  const foldRef = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-20%' });
-  // drop once the section is well into view, not when it first peeks in
-  const cardInView = useInView(ref, { once: true, margin: '0px 0px -35% 0px' });
+  // drop as soon as the section is coming into view
+  const cardInView = useInView(ref, { once: true, margin: '0px 0px -15% 0px' });
   const statsInView = useInView(statsRef, { once: true, margin: '-10%' });
   const projects = useProjectsData();
   const [cardArt, setCardArt] = useState<CardArt>();
@@ -255,24 +257,29 @@ const About: React.FC = () => {
               breeze={0.3}
               interactive
               intro="drop"
-              dropDelay={0.3}
+              dropDelay={0}
               hold={!cardInView}
+              strapTiltRef={foldRef}
+              anchorDepth={hang.mount.y - hang.top}
             />
         </div>
       )}
       {/* strap hanger on the divider (also hides the clipped strap end) */}
       {cardInView && cardArt && hang && (
         <div
-          className="about-strap-mount"
+          className="about-strap-hanger"
           aria-hidden="true"
           style={{
             left: hang.mount.x,
             top: hang.mount.y,
-            transform: `translate(-50%, -50%) rotate(${hang.mount.angle}deg)`,
             '--strap-w': `${hang.mount.strapWidth}px`,
           } as React.CSSProperties}
         >
-          <span className="about-strap-fold" />
+          <span
+            className="about-strap-mount"
+            style={{ transform: `translate(-50%, -50%) rotate(${hang.mount.angle}deg)` }}
+          />
+          <span className="about-strap-fold" ref={foldRef} />
         </div>
       )}
 

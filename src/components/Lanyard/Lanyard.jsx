@@ -482,6 +482,8 @@ const createSimulation = () => {
       inverseInertia: new THREE.Vector3(1, 1, 1),
       hang: new THREE.Vector3()
     },
+    // card box in local space, for keeping the strap out of it
+    box: { halfWidth: 0, bottom: 0, top: 0, face: 0 },
     grab: null,
     turn: 0,
     twist: 0,
@@ -499,8 +501,22 @@ const scratch = {
   f: new THREE.Vector3(),
   g: new THREE.Vector3(),
   pin: new THREE.Vector3(),
+  local: new THREE.Vector3(),
   q: new THREE.Quaternion(),
-  r: new THREE.Quaternion()
+  r: new THREE.Quaternion(),
+  inverse: new THREE.Quaternion()
+};
+
+// Push a strap point that ended up inside the card out to the nearest face (the back when it
+// is right in the card plane). The top of the card, where the strap goes into the clamp, is left alone.
+const keepOffCard = (sim, point) => {
+  const { box, body } = sim;
+  const local = scratch.local.subVectors(point, body.position).applyQuaternion(scratch.inverse.copy(body.quaternion).invert());
+  if (Math.abs(local.x) > box.halfWidth || local.y > box.top || local.y < box.bottom) return false;
+  if (Math.abs(local.z) >= box.face) return false;
+  local.z = local.z > 1e-4 ? box.face : -box.face;
+  point.copy(local.applyQuaternion(body.quaternion).add(body.position));
+  return true;
 };
 
 const applyInverseInertia = (body, vector, out) => {
@@ -610,6 +626,10 @@ const configureSimulation = (sim, layout, length) => {
     12 / (width * width + height * height)
   );
   body.hang.set(0, layout.hangY, 0);
+  sim.box.halfWidth = width / 2 + 0.01;
+  sim.box.bottom = -height / 2 - 0.01;
+  sim.box.top = layout.slot.y - layout.slot.height * 2;
+  sim.box.face = t / 2 + 0.012;
 };
 
 const stepSimulation = (sim, dt, physics, time) => {
@@ -672,6 +692,8 @@ const stepSimulation = (sim, dt, physics, time) => {
       if (grab) solvePin(body, grab, pin);
     }
 
+    for (let i = 1; i < JOINTS; i++) keepOffCard(sim, nodes[i]);
+
     for (let i = 1; i < JOINTS; i++) {
       const v = velocities[i].subVectors(nodes[i], previous[i]).divideScalar(h).multiplyScalar(nodeDrag);
       v.multiplyScalar(1 / (1 + physics.nodeAir * v.length() * h));
@@ -726,6 +748,8 @@ const Lanyard = ({
   intro = true,
   dropDelay = 0,
   hold = false,
+  strapTiltRef,
+  anchorDepth,
   className = '',
   style
 }) => {
@@ -755,7 +779,9 @@ const Lanyard = ({
     interactive,
     intro,
     dropDelay,
-    hold
+    hold,
+    strapTiltRef,
+    anchorDepth
   };
 
   useEffect(() => {
@@ -883,6 +909,7 @@ const Lanyard = ({
     let visible = true;
     let alive = true;
     let placed = false;
+    let lastTilt = 0;
     let hovering = false;
     let press = null;
     let drop = null;
@@ -934,7 +961,10 @@ const Lanyard = ({
       foilUniforms.foilFill.value.set(3, -1, 4).normalize().transformDirection(camera.matrixWorldInverse);
       foilUniforms.foilTop.value.set(0.5, 4.5, 8).normalize().transformDirection(camera.matrixWorldInverse);
       const anchorX = ((typeof s.anchor === 'number' ? s.anchor : (ANCHORS[s.anchor] ?? 0.5)) - 0.5) * viewWidth;
-      const anchorY = viewHeight / 2 + 0.2;
+      // pinned anchorDepth px below the top edge, or just above it by default
+      const anchorY = typeof s.anchorDepth === 'number'
+        ? viewHeight / 2 - (s.anchorDepth * viewHeight) / view.height
+        : viewHeight / 2 + 0.2;
       const cardTop = viewHeight / 2 - viewHeight * mix(0.12, 0.42, clamp(s.strapLength, 0, 1));
       const hangTop = cardTop + (layout.hangY - layout.height / 2);
       sim.anchor.set(anchorX, anchorY, 0);
@@ -961,7 +991,7 @@ const Lanyard = ({
         ring.position.set(0, layout.ringY, 0);
         applied.framingKey = '';
       }
-      const framingKey = `${layoutKey}|${s.size}|${s.anchor}|${s.strapLength}|${view.width}|${view.height}`;
+      const framingKey = `${layoutKey}|${s.size}|${s.anchor}|${s.anchorDepth}|${s.strapLength}|${view.width}|${view.height}`;
       if (framingKey !== applied.framingKey) {
         frameView();
         // re-place while the drop hasn't started yet, so the held pose matches the new frame
@@ -1085,7 +1115,10 @@ const Lanyard = ({
       for (let i = 0; i <= guide; i++) controls.push(sim.nodes[i]);
       controls.push(mouth, tuck);
       curve.updateArcLengths();
-      for (let i = 0; i < SAMPLES; i++) curve.getPointAt(i / (SAMPLES - 1), points[i]);
+      for (let i = 0; i < SAMPLES; i++) {
+        curve.getPointAt(i / (SAMPLES - 1), points[i]);
+        keepOffCard(sim, points[i]);
+      }
       const length = curve.getLength();
       const held = 1 - mouth.distanceTo(tuck) / Math.max(length, 0.001);
       const position = bandGeometry.getAttribute('position');
@@ -1203,6 +1236,17 @@ const Lanyard = ({
         }
       }
       stepSimulation(sim, dt, current, time);
+      // report the strap's angle where it leaves the anchor (for an attached hanger)
+      const tiltTarget = settingsRef.current.strapTiltRef?.current;
+      if (tiltTarget) {
+        const a = sim.nodes[0];
+        const b = sim.nodes[1];
+        const tilt = clamp((-Math.atan2(b.x - a.x, a.y - b.y) * 180) / Math.PI, -75, 75);
+        if (Math.abs(tilt - lastTilt) > 0.05) {
+          lastTilt = tilt;
+          tiltTarget.style.setProperty('--strap-tilt', `${tilt.toFixed(2)}deg`);
+        }
+      }
       const body = sim.body;
       if (!Number.isFinite(body.position.x + body.position.y + body.position.z + body.quaternion.w)) {
         sim.grab = null;
