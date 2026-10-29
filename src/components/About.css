@@ -37,6 +37,18 @@
   pointer-events: none;
 }
 
+/* Touch devices: a live backdrop blur over the WebGL canvas causes line artifacts and drops
+   frames, so soften the strap with a dark fade behind the text instead */
+@media (hover: none), (pointer: coarse) {
+  .about .section-header h2::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: radial-gradient(closest-side, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.5) 75%, transparent);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
 .about-grid {
   display: grid;
   grid-template-columns: minmax(300px, 0.85fr) 1.15fr;
@@ -175,7 +187,7 @@
   padding: 1.15rem 1.25rem;
   border-radius: 14px;
   background: var(--card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -542,5 +554,23 @@ a.about-stat:hover .about-stat-note {
     width: 64px;
     height: 64px;
     font-size: 2rem;
+  }
+}
+
+/* Touch screens have no hover state, so give the cards a visible lime-tinted outline */
+@media (hover: none) {
+  .focus-card {
+    border-color: rgba(204, 255, 0, 0.2);
+    background: linear-gradient(160deg, rgba(204, 255, 0, 0.05), var(--card-bg) 45%);
+  }
+
+  .about-stat .notched-shape path,
+  .about-stat .notched-icon {
+    stroke: rgba(204, 255, 0, 0.24);
+    border-color: rgba(204, 255, 0, 0.24);
+  }
+
+  .about-stack-card {
+    border-color: rgba(204, 255, 0, 0.2);
   }
 }
