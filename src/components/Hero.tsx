@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowRight, FaDownload, FaLinkedin, FaGithub, FaBlogger, FaInstagram, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { FaArrowRight, FaDownload, FaLinkedin, FaGithub, FaInstagram, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
 import mihiranPhoto from '../assets/mihiran115.png';
+import { scrollToElement, scrollToY } from '../lib/smoothScroll';
 import './Hero.css';
 
-const Hero: React.FC = () => {
+const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
   const titles = [
     ["FULL STACK", "DEVELOPER"],
     ["AI / ML", "ENTHUSIAST"],
@@ -13,6 +14,13 @@ const Hero: React.FC = () => {
 
   const [titleIndex, setTitleIndex] = useState(0);
   const [showCVModal, setShowCVModal] = useState(false);
+
+  // Parallax fade-out as the hero scrolls away
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const exitY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const exitOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const exitScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,34 +33,30 @@ const Hero: React.FC = () => {
     const element = document.getElementById(id);
     if (element) {
       if (id === 'contact') {
-        element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        scrollToElement(element, 'end');
         return;
       }
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      scrollToY(elementPosition + window.scrollY - headerOffset);
     }
   };
 
   return (
-    <section id="home" className="hero">
+    <section id="home" className="hero" ref={heroRef}>
       <div className="hero-watermark">MIHIRAN</div>
-      <div className="hero-content">
+      <motion.div className="hero-content" style={{ y: exitY, opacity: exitOpacity, scale: exitScale }}>
         <motion.div
           className="hero-text"
           initial={{ opacity: 0, x: -75 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          animate={entered ? { opacity: 1, x: 0 } : undefined}
+          transition={{ duration: 1.1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.div
             className="hero-quote-container"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
+            animate={entered ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 1.1, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <h1 className="hero-quote">
               <span className="highlight-white">AN AMBITIOUS</span><br />
@@ -81,8 +85,8 @@ const Hero: React.FC = () => {
           <motion.div
             className="hero-buttons-new"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2 }}
+            animate={entered ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.9, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
           >
             <button
               onClick={() => setShowCVModal(true)}
@@ -101,14 +105,13 @@ const Hero: React.FC = () => {
           <motion.div
             className="hero-socials-new"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.4 }}
+            animate={entered ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.9, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="follow-text">Follow me on</span>
             <div className="hero-socials">
               <a href="https://www.linkedin.com/in/mihiran-thilakarathna" target="_blank" rel="noopener noreferrer" className="social-icon-btn"><FaLinkedin /></a>
               <a href="https://github.com/Mihiran-Thilakarathna" target="_blank" rel="noopener noreferrer" className="social-icon-btn"><FaGithub /></a>
-              <a href="https://codecrazeteam.blogspot.com/" target="_blank" rel="noopener noreferrer" className="social-icon-btn"><FaBlogger /></a>
               <a href="https://www.instagram.com/mihiran_thilakarathna?igsh=emZmb2Zpb2Zxa2xt" target="_blank" rel="noopener noreferrer" className="social-icon-btn"><FaInstagram /></a>
             </div>
           </motion.div>
@@ -117,8 +120,8 @@ const Hero: React.FC = () => {
         <motion.div
           className="hero-image"
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          animate={entered ? { opacity: 1, scale: 1 } : undefined}
+          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="image-container">
             <div className="image-wrapper">
@@ -129,13 +132,13 @@ const Hero: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
       <motion.div
         className="scroll-indicator"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.8 }}
+        animate={entered ? { opacity: 1 } : undefined}
+        transition={{ duration: 0.8, delay: 1.8 }}
       >
         <div className="scroll-button">
           <div className="scroll-mouse">

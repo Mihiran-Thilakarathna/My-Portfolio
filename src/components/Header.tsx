@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaHome, FaUser, FaBriefcase, FaGraduationCap, FaCode, FaEnvelope, FaTrophy } from 'react-icons/fa';
 import { useScrollSpy } from '../hooks/useScrollSpy';
+import { scrollToElement } from '../lib/smoothScroll';
 import './Header.css';
 
 const navItems = [
@@ -14,13 +15,13 @@ const navItems = [
   { id: 'contact', label: 'Contact', icon: <FaEnvelope /> },
 ];
 
-const Header: React.FC = () => {
+const Header: React.FC<{ entered: boolean }> = ({ entered }) => {
   const activeSection = useScrollSpy(navItems.map(item => item.id));
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      scrollToElement(element);
     }
   };
 
@@ -30,8 +31,8 @@ const Header: React.FC = () => {
         <motion.div
           className="logo"
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          animate={entered ? { opacity: 1, x: 0 } : undefined}
+          transition={{ duration: 0.7, delay: 0.6 }}
           onClick={() => scrollToSection('home')}
           style={{ cursor: 'pointer' }}
         >
@@ -47,8 +48,8 @@ const Header: React.FC = () => {
               className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
               onClick={() => scrollToSection(item.id)}
               initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              animate={entered ? { opacity: 1, y: 0 } : undefined}
+              transition={{ duration: 0.7, delay: 0.6 + index * 0.07 }}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-label">{item.label}</span>

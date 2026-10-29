@@ -37,28 +37,6 @@ main {
   color: var(--text-color);
 }
 
-.app-fade-in {
-  opacity: 0;
-  animation: liquid-enter 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes liquid-enter {
-  0% {
-    opacity: 0;
-    transform: translateY(40px) scale(0.96);
-    filter: blur(12px);
-  }
-  99% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
 
 /* Back to top button */
 .back-to-top-btn {

@@ -11,8 +11,10 @@ export const useScrollSpy = (sectionIds: string[]) => {
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
         if (section) {
-          const sectionTop = section.offsetTop;
-          const sectionBottom = sectionTop + section.offsetHeight;
+          // page offset; offsetTop is relative to the transformed reveal wrappers
+          const box = section.getBoundingClientRect();
+          const sectionTop = box.top + window.scrollY;
+          const sectionBottom = sectionTop + box.height;
           
           if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
             if (activeSectionRef.current !== sectionIds[i]) {
