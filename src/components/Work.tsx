@@ -1,10 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt, FaUsers } from 'react-icons/fa';
+import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt, FaUsers, FaCode, FaLaptopCode, FaLandmark } from 'react-icons/fa';
+import type { IconType } from 'react-icons';
 import { FiX } from 'react-icons/fi';
 import { useWorkExperienceData } from '../hooks/usePortfolioData';
+import { setPageScrollLocked } from '../lib/smoothScroll';
 import './Work.css';
+
+// pick an icon from the role/company text
+const roleIcon = (work: { role: string; company: string }): IconType => {
+  const text = `${work.role} ${work.company}`.toLowerCase();
+  if (text.includes('coordinator')) return FaUsers;
+  if (text.includes('bank') || text.includes('trainee')) return FaLandmark;
+  if (text.includes('web')) return FaLaptopCode;
+  if (/software|developer|engineer|intern/.test(text)) return FaCode;
+  return FaBriefcase;
+};
 
 interface WorkCardProps {
   work: any;
@@ -67,7 +79,7 @@ const WorkCard: React.FC<WorkCardProps> = ({ work, index, isInView, onOpenModal 
     L 0,${R} 
     A ${R},${R} 0 0 1 ${R},0 Z
   `.replace(/\s+/g, ' ').trim() : '';
-  const isCoordinator = work.role.includes('Coordinator');
+  const RoleIcon = roleIcon(work);
 
   return (
     <motion.div
@@ -122,7 +134,7 @@ const WorkCard: React.FC<WorkCardProps> = ({ work, index, isInView, onOpenModal 
 
       <div className="work-notch-icon-wrapper">
         <div className="work-notch-icon-inner">
-          {isCoordinator ? <FaUsers /> : <FaBriefcase />}
+          <RoleIcon />
         </div>
       </div>
 
@@ -159,12 +171,14 @@ const WorkCard: React.FC<WorkCardProps> = ({ work, index, isInView, onOpenModal 
 const WorkModal: React.FC<{ work: any; onClose: () => void }> = ({ work, onClose }) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    setPageScrollLocked(true);
     return () => {
       document.body.style.overflow = 'unset';
+      setPageScrollLocked(false);
     };
   }, []);
 
-  const isCoordinator = work.role.includes('Coordinator');
+  const RoleIcon = roleIcon(work);
 
   return createPortal(
     <div className="work-modal-backdrop" onClick={onClose}>
@@ -178,7 +192,7 @@ const WorkModal: React.FC<{ work: any; onClose: () => void }> = ({ work, onClose
 
         <div className="work-modal-header">
           <div className="work-modal-icon-shape">
-            {isCoordinator ? <FaUsers /> : <FaBriefcase />}
+            <RoleIcon />
           </div>
           <div className="work-modal-title-area">
             <span className={`status-badge work-status-badge-inline ${work.current ? 'current' : 'past'}`}>
@@ -236,7 +250,26 @@ const Work: React.FC = () => {
         </motion.div>
 
         <div className="work-grid">
-          {workExperience.map((work, index) => (
+          {[...workExperience]
+            .sort((a, b) => {
+              // Current items always on top
+              if (a.current && !b.current) return -1;
+              if (!a.current && b.current) return 1;
+              // Then sort by start date (most recent first)
+              const months: Record<string, number> = {
+                Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+                Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+              };
+              const parseDate = (d: string) => {
+                const parts = d.split(' ');
+                if (parts.length === 2) {
+                  return new Date(parseInt(parts[1]), months[parts[0]] ?? 0);
+                }
+                return new Date(0);
+              };
+              return parseDate(b.startDate).getTime() - parseDate(a.startDate).getTime();
+            })
+            .map((work, index) => (
             <WorkCard
               key={work.id}
               work={work}

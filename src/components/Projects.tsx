@@ -4,6 +4,7 @@ import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { FiSmartphone, FiCpu, FiGlobe, FiStar } from 'react-icons/fi';
 import { useProjectsData } from '../hooks/usePortfolioData';
 import type { Project, ProjectCategory } from '../types';
+import { scrollToElement } from '../lib/smoothScroll';
 import './Projects.css';
 
 type FilterType = ProjectCategory | 'All';
@@ -141,7 +142,7 @@ const Projects: React.FC = () => {
     if (filterName === 'All' && filter === 'All') {
       // Collapse back to default
       setFilter(null);
-      sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (sectionRef.current) scrollToElement(sectionRef.current);
     } else {
       setFilter(filterName);
     }
@@ -149,7 +150,7 @@ const Projects: React.FC = () => {
 
   const handleShowLess = () => {
     setFilter(null);
-    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (sectionRef.current) scrollToElement(sectionRef.current);
   };
 
   return (

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { scrollToY } from '../lib/smoothScroll';
 
 export const useScrollToTop = () => {
   const [showButton, setShowButton] = useState(false);
@@ -14,7 +15,7 @@ export const useScrollToTop = () => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToY(0);
   };
 
   return { showButton, scrollToTop };
