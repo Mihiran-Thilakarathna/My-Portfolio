@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaDownload, FaLinkedin, FaGithub, FaInstagram, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
 import mihiranPhoto from '../assets/mihiran115.png';
 import { scrollToElement, scrollToY } from '../lib/smoothScroll';
@@ -15,12 +15,6 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
   const [titleIndex, setTitleIndex] = useState(0);
   const [showCVModal, setShowCVModal] = useState(false);
 
-  // Parallax fade-out as the hero scrolls away
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const exitY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const exitOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-  const exitScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,9 +37,9 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
   };
 
   return (
-    <section id="home" className="hero" ref={heroRef}>
+    <section id="home" className="hero">
       <div className="hero-watermark">MIHIRAN</div>
-      <motion.div className="hero-content" style={{ y: exitY, opacity: exitOpacity, scale: exitScale }}>
+      <div className="hero-content">
         <motion.div
           className="hero-text"
           initial={{ opacity: 0, x: -75 }}
@@ -132,12 +126,10 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
             </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
       <motion.div
         className="scroll-indicator"
-        // drifts with the hero content so it keeps its gap below the socials
-        style={{ x: '-50%', y: exitY }}
         initial={{ opacity: 0 }}
         animate={entered ? { opacity: 1 } : undefined}
         transition={{ duration: 0.8, delay: 1.8 }}
