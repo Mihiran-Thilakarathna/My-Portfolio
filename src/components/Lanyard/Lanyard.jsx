@@ -964,8 +964,11 @@ const Lanyard = ({
       const framingKey = `${layoutKey}|${s.size}|${s.anchor}|${s.strapLength}|${view.width}|${view.height}`;
       if (framingKey !== applied.framingKey) {
         frameView();
-        if (!placed) {
+        // re-place while the drop hasn't started yet, so the held pose matches the new frame
+        const dropPending = Boolean(drop && drop.elapsed < drop.delay);
+        if (!placed || dropPending) {
           const dropIn = s.intro === 'drop' && !reducedMotion;
+          const waited = drop ? drop.elapsed : 0;
           placeHanging(sim, layout, s.intro && !dropIn && !reducedMotion);
           if (dropIn) {
             // lift the card above the anchor; tick() lowers it back down
@@ -992,7 +995,7 @@ const Lanyard = ({
             sim.body.previousQuaternion.copy(sim.body.quaternion);
             drop = {
               lift,
-              elapsed: 0,
+              elapsed: waited,
               delay: s.dropDelay || 0,
               nodes: sim.nodes.map(node => node.clone()),
               position: sim.body.position.clone(),
@@ -1292,15 +1295,27 @@ const Lanyard = ({
       start();
     };
 
-    const onTouchStart = event => {
-      if (!settingsRef.current.interactive || event.touches.length !== 1) return;
-      toPointer(event.touches[0]);
-      if (pickCard()) event.preventDefault();
-    };
-
     // prevent scroll/text selection while dragging the card
     const onHeldDefault = event => {
       if (sim.grab) event.preventDefault();
+    };
+
+    // a non-passive touchmove on window makes every scroll wait for JS, so only attach it
+    // while the card is actually being dragged
+    const releaseTouch = () => {
+      window.removeEventListener('touchmove', onHeldDefault);
+      window.removeEventListener('touchend', releaseTouch);
+      window.removeEventListener('touchcancel', releaseTouch);
+    };
+
+    const onTouchStart = event => {
+      if (!settingsRef.current.interactive || event.touches.length !== 1) return;
+      toPointer(event.touches[0]);
+      if (!pickCard()) return;
+      event.preventDefault();
+      window.addEventListener('touchmove', onHeldDefault, { passive: false });
+      window.addEventListener('touchend', releaseTouch);
+      window.addEventListener('touchcancel', releaseTouch);
     };
 
     // canvas is pointer-events: none, so listen on window and hit-test the card
@@ -1309,7 +1324,6 @@ const Lanyard = ({
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
     window.addEventListener('touchstart', onTouchStart, { passive: false });
-    window.addEventListener('touchmove', onHeldDefault, { passive: false });
     document.addEventListener('selectstart', onHeldDefault);
 
     const resize = () => {
@@ -1348,7 +1362,7 @@ const Lanyard = ({
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerUp);
       window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onHeldDefault);
+      releaseTouch();
       document.removeEventListener('selectstart', onHeldDefault);
       [bodyMesh, frontMesh, backMesh, ring, clampMesh, eyelet, band].forEach(mesh => mesh.geometry?.dispose());
       [frontMaterial, backMaterial, edgeMaterial, metalMaterial, bandMaterial].forEach(material => material.dispose());

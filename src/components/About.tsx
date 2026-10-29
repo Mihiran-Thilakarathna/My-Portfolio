@@ -10,7 +10,7 @@ import NotchedCard from './NotchedCard';
 import { createCardArt, type CardArt } from './Lanyard/cardArt';
 import { useProjectsData } from '../hooks/usePortfolioData';
 import { personalInfo, stats } from '../data/portfolio';
-import { whenIdleAfterIntro } from '../lib/introGate';
+import { whenIntroWritten } from '../lib/introGate';
 import './About.css';
 
 // Duration (ms) for the stat counter animation
@@ -137,14 +137,15 @@ const About: React.FC = () => {
   const [counterStarted, setCounterStarted] = useState(false);
   // Key of the tech badge whose name is showing (tapped/clicked)
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
-  // preload the WebGL card after the intro; it stays held until the section is in view
+  // preload the WebGL card while the intro signature is still; it stays held until the
+  // section is in view
   const [cardWarm, setCardWarm] = useState(false);
 
   useEffect(() => {
     createCardArt().then(setCardArt).catch(() => setCardArt(undefined));
   }, []);
 
-  useEffect(() => whenIdleAfterIntro(() => setCardWarm(true)), []);
+  useEffect(() => whenIntroWritten(() => setCardWarm(true)), []);
 
   // Start counter after stats cards have slid in
   useEffect(() => {

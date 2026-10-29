@@ -1,11 +1,34 @@
-// Defers heavy work until after the intro so it doesn't jank the reveal.
+// Defers heavy work so it doesn't jank the intro or the reveal.
+let written = false;
 let done = false;
-const waiting = new Set<() => void>();
+const onWritten = new Set<() => void>();
+const onDone = new Set<() => void>();
+
+// The signature is fully written and sits still until the intro fades out
+export const markIntroWritten = () => {
+  written = true;
+  onWritten.forEach(run => run());
+  onWritten.clear();
+};
 
 export const markIntroDone = () => {
+  markIntroWritten();
   done = true;
-  waiting.forEach(run => run());
-  waiting.clear();
+  onDone.forEach(run => run());
+  onDone.clear();
+};
+
+// Runs `task` while the finished signature is on screen (any hitch is invisible there).
+// Returns a cancel function.
+export const whenIntroWritten = (task: () => void) => {
+  if (written) {
+    task();
+    return () => {};
+  }
+  onWritten.add(task);
+  return () => {
+    onWritten.delete(task);
+  };
 };
 
 // Runs `task` on idle, `settle` ms after the intro ends. Returns a cancel function.
@@ -19,9 +42,9 @@ export const whenIdleAfterIntro = (task: () => void, settle = 1800) => {
     }, settle);
   };
   if (done) schedule();
-  else waiting.add(schedule);
+  else onDone.add(schedule);
   return () => {
-    waiting.delete(schedule);
+    onDone.delete(schedule);
     clearTimeout(timer);
     if (idle) window.cancelIdleCallback(idle);
   };

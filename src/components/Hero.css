@@ -347,7 +347,7 @@
 
 @media (max-width: 968px) {
   .hero {
-    padding: 6rem 1.5rem 7rem;
+    padding: 6rem 1.5rem 8rem;
   }
 
   .hero-watermark {
@@ -428,7 +428,7 @@
 
 @media (max-width: 640px) {
   .hero {
-    padding: 5rem 1rem 6rem;
+    padding: 5rem 1rem 7.5rem;
     min-height: 100vh;
   }
 
@@ -484,7 +484,7 @@
 
 @media (max-width: 480px) {
   .hero {
-    padding: 4.5rem 0.75rem 5.5rem;
+    padding: 4.5rem 0.75rem 7rem;
     min-height: 100vh;
   }
 

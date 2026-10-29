@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { markIntroWritten } from '../lib/introGate';
 import './LoadingScreen.css';
 
 interface LoadingScreenProps {
@@ -260,6 +261,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
 
     if (reduceMotion) {
       finish();
+      markIntroWritten();
       const timer = setTimeout(() => setExiting(true), 1200);
       return () => clearTimeout(timer);
     }
@@ -279,6 +281,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
         writeUpTo(easeInOut((t - START) / WRITE) * total + Math.max(0, t - START - WRITE) / SETTLE * wetSpan);
       } else if (t < done) {
         finish();
+        // signature is still now: let heavy setup (the About card) run here
+        markIntroWritten();
       } else {
         finish();
         setExiting(true);

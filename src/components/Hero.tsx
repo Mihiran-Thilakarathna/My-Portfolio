@@ -21,6 +21,8 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
   const exitY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const exitOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
   const exitScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
+  // hide the scroll hint as soon as scrolling starts, before the content drifts onto it
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -140,12 +142,12 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
         animate={entered ? { opacity: 1 } : undefined}
         transition={{ duration: 0.8, delay: 1.8 }}
       >
-        <div className="scroll-button">
+        <motion.div className="scroll-button" style={{ opacity: hintOpacity }}>
           <div className="scroll-mouse">
             <div className="scroll-wheel"></div>
           </div>
           <p className="scroll-text">SCROLL DOWN</p>
-        </div>
+        </motion.div>
       </motion.div>
 
       <AnimatePresence>
