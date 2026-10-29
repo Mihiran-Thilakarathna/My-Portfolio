@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from './AuthContext';
 import { isFirebaseConfigured } from '../firebase';
+import { useFormValidation } from '../hooks/useFormValidation';
+import FieldError from '../components/FieldError';
 
 const AdminLogin: React.FC = () => {
   const { user, login } = useAdminAuth();
@@ -10,6 +12,7 @@ const AdminLogin: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const { errors, handleSubmit: validated, fieldProps } = useFormValidation();
 
   useEffect(() => {
     if (user) {
@@ -43,17 +46,20 @@ const AdminLogin: React.FC = () => {
           </p>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={validated(handleSubmit)} noValidate>
           <div className="admin-field">
             <label htmlFor="email">Email</label>
             <input
               id="email"
               type="email"
+              data-label="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               autoFocus
+              {...fieldProps('email')}
             />
+            <FieldError name="email" message={errors.email} />
           </div>
 
           <div className="admin-field">
@@ -61,10 +67,13 @@ const AdminLogin: React.FC = () => {
             <input
               id="password"
               type="password"
+              data-label="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              {...fieldProps('password')}
             />
+            <FieldError name="password" message={errors.password} />
           </div>
 
           {error && <p className="admin-error-text">{error}</p>}
