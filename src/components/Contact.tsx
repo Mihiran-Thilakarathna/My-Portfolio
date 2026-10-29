@@ -109,7 +109,6 @@ const Contact: React.FC = () => {
   const [lit, setLit] = useState(false);
   const pullY = useMotionValue(0);
   const cordHeight = useTransform(pullY, y => CORD + Math.max(0, y));
-  const dragged = useRef(false);
 
   useEffect(() => {
     const events = ['pointerdown', 'keydown', 'touchstart'] as const;
@@ -261,10 +260,10 @@ const Contact: React.FC = () => {
                 dragElastic={0.15}
                 dragSnapToOrigin
                 dragTransition={{ bounceStiffness: 600, bounceDamping: 14 }}
-                onPointerDown={() => { dragged.current = false; warmAudio(); }}
-                onDragStart={() => { dragged.current = true; }}
+                onPointerDown={warmAudio}
                 onDragEnd={handleDragEnd}
-                onClick={() => { if (!dragged.current) pull(); }}
+                // only a real pull switches the lamp; Enter/Space still works from the keyboard
+                onClick={e => { if (e.detail === 0) pull(); }}
                 aria-label={lit ? 'Turn off the lamp' : 'Turn on the lamp'}
                 aria-pressed={lit}
               />
@@ -273,10 +272,7 @@ const Contact: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="contact-card"
-            onClick={() => { if (!lit) pull(); }}
-          >
+          <div className="contact-card">
             <div className="contact-card-inner" inert={!lit}>
               <span className="contact-eyebrow">Your message</span>
               <h3 className="contact-title">Let's Talk</h3>
