@@ -7,6 +7,7 @@ import facial from '../assets/facial.png';
 import portfolio from '../assets/portfolio.png';
 import omnimodel from '../assets/OmniModel.png';
 import vendora from '../assets/vendora.png';
+import tinyurl from '../assets/tinyurl.png';
 
 export const personalInfo = {
   name: 'Mihiran Thilakarathna',
@@ -28,6 +29,12 @@ export const personalInfo = {
   footerBio: 'Building intelligent solutions with AI, ML, and modern web technologies.',
 };
 
+// shown on the back of the lanyard card
+export const contactInfo = {
+  phone: '0729936641',
+  location: 'Eheliyagoda, Sri Lanka',
+};
+
 export const skills: Skill[] = [
   { name: 'Python', icon: 'FaPython' },
   { name: 'TensorFlow', icon: 'SiTensorflow' },
@@ -47,10 +54,10 @@ export const skills: Skill[] = [
   { name: 'CSS3', icon: 'FaCss3Alt' },
 ];
 
+// project count comes from the projects list
 export const stats = {
-  yearsExperience: '2+',
-  projects: '10+',
-  repos: '12+',
+  yearsExperience: '3+',
+  repos: '20+',
 };
 
 export const workExperience: WorkExperience[] = [
@@ -212,6 +219,16 @@ export const certifications: Certification[] = [
 ];
 
 export const projects: Project[] = [
+  {
+    id: '8',
+    title: 'TinyURL – URL Shortener',
+    description: 'A full-stack URL shortener that allows users to create, customize, secure, and track short links. It supports custom aliases, password protection, expiration dates, QR codes, click analytics, Google authentication, and rate limiting.',
+    image: tinyurl,
+    categories: ['Web Application'],
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Supabase', 'PostgreSQL', 'Prisma', 'Upstash Redis', 'NextAuth'],
+    liveUrl: 'https://www.tiny-url.tech',
+    codeUrl: 'https://github.com/Mihiran-Thilakarathna/TinyURL',
+  },
   {
     id: '7',
     title: 'Vendora',

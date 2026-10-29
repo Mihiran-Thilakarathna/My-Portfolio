@@ -14,9 +14,23 @@ function withFallback<T>(data: T[], loading: boolean, fallback: T[]) {
   return data.length > 0 ? data : fallback;
 }
 
+const bundledAssets = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<string>('../assets/*.{png,jpg,jpeg,webp,svg}', { eager: true, import: 'default' })
+  ).map(([path, url]) => [path.split('/').pop()!.replace(/\.\w+$/, '').toLowerCase(), url])
+);
+
+// seeded docs store hashed build paths (e.g. /assets/lumo-Bv2-6cNY.png); resolve by file name
+function resolveImage(image: string) {
+  if (!image || /^(https?:|data:)/.test(image)) return image;
+  const name = image.split('/').pop()!.replace(/\.\w+$/, '').toLowerCase();
+  return bundledAssets[name] ?? bundledAssets[name.replace(/-[\w-]{8}$/, '')] ?? image;
+}
+
 export function useProjectsData() {
   const { data, loading } = useFirestoreCollection<Omit<Project, 'id'>>('projects');
-  return withFallback(data as Project[], loading, staticProjects);
+  const projects = (data as Project[]).map((p) => ({ ...p, image: resolveImage(p.image) }));
+  return withFallback(projects, loading, staticProjects);
 }
 
 export function useCertificationsData() {

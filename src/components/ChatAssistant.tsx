@@ -8,6 +8,7 @@ import {
   education,
   certifications,
   competitions,
+  stats,
 } from '../data/portfolio';
 import './ChatAssistant.css';
 
@@ -106,7 +107,7 @@ function generateResponse(rawMessage: string): string {
   }
 
   if (has(msg, 'github', 'git hub', 'repository', 'repo', 'source code')) {
-    return `GitHub Profile\n\n${personalInfo.github}\n\nHis GitHub showcases all his projects — AI/ML models, web apps, and mobile apps with 12+ repositories!`;
+    return `GitHub Profile\n\n${personalInfo.github}\n\nHis GitHub showcases all his projects — AI/ML models, web apps, and mobile apps with ${stats.repos} repositories!`;
   }
 
   if (has(msg, 'linkedin', 'linked in', 'network')) {
@@ -155,7 +156,7 @@ function generateResponse(rawMessage: string): string {
   }
 
   if (has(msg, 'how many', 'stats', 'statistic', 'number of', 'count', 'total')) {
-    return `Profile Stats\n\n• Projects: ${projects.length} featured projects\n• Certifications: ${certifications.length} completed courses\n• Competitions: ${competitions.length} major competition (Grand Finalist)\n• Work Experience: ${workExperience.length} professional role\n• Skills: ${skills.length}+ technologies\n• GitHub Repos: 12+`;
+    return `Profile Stats\n\n• Projects: ${projects.length} featured projects\n• Certifications: ${certifications.length} completed courses\n• Competitions: ${competitions.length} major competition (Grand Finalist)\n• Work Experience: ${workExperience.length} professional role\n• Skills: ${skills.length}+ technologies\n• GitHub Repos: ${stats.repos}`;
   }
 
   if (has(msg, 'who is', 'about mihiran', 'introduce', 'tell me about', 'describe')) {
