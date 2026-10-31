@@ -1,12 +1,11 @@
 <div align="center">
 
-<a href="https://mihiran.me">
-  <img src=".github/assets/signature.svg" alt="Mihiran Thilakarathna" width="100%"/>
+<!-- Wrapped in a link-less anchor so GitHub doesn't turn the banner into a clickable image link -->
+<a name="readme-top">
+  <img src=".github/assets/header.svg" alt="Portfolio - Mihiran Thilakarathna" width="100%"/>
 </a>
 
 <br/>
-
-### Personal portfolio of Mihiran Thilakarathna
 
 An interactive, fully responsive portfolio built with React, TypeScript and three.js,<br/>
 backed by a Firebase admin dashboard for managing content without redeploying.
@@ -14,7 +13,6 @@ backed by a Firebase admin dashboard for managing content without redeploying.
 <br/>
 
 [![Live Site](https://img.shields.io/badge/LIVE_SITE-mihiran.me-CCFF00?style=for-the-badge&labelColor=0A0A0A)](https://mihiran.me)
-[![Deploy](https://img.shields.io/github/actions/workflow/status/Mihiran-Thilakarathna/My-Portfolio/deploy.yml?branch=main&style=for-the-badge&label=DEPLOY&labelColor=0A0A0A&color=CCFF00)](https://github.com/Mihiran-Thilakarathna/My-Portfolio/actions)
 [![License](https://img.shields.io/badge/LICENSE-MIT-CCFF00?style=for-the-badge&labelColor=0A0A0A)](LICENSE)
 
 <br/>
