@@ -389,9 +389,15 @@ a.about-stat:hover .about-stat-note {
   will-change: transform;
 }
 
-.tech-marquee-track:hover,
 .tech-marquee-track.is-paused {
   animation-play-state: paused;
+}
+
+/* Hover-pause only with a real pointer: on touch screens :hover sticks after a tap */
+@media (hover: hover) {
+  .tech-marquee-track:hover {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes techMarqueeScroll {
@@ -450,7 +456,6 @@ a.about-stat:hover .about-stat-note {
   pointer-events: none;
 }
 
-.tech-badge:hover,
 .tech-badge.is-active {
   transform: scale(1.1) translateY(-5px);
   border-color: rgba(204, 255, 0, 0.35);
@@ -459,15 +464,32 @@ a.about-stat:hover .about-stat-note {
   z-index: 2;
 }
 
-.tech-badge:hover svg,
 .tech-badge.is-active svg {
   transform: translateY(-4px) scale(0.68);
 }
 
-.tech-badge:hover::after,
 .tech-badge.is-active::after {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (hover: hover) {
+  .tech-badge:hover {
+    transform: scale(1.1) translateY(-5px);
+    border-color: rgba(204, 255, 0, 0.35);
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+
+  .tech-badge:hover svg {
+    transform: translateY(-4px) scale(0.68);
+  }
+
+  .tech-badge:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tech-badge:focus-visible {

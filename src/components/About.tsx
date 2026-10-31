@@ -19,6 +19,8 @@ const COUNTER_DURATION = 1.0;
 const COUNTER_START_DELAY = 0.6;
 // Stagger (s) between the stat cards sliding in; the tech stack follows as the next card
 const STAT_STAGGER = 0.15;
+// How long (ms) a tapped tech badge shows its name before the marquee resumes
+const SKILL_NAME_MS = 1600;
 
 const AnimatedCounter: React.FC<{ value: number; suffix?: string; trigger: boolean; duration?: number }> = ({ value, suffix = "", trigger, duration = 1.0 }) => {
   const [count, setCount] = useState(0);
@@ -146,6 +148,14 @@ const About: React.FC = () => {
   useEffect(() => {
     createCardArt().then(setCardArt).catch(() => setCardArt(undefined));
   }, []);
+
+  // A tapped badge shows its name briefly, then the marquee carries on by itself;
+  // touch screens have no "mouse leave" to un-pause it otherwise.
+  useEffect(() => {
+    if (!activeSkill) return;
+    const timer = setTimeout(() => setActiveSkill(null), SKILL_NAME_MS);
+    return () => clearTimeout(timer);
+  }, [activeSkill]);
 
   useEffect(() => whenIntroWritten(() => setCardWarm(true)), []);
 
