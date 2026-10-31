@@ -19,6 +19,12 @@
 }
 
 
+/* Mobile browsers flash a box over anything tapped; buttons already have their own
+   pressed/hover styles, so hide it (inherited by every element). */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
   font-family: 'JetBrains Mono', monospace;
