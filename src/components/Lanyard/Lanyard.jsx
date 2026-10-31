@@ -18,6 +18,8 @@ const MAX_STEP = 1 / 960;
 const ITERATIONS = 2;
 const SAMPLES = 72;
 const FOV = 24;
+// How far in front of / behind the card plane the camera's depth range reaches.
+const DEPTH_RANGE = 4;
 const STRAP_WIDTH = 0.36;
 const RING_RADIUS = 0.095;
 const RING_TUBE = 0.0135;
@@ -847,15 +849,23 @@ const Lanyard = ({
         .replace('#include <opaque_fragment>', `${FOIL_FRAGMENT_BODY}\n#include <opaque_fragment>`);
     };
 
+    // Polygon offset pulls the printed faces toward the camera so they always win the depth
+    // test against the card body right behind them.
     const frontMaterial = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
       normalMap: grain,
-      normalScale: new THREE.Vector2(0.06, 0.06)
+      normalScale: new THREE.Vector2(0.06, 0.06),
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2
     });
     const backMaterial = new THREE.MeshPhysicalMaterial({
       map: backTexture,
       normalMap: grain,
-      normalScale: new THREE.Vector2(0.06, 0.06)
+      normalScale: new THREE.Vector2(0.06, 0.06),
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2
     });
     frontMaterial.onBeforeCompile = injectFoil;
     backMaterial.onBeforeCompile = injectFoil;
@@ -953,7 +963,12 @@ const Lanyard = ({
       if (viewHeight * aspect < minimumWidth) viewHeight = minimumWidth / aspect;
       const viewWidth = viewHeight * aspect;
       camera.aspect = aspect;
-      camera.position.set(0, 0, viewHeight / 2 / Math.tan((FOV * Math.PI) / 360));
+      const distance = viewHeight / 2 / Math.tan((FOV * Math.PI) / 360);
+      camera.position.set(0, 0, distance);
+      // A tall view puts the camera far away; keep the depth range tight around the card so
+      // the face and body (0.0006 apart) don't z-fight on mobile GPUs with low depth precision.
+      camera.near = Math.max(0.1, distance - DEPTH_RANGE);
+      camera.far = distance + DEPTH_RANGE;
       camera.lookAt(0, 0, 0);
       camera.updateProjectionMatrix();
       camera.updateMatrixWorld();

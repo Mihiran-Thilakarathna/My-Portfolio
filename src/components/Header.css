@@ -167,8 +167,20 @@
     gap: 1rem;
   }
 
+  /* Icon-only bar: share the width equally so every item fits without sideways scrolling */
+  .nav {
+    width: 100%;
+    max-width: 440px;
+    justify-content: space-between;
+    gap: 0;
+    padding: 0.55rem 0.5rem;
+    overflow: visible;
+  }
+
   .nav-item {
-    padding: 0.55rem 0.7rem;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.55rem 0;
     font-size: 0.88rem;
   }
 
@@ -183,7 +195,7 @@
   }
 
   .nav-item {
-    padding: 0.5rem 0.6rem;
+    padding: 0.5rem 0;
     font-size: 0.82rem;
   }
 }
@@ -194,7 +206,7 @@
   }
 
   .nav-item {
-    padding: 0.45rem 0.55rem;
+    padding: 0.45rem 0;
     font-size: 0.78rem;
   }
 }

@@ -14,7 +14,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scaleY(1.4);
-  font-size: clamp(8rem, 25vw, 30rem);
+  /* No minimum: phones keep the same proportions as desktop (a min of 8rem cut it to "HIRAN") */
+  font-size: min(25vw, 30rem);
   font-weight: 900;
   font-family: 'Orbitron', sans-serif;
   color: transparent;
