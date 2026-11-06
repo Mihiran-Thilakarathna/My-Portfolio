@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowRight, FaDownload, FaLinkedin, FaGithub, FaInstagram, FaLaptopCode, FaCogs, FaBrain } from 'react-icons/fa';
+import { FaArrowRight, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import mihiranPhoto from '../assets/mihiran115.png';
 import { scrollToElement, scrollToY } from '../lib/smoothScroll';
 import './Hero.css';
@@ -13,8 +13,6 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
   ];
 
   const [titleIndex, setTitleIndex] = useState(0);
-  const [showCVModal, setShowCVModal] = useState(false);
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,16 +80,10 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
             animate={entered ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.9, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            <button
-              onClick={() => setShowCVModal(true)}
-              className="btn-sharp btn-sharp-primary"
-            >
-              <FaDownload style={{ marginRight: '8px' }} /> DOWNLOAD CV
-            </button>
             <button onClick={() => scrollToSection('projects')} className="btn-sharp btn-sharp-cream-outline">
               VIEW WORK <FaArrowRight style={{ marginLeft: '8px' }} />
             </button>
-            <button onClick={() => scrollToSection('contact')} className="btn-sharp btn-sharp-outline">
+            <button onClick={() => scrollToSection('contact')} className="btn-sharp btn-sharp-primary">
               HIRE ME
             </button>
           </motion.div>
@@ -141,60 +133,6 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
           <p className="scroll-text">SCROLL DOWN</p>
         </div>
       </motion.div>
-
-      <AnimatePresence>
-        {showCVModal && (
-          <motion.div
-            className="cv-modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowCVModal(false)}
-          >
-            <motion.div
-              className="cv-modal-content"
-              initial={{ y: 50, opacity: 0, scale: 0.9 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: 20, opacity: 0, scale: 0.9 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className="close-modal-btn" onClick={() => setShowCVModal(false)}>×</button>
-              <h3 className="modal-title">Select Resume Version</h3>
-              <p className="modal-subtitle">Choose the profile that best fits your requirements.</p>
-
-              <div className="cv-options">
-                <a href={`${import.meta.env.BASE_URL}FullStack Engineer Intern.pdf`} download="Mihiran_FullStack_Engineer.pdf" className="cv-option-card">
-                  <div className="cv-option-icon"><FaLaptopCode /></div>
-                  <div className="cv-option-details">
-                    <h4>Full Stack Developer</h4>
-                    <span>Frontend & Backend Focus</span>
-                  </div>
-                  <FaDownload className="download-icon" />
-                </a>
-
-                <a href={`${import.meta.env.BASE_URL}Software Engineering Intern.pdf`} download="Mihiran_Software_Engineer.pdf" className="cv-option-card">
-                  <div className="cv-option-icon"><FaCogs /></div>
-                  <div className="cv-option-details">
-                    <h4>Software Engineering</h4>
-                    <span>System Design & Architecture</span>
-                  </div>
-                  <FaDownload className="download-icon" />
-                </a>
-
-                <a href={`${import.meta.env.BASE_URL}AI & Automation Intern.pdf`} download="Mihiran_AI_ML.pdf" className="cv-option-card">
-                  <div className="cv-option-icon"><FaBrain /></div>
-                  <div className="cv-option-details">
-                    <h4>AI / ML Engineer</h4>
-                    <span>Machine Learning & Data Science</span>
-                  </div>
-                  <FaDownload className="download-icon" />
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

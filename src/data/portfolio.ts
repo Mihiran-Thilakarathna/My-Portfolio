@@ -15,6 +15,8 @@ export const personalInfo = {
   bio: 'Passionate IT undergraduate at Rajarata University of Sri Lanka, focused on building intelligent systems with AI, Machine Learning, and modern web technologies.',
   email: 'thmthilakarathna@gmail.com',
   phone: '+94 76 045 3356',
+  // Opens a WhatsApp chat with this number
+  whatsapp: 'https://wa.me/94760453356',
   telegram: '+94760453356',
   messenger: 'mihiranthilakarathna',
   discord: 'mihiranthilakarathna',

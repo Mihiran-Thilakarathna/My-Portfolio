@@ -59,6 +59,31 @@ const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 const easeInOut = (t: number) => 0.5 - Math.cos(Math.PI * clamp01(t)) / 2;
 
 const fontSpec = `${FONT_SIZE}px "${FONT}", cursive`;
+// how long to wait for the signature font before skipping the signature
+const FONT_TIMEOUT = 8000;
+
+// True once a "Bastliga One" face has actually downloaded. document.fonts.check() is not enough:
+// it also returns true when the font's stylesheet hasn't arrived yet and the fallback would be used.
+const fontReady = () => {
+  for (const face of document.fonts) {
+    if (face.family.replace(/["']/g, '') === FONT && face.status === 'loaded') return true;
+  }
+  return false;
+};
+
+const waitForFont = async () => {
+  const deadline = performance.now() + FONT_TIMEOUT;
+  while (performance.now() < deadline) {
+    try {
+      await document.fonts.load(fontSpec, NAME);
+    } catch {
+      // keep waiting until the deadline
+    }
+    if (fontReady()) return true;
+    await new Promise(resolve => setTimeout(resolve, 150));
+  }
+  return false;
+};
 
 // Builds the reveal order: BFS along each connected stroke from its leftmost pixel, strokes
 // left to right, and halo pixels take the time of the nearest stroke pixel.
@@ -165,11 +190,20 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReveal, onFinish }) => 
   const percentRef = useRef<HTMLSpanElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
 
-  // wait for the font (max 2.5s) before measuring
+  // The signature is only ever drawn in its own font. If the font never arrives (offline, blocked),
+  // skip the signature rather than write it in a fallback font.
   useEffect(() => {
     let alive = true;
-    Promise.race([document.fonts.load(fontSpec), new Promise(resolve => setTimeout(resolve, 2500))]).then(() => {
-      if (alive) setPlan(planSignature());
+    waitForFont().then(ready => {
+      if (!alive) return;
+      if (ready) {
+        setPlan(planSignature());
+        return;
+      }
+      if (percentRef.current) percentRef.current.textContent = '100%';
+      dotsRef.current?.querySelectorAll('span').forEach(dot => dot.classList.add('is-on'));
+      markIntroWritten();
+      setExiting(true);
     });
     return () => {
       alive = false;

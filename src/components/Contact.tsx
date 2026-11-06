@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { AnimatePresence, motion, useInView, useMotionValue, useTransform } from 'framer-motion';
 import type { PanInfo } from 'framer-motion';
-import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram, FaPaperPlane } from 'react-icons/fa';
+import { FaEnvelope, FaGithub, FaLinkedin, FaInstagram, FaPaperPlane, FaWhatsapp } from 'react-icons/fa';
 import { FiAlertTriangle, FiCheck } from 'react-icons/fi';
 import emailjs from '@emailjs/browser';
 import { personalInfo } from '../data/portfolio';
@@ -356,6 +356,15 @@ const Contact: React.FC = () => {
               <div className="contact-socials">
                 <a href={`mailto:${personalInfo.email}`} aria-label="Email" title={personalInfo.email}>
                   <FaEnvelope />
+                </a>
+                <a
+                  href={personalInfo.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  title={`WhatsApp ${personalInfo.phone}`}
+                >
+                  <FaWhatsapp />
                 </a>
                 <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <FaLinkedin />
