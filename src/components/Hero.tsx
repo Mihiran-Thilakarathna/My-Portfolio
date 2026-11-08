@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import mihiranPhoto from '../assets/mihiran115.png';
-import { scrollToElement, scrollToY } from '../lib/smoothScroll';
+import { scrollToElement } from '../lib/smoothScroll';
 import './Hero.css';
 
 const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
@@ -24,13 +24,7 @@ const Hero: React.FC<{ entered: boolean }> = ({ entered }) => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      if (id === 'contact') {
-        scrollToElement(element, 'end');
-        return;
-      }
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      scrollToY(elementPosition + window.scrollY - headerOffset);
+      scrollToElement(element, id === 'contact' ? 'end' : 'start');
     }
   };
 
