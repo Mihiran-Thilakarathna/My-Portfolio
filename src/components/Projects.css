@@ -15,10 +15,12 @@
   width: 100%;
 }
 
+/* start-aligned with auto margins on the ends: centred when the tabs fit, but scrollable from
+   the first tab when they overflow (justify-content: center would push "All" off-screen) */
 .category-tabs {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   background: transparent;
   padding: 0.5rem 1rem;
@@ -32,6 +34,14 @@
 
 .category-tabs::-webkit-scrollbar {
   display: none;
+}
+
+.category-tabs > :first-child {
+  margin-left: auto;
+}
+
+.category-tabs > :last-child {
+  margin-right: auto;
 }
 
 .tab-btn {
